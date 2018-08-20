@@ -36,12 +36,18 @@ Item {
         wrapMode: Text.WordWrap
     }
 
+
+    // SCHEME SELECTION
+
     Item {
         id: paneScheme
+
         anchors.left: root.left
         anchors.right: root.right
 
         anchors.top: paneDescription.bottom
+
+        height: childrenRect.height
 
         ColumnLayout {
             width: parent.width
@@ -106,10 +112,159 @@ Item {
                             }
                         }
                     }
+                    Item {Layout.preferredHeight: 10}
+                }
+            }
+        }
+    } // END PANE
+
+    Item {
+        id: paneInputs
+        anchors.left: root.left
+        anchors.right: root.right
+
+        anchors.top: paneScheme.bottom
+        height: childrenRect.height
+
+        ColumnLayout {
+            width: parent.width
+
+            Rectangle {
+                radius: 5
+                color: "#F7F7F7"
+
+                Layout.fillWidth: true
+                Layout.margins: 10
+                Layout.preferredHeight: childrenRect.height
+
+                ColumnLayout {
+                    width: parent.width
+
+                    // contents go here
+                    Text {
+                        id: txtInputs
+                        text: "Inputs"
+                        font.family: "Ubuntu"
+                        font.pixelSize: 14
+                        Layout.leftMargin: 10
+                        Layout.topMargin: 10
+                    }
+
+                    Rectangle {
+                        Layout.preferredHeight: 1
+                        Layout.preferredWidth: txtInputs.paintedWidth * 2
+                        Layout.leftMargin: 10
+                        color: "#BFBFBF"
+                    }
+
+                    Item {Layout.preferredHeight: 5}
+
+                    // input graph
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Graph File Path"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        TextField {
+                            id: txtGraphFilePath
+                            Layout.preferredWidth: 300
+                            property bool pathValid: true
+
+                            color: txtGraphFilePath.pathValid ? "black" : "#E24670"
+
+                            text: "../../dgs-graphstream/inputs/network_1.txt"
+
+                            background: Rectangle {
+                                color: "white"
+                                border.color: "#BFBFBF"
+                                border.width: 1
+                            }
+
+                            onTextChanged: {
+                                simulationParams.slotSetGraphFilePath(txtGraphFilePath.text)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetGraphFilePath(txtGraphFilePath.text)
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyGraphFilePathChanged: {
+                                    txtGraphFilePath.pathValid = fileExistsAtPath
+                                }
+                            }
+                        }
+
+                        Text {
+                            text: "Graph Format"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        ComboBox {
+
+                            model: ["metis", "edgelist", "gml"]
+
+                            Layout.preferredWidth: 150
+                            Layout.leftMargin: 15
+
+                            background: Rectangle {
+                                color: "white"
+                                border.color: "#BFBFBF"
+                                border.width: 1
+                            }
+
+                            onActivated: {
+                                if(index === 0) {
+                                    // communities
+                                    simulationParams.slotGraphFormat('metis')
+                                }
+                                if(index === 1) {
+                                    // edges-cut
+                                    simulationParams.slotGraphFormat('edgelist')
+                                }
+                                if(index === 2) {
+                                    // random
+                                    simulationParams.slotGraphFormat('gml')
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    Text {
+                        id: txtFullGraphPath
+
+                        property string path: ""
+                        property string errorStr: "<b>File Doesn't Exist</b>: "
+                        property bool showError: false
+
+                        Layout.leftMargin: 15
+
+                        text: txtFullGraphPath.showError ? txtFullGraphPath.errorStr + txtFullGraphPath.path : txtFullGraphPath.path
+                        font.family: "Open Sans"
+                        font.pixelSize: 10
+                        color: txtFullGraphPath.showError ? "#E24670" : "#858585"
+
+                        Connections {
+                            target: simulationParams
+                            onNotifyGraphFilePathChanged: {
+                                txtFullGraphPath.path = graphFilePath
+                                txtFullGraphPath.showError = !fileExistsAtPath
+                            }
+                        }
+                    }
 
                     Item {Layout.preferredHeight: 10}
                 }
             }
         }
-    }
+    } // END PANE
+
 }

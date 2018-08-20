@@ -4,6 +4,7 @@ Item {
     anchors.right: root.right
 
     anchors.top: paneTitle.bottom
+    height: childrenRect.height
 
     ColumnLayout {
         width: parent.width
