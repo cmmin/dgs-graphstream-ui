@@ -18,20 +18,11 @@ ApplicationWindow {
             Qt.WindowTitleHint | Qt.WindowSystemMenuHint | Qt.WindowMinMaxButtonsHint |
             Qt.WindowCloseButtonHint
 
-
     Component.onCompleted: {
         // center the GUI window onto the screen
         root.setX(Screen.width / 2.0 - root.width / 2.0)
         root.setY(Screen.height / 2.0 - root.height / 2.0)
     }
-
-    Connections {
-        target: simulationParams
-        onNotifySchemeChanged: {
-            console.log("Scheme Changed to:", scheme)
-        }
-    }
-
 
     Item {
         id: contents
@@ -44,19 +35,6 @@ ApplicationWindow {
             anchors.top: contents.top
             anchors.right: contents.right
         }
-
-        /*Components.SimulationSettingsList {
-            id: b
-            color: "blue"
-            anchors.left: contents.left
-            anchors.top: navigationBar.bottom
-            anchors.right: contents.right
-            anchors.bottom: contents.bottom
-
-            Component.onCompleted: {
-                b.addPane("viva", "lafiga")
-            }
-        }*/
 
         Components.SimulationGenerationPage {
             id: simulationPage

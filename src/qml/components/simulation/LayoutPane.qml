@@ -298,6 +298,47 @@ Item {
                         Item {Layout.fillWidth: true}
                     }
 
+                    // repulsion
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            id: txtLayoutRandomSeed
+                            property int seedValue
+                            text: "Layout Random Seed: <b>" + String(txtLayoutRandomSeed.seedValue) + "</b>"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyLayoutRandomSeedChanged: {
+                                    txtLayoutRandomSeed.seedValue = randomSeed
+                                }
+                            }
+
+                            Component.onCompleted: {
+                                btnGenerateLayoutSeed.generateNewSeed()
+                            }
+
+                        }
+
+                        Item {Layout.preferredWidth: 5}
+
+                        BasicComponents.Button {
+                            id: btnGenerateLayoutSeed
+
+                            function generateNewSeed() {
+                                simulationParams.slotGenerateNewLayoutRandomSeed()
+                            }
+
+                            text: "Generate Seed"
+                            onClicked: {
+                                btnGenerateLayoutSeed.generateNewSeed()
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
 
                     Item {Layout.preferredHeight: 10}
                 }

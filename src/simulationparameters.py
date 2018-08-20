@@ -1,5 +1,7 @@
 import os
+
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
+from utils import generateRandomSeed
 
 def composeAbsolutePath(path):
     '''
@@ -27,6 +29,7 @@ class SimulationParameters(QObject):
         self.layoutLinlogForce = 3.0
         self.layoutAttraction = 0.012
         self.layoutRepulsion = 0.024
+        self.layoutRandomSeed = generateRandomSeed()
 
 
     # SIGNALS
@@ -60,6 +63,7 @@ class SimulationParameters(QObject):
     notifyLayoutLinlogForceChanged = pyqtSignal(float, arguments=["linlogForce"])
     notifyLayoutAttractionChanged = pyqtSignal(float, arguments=["attraction"])
     notifyLayoutRepulsionChanged = pyqtSignal(float, arguments=["repulsion"])
+    notifyLayoutRandomSeedChanged = pyqtSignal(int, arguments=["randomSeed"])
 
     @pyqtSlot(str)
     def slotSetGraphLayout(self, layout):
@@ -89,3 +93,8 @@ class SimulationParameters(QObject):
         repulsion = float(int(repulsion)) / factor
         self.layoutRepulsion = repulsion
         self.notifyLayoutRepulsionChanged.emit(self.layoutRepulsion)
+
+    @pyqtSlot()
+    def slotGenerateNewLayoutRandomSeed(self):
+        self.layoutRandomSeed = generateRandomSeed()
+        self.notifyLayoutRandomSeedChanged.emit(self.layoutRandomSeed)

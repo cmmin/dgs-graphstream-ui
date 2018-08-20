@@ -4,6 +4,9 @@ import random
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QFontDatabase
 
+def generateRandomSeed():
+    return random.randint(1, 10**6)
+
 class QmlUtils(QObject):
     def __init__(self):
         QObject.__init__(self)
@@ -12,7 +15,7 @@ class QmlUtils(QObject):
 
     @pyqtSlot(str)
     def createRandomSeed(self, callerID):
-        seedValue = random.randint(1, 10**6)
+        seedValue = generateRandomSeed()
         self.randomSeedResult.emit(seedValue, callerID)
 
 
