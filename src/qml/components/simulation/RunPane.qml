@@ -47,26 +47,33 @@ Item {
 
         anchors.top: paneDescription.bottom
 
-        height: childrenRect.height
+        //height: childrenRect.height
+        anchors.bottom: paneControls.top
 
         ColumnLayout {
-            width: parent.width
+            //width: parent.width
+
+            anchors.fill: parent
 
             Rectangle {
                 radius: 5
                 color: "#F7F7F7"
 
+                id: summaryPaneRect
+
                 Layout.fillWidth: true
+                Layout.fillHeight: true
                 Layout.margins: 10
-                Layout.preferredHeight: childrenRect.height
+                //Layout.preferredHeight: childrenRect.height
 
                 ColumnLayout {
-                    width: parent.width
+                    //width: parent.width
+                    anchors.fill: parent
 
                     // contents go here
                     Text {
                         id: txtSummary
-                        text: "Summary of Properties"
+                        text: "Full Simulation Parameters"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -84,6 +91,133 @@ Item {
 
                     Item {Layout.preferredHeight: 5}
 
+                    Flickable {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+
+                        clip: true
+                        contentWidth: flickableContent.width
+                        contentHeight: flickableContent.height
+
+                        Item {
+                            id: flickableContent
+                            width: summaryPaneRect.width
+                            height: childrenRect.height
+                            //height: 1000
+
+                            GridLayout {
+                                //width: parent.width
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.leftMargin: 10
+                                anchors.rightMargin: 10
+
+                                columns: 3
+
+                                Text { text: "Simulation Properties"; font.family: "Ubuntu"; font.bold: true }
+                                Item { Layout.preferredWidth: 5 }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Scheme"; font.family: "Ubuntu"; }
+                                Text { id: txtScheme; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Graph File"; font.family: "Ubuntu"; }
+                                Text { id: txtGraphFilePath; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Graph Format"; font.family: "Ubuntu"; }
+                                Text { id: txtGraphFormat; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+
+                                Item {Layout.preferredWidth: 5; Layout.preferredHeight: 5}
+                                Item { Layout.preferredWidth: 5 }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Layout Properties"; font.family: "Ubuntu"; font.bold: true }
+                                Item { Layout.preferredWidth: 5 }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Graph Layout"; font.family: "Ubuntu"; }
+                                Text { id: txtGraphLayout; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+                                Text { visible: txtGraphLayout.text === 'linlog'; text: "Layout linlog Force"; font.family: "Ubuntu"; }
+                                Text { id: txtLayoutLinlogForce; text: ""; visible: txtGraphLayout.text === 'linlog'; font.family: "Open Sans" }
+                                Item { visible: txtGraphLayout.text === 'linlog'; Layout.fillWidth: true}
+
+                                Text { text: "Layout Attraction"; font.family: "Ubuntu"; }
+                                Text { id: txtLayoutAttraction; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Layout Repulsion"; font.family: "Ubuntu"; }
+                                Text { id: txtLayoutRepulsion; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Layout Seed"; font.family: "Ubuntu"; }
+                                Text { id: txtLayoutSeed; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+
+
+                                Item {Layout.preferredWidth: 5; Layout.preferredHeight: 5}
+                                Item { Layout.preferredWidth: 5 }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "PDF Properties"; font.family: "Ubuntu"; font.bold: true }
+                                Item { Layout.preferredWidth: 5 }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "Generating PDF"; font.family: "Ubuntu"; }
+                                Text { id: txtGeneratingPDF; text: ""; font.family: "Open Sans" }
+                                Item {Layout.fillWidth: true}
+
+                                Text { text: "PDF Frame Percentage"; font.family: "Ubuntu"; visible: txtGeneratingPDF.text === "Yes"}
+                                Text { id: txtPDFFramePercentage; text: ""; font.family: "Open Sans"; visible: txtGeneratingPDF.text === "Yes"}
+                                Item { Layout.fillWidth: true; visible: txtGeneratingPDF.text === "Yes"}
+
+
+                                Connections {
+                                    target: simulationParams
+                                    onNotifySchemeChanged: {
+                                        txtScheme.text = scheme
+                                    }
+                                    onNotifyGraphFilePathChanged: {
+                                        txtGraphFilePath.text = graphFilePath
+                                        txtGraphFilePath.color = fileExistsAtPath ? "black" : "#E24670"
+                                    }
+                                    onNotifyGraphFormatChanged: {
+                                        txtGraphFormat.text = format
+                                    }
+                                    onNotifyGraphLayoutChanged: {
+                                        txtGraphLayout.text = graphLayout
+                                    }
+                                    onNotifyLayoutLinlogForceChanged: {
+                                        txtLayoutLinlogForce.text = linlogForce
+                                    }
+                                    onNotifyLayoutAttractionChanged: {
+                                        txtLayoutAttraction.text = attraction
+                                    }
+                                    onNotifyLayoutRepulsionChanged: {
+                                        txtLayoutRepulsion.text = repulsion
+                                    }
+                                    onNotifyLayoutRandomSeedChanged: {
+                                        txtLayoutSeed.text = randomSeed
+                                    }
+
+                                    onNotifyPDFEnabledChanged: {
+                                        txtGeneratingPDF.text = enabled ? "Yes" : "No"
+                                    }
+                                    onNotifyPDFFramePercentageChanged: {
+                                        txtPDFFramePercentage.text = pdfFramePercentage
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
                     Item {Layout.preferredHeight: 10}
                 }
             }
@@ -91,7 +225,7 @@ Item {
     } // END PANE
 
     Item {
-        id: panControls
+        id: paneControls
 
         anchors.left: root.left
         anchors.right: root.right

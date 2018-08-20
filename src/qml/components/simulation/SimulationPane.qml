@@ -40,7 +40,6 @@ Item {
 
 
     // SCHEME SELECTION
-
     Item {
         id: paneScheme
 
@@ -107,6 +106,11 @@ Item {
                                 simulationParams.slotSetScheme('random')
                             }
                         }
+
+                        Component.onCompleted: {
+                            simulationParams.slotSetScheme('communities')
+                        }
+
                     }
                     Item {Layout.preferredHeight: 10}
                 }
@@ -222,6 +226,10 @@ Item {
                                     // random
                                     simulationParams.slotGraphFormat('gml')
                                 }
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotGraphFormat('metis')
                             }
                         }
 
