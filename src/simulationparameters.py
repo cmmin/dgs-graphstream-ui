@@ -31,6 +31,8 @@ class SimulationParameters(QObject):
         self.layoutRepulsion = 0.024
         self.layoutRandomSeed = generateRandomSeed()
 
+        self.pdfEnabled = False
+        self.pdfFramePercentage = 20
 
     # SIGNALS
     # required
@@ -98,3 +100,18 @@ class SimulationParameters(QObject):
     def slotGenerateNewLayoutRandomSeed(self):
         self.layoutRandomSeed = generateRandomSeed()
         self.notifyLayoutRandomSeedChanged.emit(self.layoutRandomSeed)
+
+
+    # PDF
+    notifyPDFEnabledChanged = pyqtSignal(bool, arguments=["enabled"])
+    notifyPDFFramePercentageChanged = pyqtSignal(int, arguments=["pdfFramePercentage"])
+
+    @pyqtSlot(bool)
+    def slotSetPDFEnabled(self, enabled):
+        self.pdfEnabled = enabled
+        self.notifyPDFEnabledChanged.emit(self.pdfEnabled)
+
+    @pyqtSlot(int)
+    def slotSetPDFFramePercentage(self, percentage):
+        self.pdfFramePercentage = percentage
+        self.notifyPDFFramePercentageChanged.emit(self.pdfFramePercentage)
