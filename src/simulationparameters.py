@@ -26,11 +26,6 @@ class SimulationParameters(QObject):
     notifyGraphFilePathChanged = pyqtSignal(str, bool, arguments=["graphFilePath", "fileExistsAtPath"])
     notifyGraphFormatChanged = pyqtSignal(str, arguments=["format"])
 
-    # Scheme / Clustering
-    notifySchemeChanged = pyqtSignal(str, arguments=["scheme"])
-
-
-    # SLOTS
     @pyqtSlot(str)
     def slotSetGraphFilePath(self, filePath):
         path = composeAbsolutePath(filePath)
@@ -44,8 +39,27 @@ class SimulationParameters(QObject):
         self.graphFormat = format
         self.notifyGraphFormatChanged.emit(self.graphFormat)
 
+    # Scheme / Clustering
+    notifySchemeChanged = pyqtSignal(str, arguments=["scheme"])
 
     @pyqtSlot(str)
     def slotSetScheme(self, scheme):
         self.scheme = scheme
         self.notifySchemeChanged.emit(self.scheme)
+
+    # Layout
+    notifyGraphLayoutChanged = pyqtSignal(str, arguments=["graphLayout"])
+    notifyLayoutLinlogForceChanged = pyqtSignal(float, arguments=["linlogForce"])
+
+    @pyqtSlot(str)
+    def slotSetGraphLayout(self, layout):
+        self.graphLayout = layout
+        self.notifyGraphLayoutChanged.emit(self.graphLayout)
+
+
+    @pyqtSlot(float)
+    def slotSetLayoutLinlogForce(self, force):
+        force = force * 10.0
+        force = float(int(force)) / 10.0
+        self.layoutLinlogForce = force
+        self.notifyLayoutLinlogForceChanged.emit(self.layoutLinlogForce)

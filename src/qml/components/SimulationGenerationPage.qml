@@ -49,4 +49,15 @@ Item {
 
         visible: paneList.currentPaneCode === "partition"
     }
+
+    SimulationPanes.LayoutPane {
+        id: layoutPane
+
+        anchors.top: root.top
+        anchors.left: paneList.right
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+
+        visible: paneList.currentPaneCode === "layout"
+    }
 }

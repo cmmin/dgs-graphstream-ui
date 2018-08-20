@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.4
 
+import "./../basic/" as BasicComponents
+
 Item {
     id: root
 
@@ -84,18 +86,12 @@ Item {
 
                     Item {Layout.preferredHeight: 5}
 
-                    ComboBox {
+                    BasicComponents.Combo {
 
                         model: ["Showcase Communities", "Showcase Edges Cut", "Showcase Random Assignments"]
 
                         Layout.preferredWidth: 300
                         Layout.leftMargin: 15
-
-                        background: Rectangle {
-                            color: "white"
-                            border.color: "#BFBFBF"
-                            border.width: 1
-                        }
 
                         onActivated: {
                             if(index === 0) {
@@ -206,18 +202,12 @@ Item {
                             Layout.leftMargin: 15
                         }
 
-                        ComboBox {
+                        BasicComponents.Combo {
 
                             model: ["metis", "edgelist", "gml"]
 
                             Layout.preferredWidth: 150
                             Layout.leftMargin: 15
-
-                            background: Rectangle {
-                                color: "white"
-                                border.color: "#BFBFBF"
-                                border.width: 1
-                            }
 
                             onActivated: {
                                 if(index === 0) {
