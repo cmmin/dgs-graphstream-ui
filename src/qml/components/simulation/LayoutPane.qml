@@ -130,7 +130,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "linlog Layout Force"
+                            text: "Force (linlog only)"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -176,6 +176,127 @@ Item {
                         Item {Layout.fillWidth: true}
                     }
 
+                    // attraction
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Attraction Factor  "
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Slider {
+                            id: sldrAttraction
+
+                            from: 0.0
+                            to: 0.1
+                            value: 0.012
+                            stepSize: 0.001
+
+                            Layout.preferredWidth: 200
+
+                            onValueChanged: {
+                                simulationParams.slotSetLayoutAttraction(sldrAttraction.value)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetLayoutAttraction(sldrAttraction.value)
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyGraphLayoutChanged: {
+                                    if (graphLayout === 'springbox') {
+                                        sldrAttraction.value = 0.012
+                                    }
+                                    else {
+                                        sldrAttraction.value = 0.0
+                                    }
+                                }
+                            }
+                        }
+
+                        Text {
+                            id: txtAttraction
+                            text: ""
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyLayoutAttractionChanged: {
+                                    txtAttraction.text = String(attraction)
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    // repulsion
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Repulsion Factor  "
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Slider {
+                            id: sldrRepulsion
+
+                            from: 0.0
+                            to: 0.3
+                            value: 0.024
+                            stepSize: 0.001
+
+                            Layout.preferredWidth: 200
+
+                            onValueChanged: {
+                                simulationParams.slotSetLayoutRepulsion(sldrRepulsion.value)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetLayoutRepulsion(sldrRepulsion.value)
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyGraphLayoutChanged: {
+                                    if (graphLayout === 'springbox') {
+                                        sldrRepulsion.value = 0.024
+                                        sldrRepulsion.from = 0.0
+                                        sldrRepulsion.to = 0.3
+                                        sldrRepulsion.stepSize = 0.001
+                                    }
+                                    else {
+                                        sldrRepulsion.from = -5.0
+                                        sldrRepulsion.to = 5.0
+                                        sldrRepulsion.stepSize = 0.1
+                                        sldrRepulsion.value = -1.2
+                                    }
+                                }
+                            }
+                        }
+
+                        Text {
+                            id: txtRepulsion
+                            text: ""
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyLayoutRepulsionChanged: {
+                                    txtRepulsion.text = String(repulsion)
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
 
 
                     Item {Layout.preferredHeight: 10}

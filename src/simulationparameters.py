@@ -20,6 +20,14 @@ class SimulationParameters(QObject):
         QObject.__init__(self)
 
         self.scheme = 'communities'
+        self.graphFormat = 'metis'
+        self.graphFilePath = ''
+
+        self.graphLayout = 'springbox'
+        self.layoutLinlogForce = 3.0
+        self.layoutAttraction = 0.012
+        self.layoutRepulsion = 0.024
+
 
     # SIGNALS
     # required
@@ -50,12 +58,13 @@ class SimulationParameters(QObject):
     # Layout
     notifyGraphLayoutChanged = pyqtSignal(str, arguments=["graphLayout"])
     notifyLayoutLinlogForceChanged = pyqtSignal(float, arguments=["linlogForce"])
+    notifyLayoutAttractionChanged = pyqtSignal(float, arguments=["attraction"])
+    notifyLayoutRepulsionChanged = pyqtSignal(float, arguments=["repulsion"])
 
     @pyqtSlot(str)
     def slotSetGraphLayout(self, layout):
         self.graphLayout = layout
         self.notifyGraphLayoutChanged.emit(self.graphLayout)
-
 
     @pyqtSlot(float)
     def slotSetLayoutLinlogForce(self, force):
@@ -63,3 +72,20 @@ class SimulationParameters(QObject):
         force = float(int(force)) / 10.0
         self.layoutLinlogForce = force
         self.notifyLayoutLinlogForceChanged.emit(self.layoutLinlogForce)
+
+    @pyqtSlot(float)
+    def slotSetLayoutAttraction(self, attraction):
+        attraction = attraction * 1000.0
+        attraction = float(int(attraction)) / 1000.0
+        self.layoutAttraction = attraction
+        self.notifyLayoutAttractionChanged.emit(self.layoutAttraction)
+
+    @pyqtSlot(float)
+    def slotSetLayoutRepulsion(self, repulsion):
+        factor = 1000.0
+        if self.graphLayout == 'linlog':
+            factor = 10.0
+        repulsion = repulsion * factor
+        repulsion = float(int(repulsion)) / factor
+        self.layoutRepulsion = repulsion
+        self.notifyLayoutRepulsionChanged.emit(self.layoutRepulsion)
