@@ -19,7 +19,7 @@ Item {
     Text {
         id: paneTitle
         // Title
-        text: "Layout Settings & Parameters"
+        text: "Layout & Coloring Settings"
         font.family: "Ubuntu"
         font.pixelSize: 18
         color: "#333"
@@ -48,10 +48,10 @@ Item {
     }
 
 
-    // SCHEME SELECTION
+    // Layout SELECTION
 
     Item {
-        id: paneScheme
+        id: paneLayout
 
         anchors.left: root.left
         anchors.right: root.right
@@ -345,4 +345,59 @@ Item {
             }
         }
     } // END PANE
+
+    // Coloring Options
+    Item {
+        id: paneColoring
+
+        anchors.left: root.left
+        anchors.right: root.right
+
+        anchors.top: paneLayout.bottom
+
+        height: childrenRect.height
+
+        ColumnLayout {
+            width: parent.width
+
+            Rectangle {
+                radius: 5
+                color: "#F7F7F7"
+
+                Layout.fillWidth: true
+                Layout.margins: 10
+                Layout.preferredHeight: childrenRect.height
+
+                ColumnLayout {
+                    width: parent.width
+
+                    // contents go here
+                    Text {
+                        id: txtColoring
+                        text: "Coloring Options"
+                        font.family: "Ubuntu"
+                        font.pixelSize: 14
+                        Layout.leftMargin: 10
+                        Layout.topMargin: 10
+                    }
+
+                    Rectangle {
+                        //Layout.fillWidth: true
+                        Layout.preferredHeight: 1
+                        Layout.preferredWidth: txtColoring.paintedWidth * 2
+                        Layout.leftMargin: 10
+                        //Layout.rightMargin: 100
+                        color: "#BFBFBF"
+                    }
+
+                    Item {Layout.preferredHeight: 5}
+
+                    Item {Layout.preferredHeight: 10}
+                }
+            }
+        }
+    } // END PANE
+
+
+
 }

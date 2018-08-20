@@ -20,9 +20,10 @@ Item {
 
         Component.onCompleted: {
             paneList.addPane("Simulation", "simulation")
-            paneList.addPane("Partitioning", "partition")
-            paneList.addPane("Layout", "layout")
+            paneList.addPane("Partitioning & Clustering", "partition")
+            paneList.addPane("Layout & Coloring", "layout")
             paneList.addPane("Output", "output")
+            paneList.addPane("Run", "run")
 
             paneList.changePane("simulation")
         }
@@ -60,4 +61,27 @@ Item {
 
         visible: paneList.currentPaneCode === "layout"
     }
+
+    SimulationPanes.OutputPane {
+        id: outputPane
+
+        anchors.top: root.top
+        anchors.left: paneList.right
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+
+        visible: paneList.currentPaneCode === "output"
+    }
+
+    SimulationPanes.RunPane {
+        id: runPane
+
+        anchors.top: root.top
+        anchors.left: paneList.right
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+
+        visible: paneList.currentPaneCode === "run"
+    }
+
 }

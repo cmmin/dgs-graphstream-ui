@@ -8,7 +8,7 @@ Item {
     Text {
         id: paneTitle
         // Title
-        text: "Partitioning Settings"
+        text: "Output Settings"
         font.family: "Ubuntu"
         font.pixelSize: 18
         color: "#333"
@@ -22,7 +22,7 @@ Item {
 
     Text {
         id: paneDescription
-        text: "some loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this pane"
+        text: "The settings in this pane allow to control the full output of the DGS Graphstream program."
         font.family: "Open Sans"
         font.pixelSize: 14
 
@@ -36,10 +36,9 @@ Item {
         wrapMode: Text.WordWrap
     }
 
-
-
+    // Output Options
     Item {
-        id: panePartitioning
+        id: paneOutput
 
         anchors.left: root.left
         anchors.right: root.right
@@ -64,8 +63,8 @@ Item {
 
                     // contents go here
                     Text {
-                        id: txtLayout
-                        text: "Partitioning Properties"
+                        id: txtOutput
+                        text: "Output Options"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -75,7 +74,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtLayout.paintedWidth * 2
+                        Layout.preferredWidth: txtOutput.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -89,13 +88,14 @@ Item {
         }
     } // END PANE
 
+    // video Options
     Item {
-        id: paneClustering
+        id: paneVideo
 
         anchors.left: root.left
         anchors.right: root.right
 
-        anchors.top: panePartitioning.bottom
+        anchors.top: paneOutput.bottom
 
         height: childrenRect.height
 
@@ -115,8 +115,8 @@ Item {
 
                     // contents go here
                     Text {
-                        id: txtClustering
-                        text: "Clustering Properties"
+                        id: txtVideo
+                        text: "Video Options"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -126,7 +126,59 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtClustering.paintedWidth * 2
+                        Layout.preferredWidth: txtVideo.paintedWidth * 2
+                        Layout.leftMargin: 10
+                        //Layout.rightMargin: 100
+                        color: "#BFBFBF"
+                    }
+
+                    Item {Layout.preferredHeight: 5}
+
+                    Item {Layout.preferredHeight: 10}
+                }
+            }
+        }
+    } // END PANE
+
+    // PDF Options
+    Item {
+        id: panePDF
+
+        anchors.left: root.left
+        anchors.right: root.right
+
+        anchors.top: paneVideo.bottom
+
+        height: childrenRect.height
+
+        ColumnLayout {
+            width: parent.width
+
+            Rectangle {
+                radius: 5
+                color: "#F7F7F7"
+
+                Layout.fillWidth: true
+                Layout.margins: 10
+                Layout.preferredHeight: childrenRect.height
+
+                ColumnLayout {
+                    width: parent.width
+
+                    // contents go here
+                    Text {
+                        id: txtPDF
+                        text: "PDF Options"
+                        font.family: "Ubuntu"
+                        font.pixelSize: 14
+                        Layout.leftMargin: 10
+                        Layout.topMargin: 10
+                    }
+
+                    Rectangle {
+                        //Layout.fillWidth: true
+                        Layout.preferredHeight: 1
+                        Layout.preferredWidth: txtPDF.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"

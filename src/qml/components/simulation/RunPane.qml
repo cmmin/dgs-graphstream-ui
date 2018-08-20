@@ -2,13 +2,15 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.4
 
+import "./../basic/" as BasicComponents
+
 Item {
     id: root
 
     Text {
         id: paneTitle
         // Title
-        text: "Partitioning Settings"
+        text: "Generate DGS Graphstream"
         font.family: "Ubuntu"
         font.pixelSize: 18
         color: "#333"
@@ -22,7 +24,7 @@ Item {
 
     Text {
         id: paneDescription
-        text: "some loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this pane"
+        text: "Check the simulation parameters & run the simulation."
         font.family: "Open Sans"
         font.pixelSize: 14
 
@@ -37,9 +39,8 @@ Item {
     }
 
 
-
     Item {
-        id: panePartitioning
+        id: paneDetails
 
         anchors.left: root.left
         anchors.right: root.right
@@ -64,8 +65,8 @@ Item {
 
                     // contents go here
                     Text {
-                        id: txtLayout
-                        text: "Partitioning Properties"
+                        id: txtSummary
+                        text: "Summary of Properties"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -75,7 +76,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtLayout.paintedWidth * 2
+                        Layout.preferredWidth: txtSummary.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -90,12 +91,12 @@ Item {
     } // END PANE
 
     Item {
-        id: paneClustering
+        id: panControls
 
         anchors.left: root.left
         anchors.right: root.right
 
-        anchors.top: panePartitioning.bottom
+        anchors.bottom: root.bottom
 
         height: childrenRect.height
 
@@ -115,8 +116,8 @@ Item {
 
                     // contents go here
                     Text {
-                        id: txtClustering
-                        text: "Clustering Properties"
+                        id: txtControls
+                        text: "Controls"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -126,13 +127,31 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtClustering.paintedWidth * 2
+                        Layout.preferredWidth: txtControls.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
                     }
 
                     Item {Layout.preferredHeight: 5}
+
+                    RowLayout {
+                        Item {Layout.fillWidth: true}
+
+                        BasicComponents.Button {
+                            text: "Start"
+                        }
+
+                        Item {Layout.preferredWidth: 5}
+
+                        BasicComponents.Button {
+                            text: "Cancel"
+                            enabled: false
+                        }
+
+                        Item {Layout.preferredWidth: 5}
+
+                    }
 
                     Item {Layout.preferredHeight: 10}
                 }
