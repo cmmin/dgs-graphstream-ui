@@ -22,6 +22,7 @@ Item {
             paneList.addPane("Simulation", "simulation")
             paneList.addPane("Partitioning & Clustering", "partition")
             paneList.addPane("Layout & Coloring", "layout")
+            paneList.addPane("Image", "image")
             paneList.addPane("Output", "output")
             paneList.addPane("Run", "run")
 
@@ -60,6 +61,17 @@ Item {
         anchors.bottom: root.bottom
 
         visible: paneList.currentPaneCode === "layout"
+    }
+
+    SimulationPanes.ImagePane {
+        id: imagePane
+
+        anchors.top: root.top
+        anchors.left: paneList.right
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+
+        visible: paneList.currentPaneCode === "image"
     }
 
     SimulationPanes.OutputPane {

@@ -1,0 +1,6 @@
+dgsProgramDirectory=/Users/voreno/Development/graphstream/dgs-graphstream
+montage=/usr/local/bin/montage
+ffmpeg=/usr/local/bin/ffmpeg
+oslom2=/Users/voreno/Development/graphstream/OSLOM2
+infomap=/Users/voreno/Development/graphstream/Infomap
+gvmap=/Users/voreno/Development/graphstream/graphviz/cmd/gvmap

@@ -84,6 +84,73 @@ Item {
 
                     Item {Layout.preferredHeight: 5}
 
+                    // input graph
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Output Folder Path"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        TextField {
+                            id: txtOutputFolderPath
+                            Layout.preferredWidth: 300
+                            property bool pathValid: true
+
+                            color: txtOutputFolderPath.pathValid ? "black" : "#E24670"
+
+                            text: "../../dgs-graphstream/output/"
+
+                            background: Rectangle {
+                                color: "white"
+                                border.color: "#BFBFBF"
+                                border.width: 1
+                            }
+
+                            onTextChanged: {
+                                simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyOutputPathChanged: {
+                                    txtOutputFolderPath.pathValid = folderExists
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    Text {
+                        id: txtFullOutputPath
+
+                        property string path: ""
+                        property string errorStr: "<b>Folder Doesn't Exist</b>: "
+                        property bool showError: false
+
+                        Layout.leftMargin: 15
+
+                        text: txtFullOutputPath.showError ? txtFullOutputPath.errorStr + txtFullOutputPath.path : txtFullOutputPath.path
+                        font.family: "Open Sans"
+                        font.pixelSize: 10
+                        color: txtFullOutputPath.showError ? "#E24670" : "#858585"
+
+                        Connections {
+                            target: simulationParams
+                            onNotifyOutputPathChanged: {
+                                txtFullOutputPath.path = outputPath
+                                txtFullOutputPath.showError = !folderExists
+                            }
+                        }
+                    }
+
                     Item {Layout.preferredHeight: 10}
                 }
             }
@@ -135,6 +202,158 @@ Item {
                     }
 
                     Item {Layout.preferredHeight: 5}
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Video File Path"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        TextField {
+                            id: txtVideoPath
+                            Layout.preferredWidth: 300
+                            property bool pathValid: true
+
+                            color: txtVideoPath.pathValid ? "black" : "#E24670"
+
+                            text: "vid.mp4"
+
+                            background: Rectangle {
+                                color: "white"
+                                border.color: "#BFBFBF"
+                                border.width: 1
+                            }
+
+                            onTextChanged: {
+                                simulationParams.slotSetVideoPath(txtVideoPath.text)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetVideoPath(txtVideoPath.text)
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyVideoPathChanged: {
+                                    txtVideoPath.pathValid = true
+                                }
+                            }
+                        }
+
+                        Text {
+                            id: txtFullVideoPath
+                            text : ""
+                            property bool pathValid: true
+
+                            color: txtFullVideoPath.pathValid ? "black" : "#E24670"
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyVideoFullPathChanged: {
+                                    txtFullVideoPath.text = videoFullPath
+                                    txtFullVideoPath.pathValid = isValid
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    // fps
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Frames Per Second (FPS)"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Slider {
+                            id: sldrFPS
+
+                            from: 1
+                            to: 60
+                            value: 8
+                            stepSize: 1
+
+                            Layout.preferredWidth: 200
+
+                            onValueChanged: {
+                                simulationParams.slotSetVideoFPS(sldrFPS.value)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetVideoFPS(sldrFPS.value)
+                            }
+                        }
+
+                        Text {
+                            id: txtFPS
+                            text: ""
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyVideoFPSChanged: {
+                                    txtFPS.text = String(fps)
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    // padding time
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Padding Time"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Slider {
+                            id: sldrPaddingTime
+
+                            from: 0.0
+                            to: 10.0
+                            value: 2.0
+                            stepSize: 0.2
+
+                            Layout.preferredWidth: 200
+
+                            onValueChanged: {
+                                simulationParams.slotSetVideoPaddingTime(sldrPaddingTime.value)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetVideoPaddingTime(sldrPaddingTime.value)
+                            }
+                        }
+
+                        Text {
+                            id: txtPaddingTime
+                            text: ""
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyVideoPaddingTimeChanged: {
+                                    txtPaddingTime.text = String(paddingTime)
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
 
                     Item {Layout.preferredHeight: 10}
                 }

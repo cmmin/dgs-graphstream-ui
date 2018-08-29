@@ -9,6 +9,20 @@ Rectangle {
     property string currentPageTitle: ""
     property string currentPageCode: ""
 
+    property bool settingsActivated: false
+    property bool settingsValid: true
+
+    Connections {
+        target: dgsSettings
+        onNotifyOverallValidationChanged: {
+            root.settingsValid = settingsValid
+        }
+    }
+
+    Component.onCompleted: {
+        root.settingsValid = dgsSettings.dgsSettingsValid
+    }
+
     RowLayout {
         anchors.fill: parent
 
@@ -17,15 +31,101 @@ Rectangle {
         // Page Title
         Text {
             id: txtTitle
-            text: "DGS GRAPHSTREAM: " + root.currentPageTitle
+            text: "DGS GRAPHSTREAM" + (root.settingsValid === true ? "" : ": errors in settings, cannot run")
             font.family: "Ubuntu"
             font.pixelSize: 16
             Layout.alignment: Qt.AlignVCenter
+            color: root.settingsValid === true ? "black" : "#E24670"
+
         }
 
         Item {Layout.fillWidth: true} // filler spacer
 
         // Settings button
+
+        Rectangle {
+            Layout.fillHeight: true
+            Layout.preferredWidth: 80
+
+            visible: root.settingsActivated
+
+            Text {
+                id: txtBack
+                text: "Cancel"
+                font.family: "Ubuntu"
+                font.pixelSize: 16
+                anchors.centerIn: parent
+            }
+
+            Rectangle {
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 1
+                color: "#BFBFBF"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.settingsActivated = false
+                    dgsSettings.cancelSettingsChanges()
+                }
+            }
+        }
+
+        Rectangle {
+            Layout.fillHeight: true
+            Layout.preferredWidth: 80
+
+            visible: root.settingsActivated
+
+            Text {
+                id: txtSave
+                text: "Save"
+                font.family: "Ubuntu"
+                font.pixelSize: 16
+                anchors.centerIn: parent
+            }
+
+            Rectangle {
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 1
+                color: "#BFBFBF"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.settingsActivated = false
+                    dgsSettings.commitSettingsChanges()
+                }
+            }
+        }
+
+        Rectangle {
+            Layout.fillHeight: true
+            Layout.preferredWidth: 40
+
+            //visible: !root.settingsActivated
+            visible: false
+
+            Image {
+                source: "../assets/icons/settings_dark.png"
+                width: 24; height: 24
+                fillMode: Image.PreserveAspectFit
+                anchors.centerIn: parent
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        root.settingsActivated = true
+                    }
+                }
+            }
+        }
 
         Item {width:1} // spacer
     }
@@ -33,7 +133,7 @@ Rectangle {
     Rectangle {
         id: bottomBorderLine
         height: 1
-        color: "#333333"
+        color: "#BFBFBF"
         anchors.left: root.left
         anchors.right: root.right
         anchors.bottom: root.bottom

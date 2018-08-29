@@ -298,7 +298,6 @@ Item {
                         Item {Layout.fillWidth: true}
                     }
 
-                    // repulsion
                     RowLayout {
                         Layout.fillWidth: true
 
@@ -391,6 +390,130 @@ Item {
                     }
 
                     Item {Layout.preferredHeight: 5}
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Coloring Scheme"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Combo {
+
+                            model: ["pastel", "primary-colors"]
+
+                            Layout.preferredWidth: 200
+                            Layout.leftMargin: 15
+
+                            onActivated: {
+                                if(index === 0) {
+                                    // communities
+                                    simulationParams.slotSetColorScheme('pastel')
+                                }
+                                if(index === 1) {
+                                    // edges-cut
+                                    simulationParams.slotSetColorScheme('primary-colors')
+                                }
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetColorScheme('pastel')
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+
+                    }
+
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Node Color"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Textfield {
+                            id: txtNodeColor
+                            Layout.preferredWidth: 100
+
+                            property bool colorValid: true
+
+                            color: txtNodeColor.colorValid ? txtNodeColor.text : "#E24670"
+
+                            text: ""
+
+                            onTextChanged: {
+                                simulationParams.slotSetNodeColor(txtNodeColor.text)
+                            }
+
+                            Component.onCompleted: {
+                                simulationParams.slotSetNodeColor(txtNodeColor.text)
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyNodeColorChanged: {
+                                    txtNodeColor.colorValid = colorValid
+                                }
+                            }
+                        }
+
+                        Rectangle {
+                            Layout.preferredHeight: txtNodeColor.height
+                            Layout.preferredWidth: txtNodeColor.height
+
+                            color: txtNodeColor.colorValid ? txtNodeColor.text : "transparent"
+                        }
+
+                        Item {Layout.fillWidth: true}
+
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            id: txtColoringSeed
+                            property int seedValue
+                            text: "Coloring Random Seed: <b>" + String(txtColoringSeed.seedValue) + "</b>"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyColoringRandomSeedChanged: {
+                                    txtColoringSeed.seedValue = randomSeed
+                                }
+                            }
+
+                            Component.onCompleted: {
+                                btnGenerateColorSeed.generateNewSeed()
+                            }
+
+                        }
+
+                        Item {Layout.preferredWidth: 5}
+
+                        BasicComponents.Button {
+                            id: btnGenerateColorSeed
+
+                            function generateNewSeed() {
+                                simulationParams.slotGenerateNewColorRandomSeed()
+                            }
+
+                            text: "Generate Seed"
+                            onClicked: {
+                                btnGenerateColorSeed.generateNewSeed()
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
 
                     Item {Layout.preferredHeight: 10}
                 }

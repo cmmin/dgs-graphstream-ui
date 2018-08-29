@@ -1,5 +1,7 @@
 import os
 import random
+import platform
+import subprocess
 
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QFontDatabase
@@ -32,3 +34,11 @@ def loadFonts():
     fontIDs.append(QFontDatabase().addApplicationFont(os.path.join(os.getcwd(), "qml/assets/fonts/ubuntu/Ubuntu-Bold.ttf")))
     fontIDs.append(QFontDatabase().addApplicationFont(os.path.join(os.getcwd(), "qml/assets/fonts/ubuntu/Ubuntu-BoldItalic.ttf")))
     return fontIDs
+
+def getProgramPathWithWhich(programName):
+    whichPath = ''
+    if platform.system() == 'Darwin':
+        whichPath = subprocess.check_output(['which', programName]).decode("utf-8").strip()
+    if platform.system() == 'Linux':
+        whichPath = subprocess.check_output(['which', programName]).decode("utf-8").strip()
+    return whichPath

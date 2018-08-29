@@ -8,8 +8,8 @@ import "./components" as Components
 ApplicationWindow {
     id: root
     visible: true
-    width: Screen.width * 0.75
-    height: Screen.height * 0.60
+    width: Screen.width * 0.60
+    height: Screen.height * 0.70
 
     title: qsTr("DGS GraphStream")
     color: "white"
@@ -39,10 +39,24 @@ ApplicationWindow {
         Components.SimulationGenerationPage {
             id: simulationPage
 
+            visible: navigationBar.settingsActivated === false
+
             anchors.left: contents.left
             anchors.top: navigationBar.bottom
             anchors.right: contents.right
             anchors.bottom: contents.bottom
+        }
+
+        Components.SettingsPage {
+            id: settingsPage
+
+            visible: navigationBar.settingsActivated === true
+
+            anchors.left: contents.left
+            anchors.top: navigationBar.bottom
+            anchors.right: contents.right
+            anchors.bottom: contents.bottom
+
         }
     }
 }
