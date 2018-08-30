@@ -37,8 +37,11 @@ def loadFonts():
 
 def getProgramPathWithWhich(programName):
     whichPath = ''
-    if platform.system() == 'Darwin':
-        whichPath = subprocess.check_output(['which', programName]).decode("utf-8").strip()
-    if platform.system() == 'Linux':
-        whichPath = subprocess.check_output(['which', programName]).decode("utf-8").strip()
+    try:
+        if platform.system() == 'Darwin':
+            whichPath = subprocess.check_output(['which', programName]).decode("utf-8").strip()
+        if platform.system() == 'Linux':
+            whichPath = subprocess.check_output(['which', programName]).decode("utf-8").strip()
+    except Exception as err:
+        print(err)
     return whichPath
