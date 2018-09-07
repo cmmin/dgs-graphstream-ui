@@ -101,7 +101,10 @@ Item {
 
                             color: txtOutputFolderPath.pathValid ? "black" : "#E24670"
 
-                            text: "../../dgs-graphstream/output/"
+                            //text: "../../dgs-graphstream/output/"
+
+                            property bool disableUpdate: false
+                            enabled: false
 
                             background: Rectangle {
                                 color: "white"
@@ -110,17 +113,20 @@ Item {
                             }
 
                             onTextChanged: {
-                                simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
-                            }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
+                                if(txtOutputFolderPath.disableUpdate === false) {
+                                    simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
+                                }
                             }
 
                             Connections {
                                 target: simulationParams
                                 onNotifyOutputPathChanged: {
                                     txtOutputFolderPath.pathValid = folderExists
+                                    if(txtOutputFolderPath.text !== outputPath) {
+                                        txtOutputFolderPath.disableUpdate = true
+                                        txtOutputFolderPath.text = outputPath
+                                        txtOutputFolderPath.disableUpdate = false
+                                    }
                                 }
                             }
                         }
@@ -145,6 +151,9 @@ Item {
                         Connections {
                             target: simulationParams
                             onNotifyOutputPathChanged: {
+                                if(outputPath.length === 0) {
+                                    outputPath = 'output folder is required'
+                                }
                                 txtFullOutputPath.path = outputPath
                                 txtFullOutputPath.showError = !folderExists
                             }
@@ -231,14 +240,13 @@ Item {
                                 simulationParams.slotSetVideoPath(txtVideoPath.text)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetVideoPath(txtVideoPath.text)
-                            }
-
                             Connections {
                                 target: simulationParams
                                 onNotifyVideoPathChanged: {
                                     txtVideoPath.pathValid = true
+                                    if(txtVideoPath.text !== videoPath) {
+                                        txtVideoPath.text = videoPath
+                                    }
                                 }
                             }
                         }
@@ -286,9 +294,15 @@ Item {
                                 simulationParams.slotSetVideoFPS(sldrFPS.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetVideoFPS(sldrFPS.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyVideoFPSChanged: {
+                                    if(sldrFPS.value !== fps) {
+                                        sldrFPS.value = fps
+                                    }
+                                }
                             }
+
                         }
 
                         Text {
@@ -332,8 +346,13 @@ Item {
                                 simulationParams.slotSetVideoPaddingTime(sldrPaddingTime.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetVideoPaddingTime(sldrPaddingTime.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyVideoPaddingTimeChanged: {
+                                    if(sldrPaddingTime.value !== paddingTime) {
+                                        sldrPaddingTime.value = paddingTime
+                                    }
+                                }
                             }
                         }
 
@@ -420,9 +439,13 @@ Item {
                                 simulationParams.slotSetPDFEnabled(chbxPDFEnabled.checked)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetPDFEnabled(chbxPDFEnabled.checked)
+                            Connections {
+                                target: simulationParams
+                                onNotifyPDFEnabledChanged: {
+                                    chbxPDFEnabled.checked = enabled
+                                }
                             }
+
                         }
 
                         Item {Layout.fillWidth: true}
@@ -457,10 +480,14 @@ Item {
                                 simulationParams.slotSetPDFFramePercentage(sldrPDFFramePercentage.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetPDFFramePercentage(sldrPDFFramePercentage.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyPDFFramePercentageChanged: {
+                                    if(sldrPDFFramePercentage.value !== pdfFramePercentage) {
+                                        sldrPDFFramePercentage.value = pdfFramePercentage
+                                    }
+                                }
                             }
-
                         }
 
                         Text {

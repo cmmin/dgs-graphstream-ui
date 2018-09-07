@@ -115,14 +115,13 @@ Item {
                                 simulationParams.slotSetImageWidth(txtWidth.text)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageWidth(txtWidth.text)
-                            }
-
                             Connections {
                                 target: simulationParams
                                 onNotifyImageWidthChanged: {
                                     txtWidth.isValid = isValid
+                                    if(txtWidth.text !== width) {
+                                        txtWidth.text = width
+                                    }
                                 }
                             }
                         }
@@ -157,14 +156,14 @@ Item {
                                 simulationParams.slotSetImageHeight(txtHeight.text)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageHeight(txtHeight.text)
-                            }
 
                             Connections {
                                 target: simulationParams
                                 onNotifyImageHeightChanged: {
                                     txtHeight.isValid = isValid
+                                    if(txtHeight.text !== height) {
+                                        txtHeight.text = height
+                                    }
                                 }
                             }
                         }
@@ -199,8 +198,13 @@ Item {
                                 simulationParams.slotSetImageBorderSize(sldrBorderSize.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageBorderSize(sldrBorderSize.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageBorderSizeChanged: {
+                                    if(sldrBorderSize.value !== borderSize) {
+                                        sldrBorderSize.value = borderSize
+                                    }
+                                }
                             }
                         }
 
@@ -298,20 +302,32 @@ Item {
                                     cmbxNodeSizeMode.mode = 'fixed'
                                 }
                                 if(index === 1) {
-                                    // edges-cut
+                                    // cut-edges
                                     simulationParams.slotSetImageNodeSizeMode('highlight-new')
                                     cmbxNodeSizeMode.mode = 'highlight-new'
                                 }
                                 if(index === 2) {
-                                    // edges-cut
+                                    // cut-edges
                                     simulationParams.slotSetImageNodeSizeMode('centrality')
                                     cmbxNodeSizeMode.mode = 'centrality'
                                 }
                             }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageNodeSizeMode('fixed')
-                                cmbxNodeSizeMode.mode = 'fixed'
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageNodeSizeModeChanged: {
+                                    if(nodeSizeMode === 'fixed') {
+                                        cmbxNodeSizeMode.currentIndex = 0
+                                        cmbxNodeSizeMode.mode = 'fixed'
+                                    }
+                                    else if(nodeSizeMode === 'centrality') {
+                                        cmbxNodeSizeMode.currentIndex = 2
+                                        cmbxNodeSizeMode.mode = 'centrality'
+                                    }
+                                    else {
+                                        cmbxNodeSizeMode.currentIndex = 1
+                                        cmbxNodeSizeMode.mode = 'highlight-new'
+                                    }
+                                }
                             }
                         }
 
@@ -345,8 +361,13 @@ Item {
                                 simulationParams.slotSetImageNodeSize(sldrNodeSize.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageNodeSize(sldrNodeSize.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageNodeSizeChanged: {
+                                    if(sldrNodeSize.value !== nodeSize) {
+                                        sldrNodeSize.value = nodeSize
+                                    }
+                                }
                             }
                         }
 
@@ -396,10 +417,14 @@ Item {
                                 simulationParams.slotSetImageEdgeSize(sldrEdgeSize.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageEdgeSize(sldrEdgeSize.value)
-                            }
-                        }
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageEdgeSizeChanged: {
+                                    if(sldrEdgeSize.value !== edgeSize) {
+                                        sldrEdgeSize.value = edgeSize
+                                    }
+                                }
+                            }                        }
 
                         Text {
                             id: txtEdgeSize
@@ -447,9 +472,15 @@ Item {
                                 simulationParams.slotSetImageMinNodeSize(sldrMinNodeSize.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageMinNodeSize(sldrMinNodeSize.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageMinNodeSizeChanged: {
+                                    if(sldrMinNodeSize.value !== minNodeSize) {
+                                        sldrMinNodeSize.value = minNodeSize
+                                    }
+                                }
                             }
+
                         }
 
                         Text {
@@ -501,9 +532,16 @@ Item {
                                 simulationParams.slotSetImageMaxNodeSize(sldrMaxNodeSize.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageMaxNodeSize(sldrMaxNodeSize.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageMaxNodeSizeChanged: {
+                                    if(sldrMaxNodeSize.value !== maxNodeSize) {
+                                        sldrMaxNodeSize.value = maxNodeSize
+                                    }
+                                }
                             }
+
+
                         }
 
                         Text {
@@ -555,16 +593,26 @@ Item {
                                     cmbxLblNodeType.mode = 'id'
                                 }
                                 if(index === 1) {
-                                    // edges-cut
+                                    // cut-edges
                                     simulationParams.slotSetImageLabelType('order')
                                     cmbxLblNodeType.mode = 'order'
                                 }
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageLabelType('id')
-                                cmbxLblNodeType.mode = 'id'
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageLabelTypeChanged: {
+                                    if(labelType === 'id') {
+                                        cmbxLblNodeType.mode = 'id'
+                                        cmbxLblNodeType.currentIndex = 0
+                                    }
+                                    else {
+                                        cmbxLblNodeType.mode = 'order'
+                                        cmbxLblNodeType.currentIndex = 1
+                                    }
+                                }
                             }
+
                         }
 
                         Item {Layout.fillWidth: true}
@@ -593,8 +641,13 @@ Item {
                                 simulationParams.slotSetImageLabelSize(sldrLabelSize.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageLabelSize(sldrLabelSize.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageLabelSizeChanged: {
+                                    if(sldrLabelSize.value !== labelSize) {
+                                        sldrLabelSize.value = labelSize
+                                    }
+                                }
                             }
                         }
 
@@ -615,119 +668,6 @@ Item {
                         Item {Layout.fillWidth: true}
                     }
 
-                    // shadow-color = color
-                    RowLayout {
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: "Node Shadow Color"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            color: cmbxNodeSizeMode.mode  === 'highlight-new' ? "black" : "#858585"
-
-                        }
-
-                        BasicComponents.Textfield {
-                            id: txtNodeShadowColor
-                            Layout.preferredWidth: 100
-
-                            property bool colorValid: true
-
-                            color: txtNodeShadowColor.colorValid ? txtNodeShadowColor.text : "#E24670"
-
-                            text: ""
-                            enabled: cmbxNodeSizeMode.mode  === 'highlight-new'
-
-                            onTextChanged: {
-                                simulationParams.slotSetNodeShadowColor(txtNodeShadowColor.text)
-                            }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetNodeShadowColor(txtNodeShadowColor.text)
-                            }
-
-                            Connections {
-                                target: simulationParams
-                                onNotifyNodeShadowColorChanged: {
-                                    txtNodeShadowColor.colorValid = colorValid
-                                }
-                            }
-                        }
-
-                        Rectangle {
-                            Layout.preferredHeight: txtNodeShadowColor.height
-                            Layout.preferredWidth: txtNodeShadowColor.height
-
-                            color: txtNodeShadowColor.colorValid ? txtNodeShadowColor.text : "transparent"
-
-                        }
-
-                        Item {Layout.fillWidth: true}
-
-                    }
-
-                    // cut edge length = slider
-                    RowLayout {
-                        Layout.fillWidth: true
-
-
-                        Text {
-                            text: "Cut Edge Length"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-                            color: root.scheme === 'edges-cut' ? "black" : "#858585"
-                        }
-
-                        BasicComponents.Slider {
-                            id: sldrCutEdgeLength
-                            from: 0
-                            to: 100
-                            value: 50
-                            stepSize: 1
-
-                            Layout.preferredWidth: 100
-
-                            enabled: root.scheme === 'edges-cut'
-
-                            onValueChanged: {
-                                simulationParams.slotSetImageCutEdgeLength(sldrCutEdgeLength.value)
-                            }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageCutEdgeLength(sldrCutEdgeLength.value)
-                            }
-                        }
-
-                        Text {
-                            id: txtCutEdgeLength
-                            text: ""
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            color: root.scheme === 'edges-cut' ? "black" : "#858585"
-
-                            Connections {
-                                target: simulationParams
-                                onNotifyImageCutEdgeLengthChanged: {
-                                    txtCutEdgeLength.text = String(cutEdgeLength)
-                                }
-                            }
-                        }
-
-                        Text {
-
-                            visible: root.scheme !== 'edges-cut'
-                            color: root.scheme === 'edges-cut' ? "black" : "#858585"
-
-                            text: "<i>only for edges-cut scheme</i>"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-                        }
-
-                        Item {Layout.fillWidth: true}
-                    }
-
                     // cut edge node size = slider
                     RowLayout {
                         Layout.fillWidth: true
@@ -736,7 +676,7 @@ Item {
                             text: "Cut Edge Node Size"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
-                            color: root.scheme === 'edges-cut' ? "black" : "#858585"
+                            color: root.scheme === 'cut-edges' ? "black" : "#858585"
                         }
 
                         BasicComponents.Slider {
@@ -748,15 +688,21 @@ Item {
 
                             Layout.preferredWidth: 100
 
-                            enabled: root.scheme === 'edges-cut'
+                            enabled: root.scheme === 'cut-edges'
 
                             onValueChanged: {
                                 simulationParams.slotSetImageCutEdgeNodeSize(sldrCutEdgeNodeSize.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetImageCutEdgeNodeSize(sldrCutEdgeNodeSize.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageCutEdgeNodeSizeChanged: {
+                                    if(sldrCutEdgeNodeSize.value !== cutEdgeNodeSize) {
+                                        sldrCutEdgeNodeSize.value = cutEdgeNodeSize
+                                    }
+                                }
                             }
+
                         }
 
                         Text {
@@ -765,7 +711,7 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
-                            color: root.scheme === 'edges-cut' ? "black" : "#858585"
+                            color: root.scheme === 'cut-edges' ? "black" : "#858585"
 
                             Connections {
                                 target: simulationParams
@@ -777,10 +723,77 @@ Item {
 
                         Text {
 
-                            visible: root.scheme !== 'edges-cut'
-                            color: root.scheme === 'edges-cut' ? "black" : "#858585"
+                            visible: root.scheme !== 'cut-edges'
+                            color: root.scheme === 'cut-edges' ? "black" : "#858585"
 
-                            text: "<i>only for edges-cut scheme</i>"
+                            text: "<i>only for cut-edges scheme</i>"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
+
+                    // cut edge length = slider
+                    RowLayout {
+                        Layout.fillWidth: true
+
+
+                        Text {
+                            text: "Cut Edge Percentage of Length"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                            color: root.scheme === 'cut-edges' ? "black" : "#858585"
+                        }
+
+                        BasicComponents.Slider {
+                            id: sldrCutEdgeLength
+                            from: 0
+                            to: 100
+                            value: 50
+                            stepSize: 1
+
+                            Layout.preferredWidth: 100
+
+                            enabled: root.scheme === 'cut-edges'
+
+                            onValueChanged: {
+                                simulationParams.slotSetImageCutEdgeLength(sldrCutEdgeLength.value)
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageCutEdgeLengthChanged: {
+                                    if(sldrCutEdgeLength.value !== cutEdgeLength) {
+                                        sldrCutEdgeLength.value = cutEdgeLength
+                                    }
+                                }
+                            }
+                        }
+
+                        Text {
+                            id: txtCutEdgeLength
+                            text: ""
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            color: root.scheme === 'cut-edges' ? "black" : "#858585"
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyImageCutEdgeLengthChanged: {
+                                    txtCutEdgeLength.text = String(cutEdgeLength) + "%"
+                                }
+                            }
+                        }
+
+                        Text {
+
+                            visible: root.scheme !== 'cut-edges'
+                            color: root.scheme === 'cut-edges' ? "black" : "#858585"
+
+                            text: "<i>only for cut-edges scheme</i>"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }

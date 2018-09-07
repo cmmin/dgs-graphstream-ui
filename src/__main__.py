@@ -7,6 +7,7 @@ from utils import QmlUtils, loadFonts
 from simulationparameters import SimulationParameters
 from dgswrapper import DGSWrapper
 from settings import DGSSettings
+from uitexts import UITexts
 
 if __name__ == '__main__':
     import sys
@@ -18,10 +19,16 @@ if __name__ == '__main__':
     engine = QQmlApplicationEngine()
 
     qmlUtils = QmlUtils()
-    simParams = SimulationParameters()
-    dgsWrapper = DGSWrapper(simParams)
 
+    uiTexts = UITexts()
+    uiTexts.load('qml/assets/uitext.csv')
+
+    simParams = SimulationParameters()
     dgsSettings = DGSSettings(app)
+    dgsWrapper = DGSWrapper(simParams, dgsSettings)
+
+    simParams.notifySavingSettings.connect(dgsWrapper.checkForParamErrors)
+
     #dgsSettings.load()
 
     fontIDs = loadFonts()
@@ -30,6 +37,7 @@ if __name__ == '__main__':
     engine.rootContext().setContextProperty("simulationParams", simParams)
     engine.rootContext().setContextProperty("dgsGraphstream", dgsWrapper)
     engine.rootContext().setContextProperty("dgsSettings", dgsSettings)
+    engine.rootContext().setContextProperty("uiTexts", uiTexts)
 
     # Load the qml file into the engine
     engine.load("qml/main.qml")

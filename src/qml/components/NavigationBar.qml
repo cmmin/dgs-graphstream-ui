@@ -12,10 +12,19 @@ Rectangle {
     property bool settingsActivated: false
     property bool settingsValid: true
 
+    property string currentProjectPath: ""
+
     Connections {
         target: dgsSettings
         onNotifyOverallValidationChanged: {
             root.settingsValid = settingsValid
+        }
+    }
+
+    Connections {
+        target: simulationParams
+        onNotifyOutputPathChanged: {
+            root.currentProjectPath = outputPath
         }
     }
 
@@ -31,7 +40,7 @@ Rectangle {
         // Page Title
         Text {
             id: txtTitle
-            text: "DGS GRAPHSTREAM" + (root.settingsValid === true ? "" : ": errors in settings, cannot run")
+            text: "DGS GRAPHSTREAM" + (root.currentProjectPath.length ? ": " + root.currentProjectPath : "") +  (root.settingsValid === true ? "" : " - errors in settings, cannot run")
             font.family: "Ubuntu"
             font.pixelSize: 16
             Layout.alignment: Qt.AlignVCenter
@@ -109,8 +118,8 @@ Rectangle {
             Layout.fillHeight: true
             Layout.preferredWidth: 40
 
-            //visible: !root.settingsActivated
-            visible: false
+            visible: !root.settingsActivated
+            //visible: false
 
             Image {
                 source: "../assets/icons/settings_dark.png"

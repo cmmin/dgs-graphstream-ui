@@ -439,6 +439,171 @@ Item {
         // END config.ini
         */
 
+        // python modules
+        Text { text: "<b>networkx</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageNetworkxInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // nxmetis
+        Text { text: "<b>nxmetis</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageNxmetisInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // configparser
+        Text { text: "<b>configparser</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageConfigparserInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // pydot
+        Text { text: "<b>pydot</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packagePydotInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // scipy
+        Text { text: "<b>scipy</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageScipyInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // colour
+        Text { text: "<b>colour</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageColourInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // Decorator
+        Text { text: "<b>decorator</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageDecoratorInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // Pillow
+        Text { text: "<b>Pillow</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packagePillowInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // Fpdf
+        Text { text: "<b>fpdf</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageFpdfInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // pygraphviz
+        Text { text: "<b>pygraphviz</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packagePygraphvizInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // reportlab
+        Text { text: "<b>reportlab</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageReportlabInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        //pyparsing
+        Text { text: "<b>pyparsing</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packagePyparsingInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        // svgutils
+        Text { text: "<b>svgutils</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageSvgutilsInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        //svglib
+        Text { text: "<b>svglib</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageSvglibInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
+        //cython
+        Text { text: "<b>Cython</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Text {
+            property bool installed: dgsSettings.packageCythonInstalled
+            text: installed ? "installed" : "not installed"
+            color: installed ? "#009E6A" : "#E24670"
+        }
+        Item {Layout.fillWidth: true;}
+        Item {width:1}
+        Item {width:1}
+
         Item {Layout.fillHeight: true;}
         Item {Layout.fillHeight: true;}
         Item {Layout.fillHeight: true; Layout.fillWidth: true;}

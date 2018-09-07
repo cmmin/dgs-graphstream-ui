@@ -1,0 +1,2 @@
+tooltipAssignments,File with list of partition IDs for each node in the graph.
+tooltipGraphFilePath,Graph file representing a network of nodes and edges.

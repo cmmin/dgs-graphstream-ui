@@ -9,6 +9,7 @@ Item {
 
     property string scheme: ""
     property string clustering: ""
+    property string assignmentsMode: ""
 
     Connections {
         target: simulationParams
@@ -17,6 +18,9 @@ Item {
         }
         onNotifyClusteringChanged: {
             root.clustering = clustering
+        }
+        onNotifyAssignmentModeChanged: {
+            root.assignmentsMode = assignmentsMode
         }
     }
 
@@ -37,7 +41,7 @@ Item {
 
     Text {
         id: paneDescription
-        text: "some loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this panesome loong text that describes this pane"
+        text: "Properties about how the nodes should be partitioned and separated."
         font.family: "Open Sans"
         font.pixelSize: 14
 
@@ -50,8 +54,6 @@ Item {
 
         wrapMode: Text.WordWrap
     }
-
-
 
     Item {
         id: panePartitioning
@@ -98,6 +100,77 @@ Item {
 
                     Item {Layout.preferredHeight: 5}
 
+                    // partitioning mode
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Color Clustering Program"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            color: {
+                                if(root.scheme === 'cut-edges') {
+                                    return "#858585"
+                                }
+                                else {
+                                    return "black"
+                                }
+                            }
+                        }
+
+                        BasicComponents.Combo {
+                            id: cmbxRandomAssignments
+
+
+                            model: ["Random Assignments", "From Assignments File"]
+                            //model: ["METIS Partitioning", "Random Assignments", "From Assignments File"]
+
+
+                            //property bool checked: false
+
+                            Layout.preferredWidth: 300
+                            Layout.leftMargin: 15
+
+                            onActivated: {
+                                if(index === 0) {
+                                    // random
+                                    simulationParams.slotSetAssignmentsMode('random')
+                                }
+                                if(index === 1) {
+                                    simulationParams.slotSetAssignmentsMode('file')
+                                }
+                                if(index === 2) {
+                                    // metis
+                                    simulationParams.slotSetAssignmentsMode('metis')
+                                }
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyAssignmentModeChanged: {
+                                    var targetIndex = 0
+                                    if(assignmentsMode === 'random') {
+                                        targetIndex = 0
+                                    }
+                                    if(assignmentsMode === 'file') {
+                                        targetIndex = 1
+                                    }
+                                    if(assignmentsMode === 'metis') {
+                                        targetIndex = 2
+                                    }
+
+                                    if(cmbxRandomAssignments.currentIndex !== targetIndex) {
+                                        cmbxRandomAssignments.currentIndex = targetIndex
+                                    }
+
+                                }
+                            }
+                        }
+                        Item {Layout.fillWidth: true}
+                    }
+
+
                     // input graph
                     RowLayout {
                         Layout.fillWidth: true
@@ -106,7 +179,7 @@ Item {
                             text: "Assignments File Path"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
-                            color: !chbxRandomAssignments.checked ? "black" : "#858585"
+                            color: root.assignmentsMode === 'file' ? "black" : "#858585"
                         }
 
                         BasicComponents.Textfield {
@@ -114,10 +187,10 @@ Item {
                             Layout.preferredWidth: 300
                             property bool pathValid: true
 
-                            color: !chbxRandomAssignments.checked ? txtAssignmentsFilePath.pathValid ? "black" : "#E24670" : "#858585"
+                            color: root.assignmentsMode === 'file' ? txtAssignmentsFilePath.pathValid ? "black" : "#E24670" : "#858585"
 
-                            text: "../../dgs-graphstream/inputs/assignments.txt"
-                            enabled: !chbxRandomAssignments.checked
+                            //text: "../../dgs-graphstream/inputs/assignments.txt"
+                            enabled: root.assignmentsMode === 'file'
 
                             onTextChanged: {
                                 simulationParams.slotSetAssignmentsFilePath(txtAssignmentsFilePath.text)
@@ -131,6 +204,9 @@ Item {
                                 target: simulationParams
                                 onNotifyAssignmentsFilePathChanged: {
                                     txtAssignmentsFilePath.pathValid = fileExistsAtPath
+                                    if(txtAssignmentsFilePath.text !== assignmentsPath) {
+                                        txtAssignmentsFilePath.text = assignmentsPath
+                                    }
                                 }
                             }
                         }
@@ -161,69 +237,6 @@ Item {
                         }
                     }
 
-                    // partition seed
-                    RowLayout {
-                        Layout.fillWidth: true
-
-                        Text {
-                            id: txtPartitionSeed
-                            property int seedValue: 0
-                            text: "Partition Random Seed: <b>" + String(txtPartitionSeed.seedValue) + "</b>"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            Connections {
-                                target: simulationParams
-                                onNotifyPartitionSeedChanged: {
-                                    txtPartitionSeed.seedValue = randomSeed
-                                }
-                            }
-
-                            Component.onCompleted: {
-                                btnGeneratePartitionSeed.generateNewSeed()
-                            }
-                        }
-
-                        Item {Layout.preferredWidth: 5}
-
-                        BasicComponents.Button {
-                            id: btnGeneratePartitionSeed
-
-                            function generateNewSeed() {
-                                simulationParams.slotGeneratePartitionSeed()
-                            }
-
-                            text: "Generate Seed"
-                            onClicked: {
-                                btnGeneratePartitionSeed.generateNewSeed()
-                            }
-                        }
-
-                        Item {Layout.fillWidth: true}
-                    }
-
-                    // random assignments
-                    RowLayout {
-                        Text {
-                            text: "Enable Random Assignments"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-                        }
-
-                        BasicComponents.Checkbox {
-                            id: chbxRandomAssignments
-                            onCheckedChanged: {
-                                simulationParams.slotSetRandomAssignments(chbxRandomAssignments.checked)
-                            }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetRandomAssignments(chbxRandomAssignments.checked)
-                            }
-                        }
-
-                        Item {Layout.fillWidth: true}
-                    }
-
                     // slider num partitions
                     RowLayout {
                         Layout.fillWidth: true
@@ -233,18 +246,18 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
-                            color: chbxRandomAssignments.checked ? "black" : "#858585"
+                            color: root.assignmentsMode !== 'file' ? "black" : "#858585"
                         }
 
                         BasicComponents.Slider {
                             id: sldrNumPartitions
 
                             from: 1
-                            to: 20
+                            to: 12
                             value: 4
                             stepSize: 1
 
-                            enabled: chbxRandomAssignments.checked
+                            enabled: root.assignmentsMode !== 'file'
 
                             Layout.preferredWidth: 200
 
@@ -252,10 +265,14 @@ Item {
                                 simulationParams.slotSetNumPartitions(sldrNumPartitions.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetNumPartitions(sldrNumPartitions.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyNumPartitionsChanged: {
+                                    if(sldrNumPartitions.value !== numPartitions) {
+                                        sldrNumPartitions.value = numPartitions
+                                    }
+                                }
                             }
-
                         }
 
                         Text {
@@ -264,7 +281,7 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
-                            color: chbxRandomAssignments.checked ? "black" : "#858585"
+                            color: root.assignmentsMode !== 'file' ? "black" : "#858585"
 
                             Connections {
                                 target: simulationParams
@@ -283,11 +300,11 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Load Imbalance"
+                            text: "Partitioning Imbalance"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
-                            color: chbxRandomAssignments.checked ? "black" : "#858585"
+                            color: root.assignmentsMode === 'metis' ? "black" : "#858585"
                         }
 
                         BasicComponents.Slider {
@@ -298,7 +315,7 @@ Item {
                             value: 1.001
                             stepSize: 0.001
 
-                            enabled: chbxRandomAssignments.checked
+                            enabled: root.assignmentsMode === 'metis'
 
                             Layout.preferredWidth: 200
 
@@ -306,8 +323,13 @@ Item {
                                 simulationParams.slotSetLoadImbalance(sldrLoadImbalance.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetLoadImbalance(sldrLoadImbalance.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyLoadImbalanceChanged: {
+                                    if(sldrLoadImbalance.value !== loadImbalance) {
+                                        sldrLoadImbalance.value = loadImbalance
+                                    }
+                                }
                             }
                         }
 
@@ -317,7 +339,7 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
-                            color: chbxRandomAssignments.checked ? "black" : "#858585"
+                            color: root.assignmentsMode === 'metis' ? "black" : "#858585"
 
                             Connections {
                                 target: simulationParams
@@ -340,7 +362,7 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
-                            color: chbxRandomAssignments.checked ? "black" : "#858585"
+                            color: root.assignmentsMode !== 'file' ? "black" : "#858585"
                         }
 
                         BasicComponents.Textfield {
@@ -350,16 +372,12 @@ Item {
 
                             color: txtPartitionWeights.valid ? "black" : "#E24670"
 
-                            text: "0.25,0.25,0.25,0.25"
+                            //text: "0.25,0.25,0.25,0.25"
 
-                            enabled: chbxRandomAssignments.checked
+                            enabled: root.assignmentsMode !== 'file'
 
 
                             onTextChanged: {
-                                simulationParams.slotSetPartitionWeightsChanged(txtPartitionWeights.text)
-                            }
-
-                            Component.onCompleted: {
                                 simulationParams.slotSetPartitionWeightsChanged(txtPartitionWeights.text)
                             }
 
@@ -368,11 +386,20 @@ Item {
                                 onNotifyPartitionWeights: {
                                     txtPartitionWeights.valid = isValid
                                 }
+                                onNotifyNumPartitionsChanged: {
+                                    var partWeightNum = 1.0 / (1.0 * numPartitions)
+                                    var partWeight = String(partWeightNum).substr(0, 5)
+                                    var s = partWeight
+                                    for(var i = 1; i < numPartitions; i++) {
+                                        s += ',' + partWeight
+                                    }
+                                    txtPartitionWeights.text = s
+                                }
                             }
                         }
 
                         Text {
-                            color: chbxRandomAssignments.checked ? "black" : "#858585"
+                            color: root.assignmentsMode !== 'file' ? "black" : "#858585"
                             text: "format: w1,w2,...wn where n=Number of Partitions; sum(w) = 1.0"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
@@ -389,14 +416,16 @@ Item {
                             text: "Visible Partitions"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+
+                            //color: cmbxRandomAssignments.checked ? "black" : "#858585"
                         }
 
                         BasicComponents.Textfield {
                             id: txtVisiblePartitions
                             Layout.preferredWidth: 200
                             property bool valid: true
-
                             color: txtVisiblePartitions.valid ? "black" : "#E24670"
+                            //enabled: cmbxRandomAssignments.checked
 
                             text: ""
 
@@ -413,11 +442,20 @@ Item {
                                 onNotifyVisiblePartitionsChanged: {
                                     txtVisiblePartitions.valid = isValid
                                 }
+                                onNotifyNumPartitionsChanged: {
+                                    var offset = 1
+                                    var s = String(offset)
+                                    //var remainder = 1.0 - parseFloat(partWeight)
+                                    for(var i = 1; i < numPartitions; i++) {
+                                        s += ',' + String(i + offset)
+                                    }
+                                    txtVisiblePartitions.text = s
+                                }
                             }
                         }
 
                         Text {
-                            color: chbxRandomAssignments.checked ? "black" : "#858585"
+                            //color: cmbxRandomAssignments.checked ? "black" : "#858585"
                             text: "format: p1,p2,..pn where pi=partition number"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
@@ -426,262 +464,57 @@ Item {
                         Item {Layout.fillWidth: true}
                     }
 
-                    Item {Layout.preferredHeight: 10}
-                }
-            }
-        }
-    } // END PANE
-
-    Item {
-        id: paneClustering
-
-        anchors.left: root.left
-        anchors.right: root.right
-
-        anchors.top: panePartitioning.bottom
-
-        height: childrenRect.height
-
-        ColumnLayout {
-            width: parent.width
-
-            Rectangle {
-                radius: 5
-                color: "#F7F7F7"
-
-                Layout.fillWidth: true
-                Layout.margins: 10
-                Layout.preferredHeight: childrenRect.height
-
-                ColumnLayout {
-                    width: parent.width
-
-                    // contents go here
-                    Text {
-                        id: txtClustering
-                        text: "Clustering Properties"
-                        font.family: "Ubuntu"
-                        font.pixelSize: 14
-                        Layout.leftMargin: 10
-                        Layout.topMargin: 10
-                    }
-
-                    Rectangle {
-                        //Layout.fillWidth: true
-                        Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtClustering.paintedWidth * 2
-                        Layout.leftMargin: 10
-                        //Layout.rightMargin: 100
-                        color: "#BFBFBF"
-                    }
-
-                    Item {Layout.preferredHeight: 5}
-
-                    // clustering scheme
+                    // partition seed
                     RowLayout {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Clustering Method"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-                        }
-
-                        BasicComponents.Combo {
-
-                            model: ["oslom2", "infomap", "graphviz"]
-
-                            Layout.preferredWidth: 150
-                            Layout.leftMargin: 15
-
-                            onActivated: {
-                                if(index === 0) {
-                                    // communities
-                                    simulationParams.slotSetClusteringMode('oslom2')
-                                }
-                                if(index === 1) {
-                                    // edges-cut
-                                    simulationParams.slotSetClusteringMode('infomap')
-                                }
-                                if(index === 2) {
-                                    // random
-                                    simulationParams.slotSetClusteringMode('graphviz')
-                                }
-                            }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetClusteringMode('oslom2')
-                            }
-                        }
-
-                        Item {Layout.fillWidth: true}
-                    }
-
-                    // clustering seed
-                    RowLayout {
-                        Layout.fillWidth: true
-
-                        Text {
-                            id: txtClusteringSeed
+                            color: root.assignmentsMode === 'random' ? "black" : "#858585"
                             property int seedValue: 0
-                            text: "Clustering Random Seed: <b>" + String(txtClusteringSeed.seedValue) + "</b>"
+                            text: "Partition Random Seed"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+                        }
 
-                            color: {
-                                if(root.scheme === 'edges-cut' || root.clustering === 'graphviz') {
-                                    return "#858585"
-                                }
-                                else {
-                                    return "black"
+                        BasicComponents.Textfield {
+                            id: txtPartitioningSeed
+                            Layout.preferredWidth: 100
+                            text: ""
+                            color: txtPartitioningSeed.valid === false ? "#E24670" : "black"
+
+                            property bool disableUpdate: false
+                            property bool valid: true
+
+                            enabled: root.assignmentsMode === 'random'
+                            onTextChanged: {
+                                if (txtPartitioningSeed.disableUpdate === false) {
+                                    simulationParams.slotSetPartitionSeed(txtPartitioningSeed.text)
                                 }
                             }
 
                             Connections {
                                 target: simulationParams
-                                onNotifyClusterSeedChanged: {
-                                    txtClusteringSeed.seedValue = randomSeed
+                                onNotifyPartitionSeedChanged: {
+                                    txtPartitioningSeed.text = randomSeed
+                                    txtPartitioningSeed.valid = isValid
                                 }
                             }
-
-                            Component.onCompleted: {
-                                btnGenerateClusteringSeed.generateNewSeed()
-                            }
-
                         }
 
                         Item {Layout.preferredWidth: 5}
 
                         BasicComponents.Button {
-                            id: btnGenerateClusteringSeed
+                            id: btnGeneratePartitionSeed
+
+                            enabled: root.assignmentsMode === 'random'
 
                             function generateNewSeed() {
-                                simulationParams.slotGenerateClusterSeed()
+                                simulationParams.slotGeneratePartitionSeed()
                             }
-
-                            enabled: {
-                                if(root.scheme === 'edges-cut' || root.clustering === 'graphviz') {
-                                    return false
-                                }
-                                else {
-                                    return true
-                                }
-                            }
-
 
                             text: "Generate Seed"
                             onClicked: {
-                                btnGenerateClusteringSeed.generateNewSeed()
-                            }
-                        }
-
-                        Text {
-                            text: "not available with graphviz clustering or edges-cut scheme"
-                            wrapMode: Text.WordWrap
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            color: "#858585"
-
-                            visible: {
-                                if(root.scheme === 'edges-cut' || root.clustering === 'graphviz') {
-                                    return true
-                                }
-                                else {
-                                    return false
-                                }
-                            }
-                        }
-
-                        Item {Layout.fillWidth: true}
-                    }
-
-                    // infomap calls
-                    RowLayout {
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: "Infomap Calls"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            color: {
-                                if(root.scheme === 'communities' && root.clustering === 'oslom2') {
-                                    return "black"
-                                }
-                                else {
-                                    return "#858585"
-                                }
-                            }
-                        }
-
-                        Item {Layout.preferredWidth: 5}
-
-                        BasicComponents.Slider {
-                            id: sldrInfomapCalls
-                            from: 0
-                            to: 10
-                            value: 0
-                            stepSize: 1
-
-                            Layout.preferredWidth: 200
-
-                            enabled: {
-                                if(root.scheme === 'communities' && root.clustering === 'oslom2') {
-                                    return true
-                                }
-                                else {
-                                    return false
-                                }
-                            }
-
-                            onValueChanged: {
-                                simulationParams.slotSetInfomapCalls(sldrInfomapCalls.value)
-                            }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetInfomapCalls(sldrInfomapCalls.value)
-                            }
-                        }
-
-                        Text {
-                            id: txtInfomapCalls
-                            text: ""
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            color: {
-                                if(root.scheme === 'communities' && root.clustering === 'oslom2') {
-                                    return "black"
-                                }
-                                else {
-                                    return "#858585"
-                                }
-                            }
-
-                            Connections {
-                                target: simulationParams
-                                onNotifyInfomapCallsChanged: {
-                                    txtInfomapCalls.text = String(infomapCalls)
-                                }
-                            }
-                        }
-
-                        Text {
-                            text: "Available with oslom2 clustering and communities scheme"
-                            wrapMode: Text.WordWrap
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            color: "#858585"
-
-                            visible: {
-                                if(root.scheme === 'communities' && root.clustering === 'oslom2') {
-                                    return false
-                                }
-                                else {
-                                    return true
-                                }
+                                btnGeneratePartitionSeed.generateNewSeed()
                             }
                         }
 
@@ -693,5 +526,4 @@ Item {
             }
         }
     } // END PANE
-
 }

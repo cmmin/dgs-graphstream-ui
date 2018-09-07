@@ -20,9 +20,10 @@ Item {
 
         Component.onCompleted: {
             paneList.addPane("Simulation", "simulation")
-            paneList.addPane("Partitioning & Clustering", "partition")
+            paneList.addPane("Partitioning", "partition")
+            paneList.addPane("Community Node Coloring", "clustering")
             paneList.addPane("Layout & Coloring", "layout")
-            paneList.addPane("Image", "image")
+            paneList.addPane("Image Rendering", "image")
             paneList.addPane("Output", "output")
             paneList.addPane("Run", "run")
 
@@ -51,6 +52,20 @@ Item {
 
         visible: paneList.currentPaneCode === "partition"
     }
+
+    SimulationPanes.ClusteringPane {
+        id: clusteringPane
+
+        anchors.top: root.top
+        anchors.left: paneList.right
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+
+        visible: paneList.currentPaneCode === "clustering"
+    }
+
+
+
 
     SimulationPanes.LayoutPane {
         id: layoutPane

@@ -1,14 +1,6 @@
 import os
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, pyqtProperty
-from utils import getProgramPathWithWhich
-
-def cleanFolderPath(path):
-    if path.startswith('file:///'):
-        path = path.replace('file://', '')
-    if path.startswith('file://'):
-        path = path.replace('file:/', '')
-    return path
-
+from utils import getProgramPathWithWhich, cleanFolderPath
 
 class DGSSettingsData:
     def __init__(self, settingsPath=None):
@@ -211,6 +203,125 @@ class DGSSettings(QObject):
     def ffmpegProgramPath(self):
         return self.dataTemp._ffmpegProgramPath
 
+    @pyqtProperty(bool)
+    def packageNetworkxInstalled(self):
+        try:
+            import networkx
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageNxmetisInstalled(self):
+        try:
+            import nxmetis
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageConfigparserInstalled(self):
+        try:
+            import configparser
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packagePydotInstalled(self):
+        try:
+            import pydot
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageScipyInstalled(self):
+        try:
+            import scipy
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageSvglibInstalled(self):
+        try:
+            import svglib
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageSvgutilsInstalled(self):
+        try:
+            import svgutils
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packagePyparsingInstalled(self):
+        try:
+            import pyparsing
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageReportlabInstalled(self):
+        try:
+            import reportlab
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packagePygraphvizInstalled(self):
+        try:
+            import pygraphviz
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageFpdfInstalled(self):
+        try:
+            import fpdf
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packagePillowInstalled(self):
+        try:
+            from PIL import Image
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageDecoratorInstalled(self):
+        try:
+            import decorator
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageColourInstalled(self):
+        try:
+            import colour
+            return True
+        except:
+            return False
+
+    @pyqtProperty(bool)
+    def packageCythonInstalled(self):
+        try:
+            import Cython
+            return True
+        except:
+            return False
 
     # VALIDATIONS
     @pyqtProperty(bool)
@@ -273,6 +384,53 @@ class DGSSettings(QObject):
             valid = False
         if self.ffmpegProgramPathValid == False:
             valid = False
+
+        if self.packageNetworkxInstalled == False:
+            valid = False
+
+        if self.packageNxmetisInstalled == False:
+            valid = False
+
+        if self.packageConfigparserInstalled == False:
+            valid = False
+
+        if self.packagePydotInstalled == False:
+            valid = False
+
+        if self.packageScipyInstalled == False:
+            valid = False
+
+        if self.packageSvglibInstalled == False:
+            valid = False
+
+        if self.packageSvgutilsInstalled == False:
+            valid = False
+
+        if self.packagePyparsingInstalled == False:
+            valid = False
+
+        if self.packageReportlabInstalled == False:
+            valid = False
+
+        if self.packagePygraphvizInstalled == False:
+            valid = False
+
+        if self.packageFpdfInstalled == False:
+            valid = False
+
+        if self.packagePillowInstalled == False:
+            valid = False
+
+        if self.packageDecoratorInstalled == False:
+            valid = False
+
+        if self.packageColourInstalled == False:
+            valid = False
+
+        if self.packageCythonInstalled == False:
+            valid = False
+
+
 
         self.notifyOverallValidationChanged.emit(valid)
         return valid

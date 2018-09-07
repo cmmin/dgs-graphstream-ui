@@ -86,7 +86,7 @@ Item {
                     Item {Layout.preferredHeight: 5}
 
                     BasicComponents.Combo {
-
+                        id: cmbxScheme
                         model: ["Showcase Communities", "Showcase Edges Cut"]
 
                         Layout.preferredWidth: 300
@@ -98,15 +98,25 @@ Item {
                                 simulationParams.slotSetScheme('communities')
                             }
                             if(index === 1) {
-                                // edges-cut
-                                simulationParams.slotSetScheme('edges-cut')
+                                // cut-edges
+                                simulationParams.slotSetScheme('cut-edges')
                             }
                         }
 
-                        Component.onCompleted: {
+                        /*Component.onCompleted: {
                             simulationParams.slotSetScheme('communities')
+                        }*/
+                        Connections {
+                            target: simulationParams
+                            onNotifySchemeChanged: {
+                                if (scheme === 'communities') {
+                                    cmbxScheme.currentIndex = 0
+                                }
+                                else {
+                                    cmbxScheme.currentIndex = 1
+                                }
+                            }
                         }
-
                     }
                     Item {Layout.preferredHeight: 10}
                 }
@@ -139,7 +149,7 @@ Item {
                     // contents go here
                     Text {
                         id: txtInputs
-                        text: "Inputs"
+                        text: "Graph Inputs"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -160,10 +170,30 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
+                            id: lblGraphFilePath
                             text: "Graph File Path"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+
+                            property bool hovered: false
+                            MouseArea {
+                                anchors.fill:parent
+                                hoverEnabled: true
+                                onEntered: {
+                                    parent.hovered = true
+                                }
+                                onExited: {
+                                    parent.hovered = false
+                                }
+                            }
                         }
+
+                        BasicComponents.Tooltip {
+                            parent: lblGraphFilePath
+                            text: uiTexts.get('tooltipGraphFilePath')
+                            visible: lblGraphFilePath.hovered
+                        }
+
 
                         BasicComponents.Textfield {
                             id: txtGraphFilePath
@@ -172,13 +202,7 @@ Item {
 
                             color: txtGraphFilePath.pathValid ? "black" : "#E24670"
 
-                            text: "../../dgs-graphstream/inputs/network_1.txt"
-
                             onTextChanged: {
-                                simulationParams.slotSetGraphFilePath(txtGraphFilePath.text)
-                            }
-
-                            Component.onCompleted: {
                                 simulationParams.slotSetGraphFilePath(txtGraphFilePath.text)
                             }
 
@@ -186,6 +210,9 @@ Item {
                                 target: simulationParams
                                 onNotifyGraphFilePathChanged: {
                                     txtGraphFilePath.pathValid = fileExistsAtPath
+                                    if (txtGraphFilePath.text !== graphFilePath) {
+                                        txtGraphFilePath.text = graphFilePath
+                                    }
                                 }
                             }
                         }
@@ -197,7 +224,7 @@ Item {
                         }
 
                         BasicComponents.Combo {
-
+                            id: cmbxGraphFormat
                             model: ["metis", "edgelist", "gml"]
 
                             Layout.preferredWidth: 150
@@ -209,7 +236,7 @@ Item {
                                     simulationParams.slotGraphFormat('metis')
                                 }
                                 if(index === 1) {
-                                    // edges-cut
+                                    // cut-edges
                                     simulationParams.slotGraphFormat('edgelist')
                                 }
                                 if(index === 2) {
@@ -217,9 +244,19 @@ Item {
                                     simulationParams.slotGraphFormat('gml')
                                 }
                             }
-
-                            Component.onCompleted: {
-                                simulationParams.slotGraphFormat('metis')
+                            Connections {
+                                target:simulationParams
+                                onNotifyGraphFormatChanged: {
+                                    if(format === 'metis') {
+                                        cmbxGraphFormat.currentIndex = 0
+                                    }
+                                    else if(format === 'edgelist') {
+                                        cmbxGraphFormat.currentIndex = 1
+                                    }
+                                    else {
+                                        cmbxGraphFormat.currentIndex = 2
+                                    }
+                                }
                             }
                         }
 
@@ -249,6 +286,53 @@ Item {
                         }
                     }
 
+                    Item {Layout.preferredHeight: 10}
+                }
+            }
+        }
+    } // END PANE
+
+    Item {
+        id: paneArrivals
+        anchors.left: root.left
+        anchors.right: root.right
+
+        anchors.top: paneInputs.bottom
+        height: childrenRect.height
+
+        ColumnLayout {
+            width: parent.width
+
+            Rectangle {
+                radius: 5
+                color: "#F7F7F7"
+
+                Layout.fillWidth: true
+                Layout.margins: 10
+                Layout.preferredHeight: childrenRect.height
+
+                ColumnLayout {
+                    width: parent.width
+
+                    // contents go here
+                    Text {
+                        id: txtSequence
+                        text: "Sequence of Node Arrival"
+                        font.family: "Ubuntu"
+                        font.pixelSize: 14
+                        Layout.leftMargin: 10
+                        Layout.topMargin: 10
+                    }
+
+                    Rectangle {
+                        Layout.preferredHeight: 1
+                        Layout.preferredWidth: txtSequence.paintedWidth * 2
+                        Layout.leftMargin: 10
+                        color: "#BFBFBF"
+                    }
+
+                    Item {Layout.preferredHeight: 5}
+
                     // Node order list
                     RowLayout {
                         Layout.fillWidth: true
@@ -257,6 +341,9 @@ Item {
                             text: "Node Order List File Path"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+
+                            color: (txtNoderOrderList.text.length > 0 && txtNoderOrderList.pathValid === true) ? "black" : "#858585"
+
                         }
 
                         BasicComponents.Textfield {
@@ -269,10 +356,7 @@ Item {
                             text: "../../dgs-graphstream/inputs/arrival_100_1.txt"
 
                             onTextChanged: {
-                                simulationParams.slotSetNodeOrderListPath(txtNoderOrderList.text)
-                            }
-
-                            Component.onCompleted: {
+                                //console.log('txtNoderOrderList.text', txtNoderOrderList.text)
                                 simulationParams.slotSetNodeOrderListPath(txtNoderOrderList.text)
                             }
 
@@ -280,6 +364,9 @@ Item {
                                 target: simulationParams
                                 onNotifyNodeOrderListPathChanged: {
                                     txtNoderOrderList.pathValid = pathValid
+                                    if(txtNoderOrderList.text !== orderListPath) {
+                                        txtNoderOrderList.text = orderListPath
+                                    }
                                 }
                             }
                         }
@@ -305,10 +392,255 @@ Item {
                             target: simulationParams
                             onNotifyNodeOrderListPathChanged: {
                                 txtNoderOrderListPath.path = orderListPath
-                                txtNoderOrderListPath.showError = !pathValid
+                                txtNoderOrderListPath.showError = !pathValid && orderListPath.length > 0
                             }
                         }
                     }
+
+                    // Ordering seed
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            property int seedValue: 0
+                            text: "Node Order Random Seed"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+
+                            color: (txtNoderOrderList.text.length === 0 || txtNoderOrderList.pathValid === false) ? "black" : "#858585"
+
+                            /*Component.onCompleted: {
+                                btnGenerateOrderSeed.generateNewSeed()
+                            }*/
+                        }
+
+                        BasicComponents.Textfield {
+                            id: txtOrderingSeed
+                            Layout.preferredWidth: 100
+                            text: ""
+                            color: txtOrderingSeed.valid === false ? "#E24670" : "black"
+
+                            property bool disableUpdate: false
+                            property bool valid: true
+
+                            enabled: (txtNoderOrderList.text.length === 0 || txtNoderOrderList.pathValid === false)
+
+                            onTextChanged: {
+                                if (txtOrderingSeed.disableUpdate === false) {
+                                    simulationParams.slotSetOrderSeed(txtOrderingSeed.text)
+                                }
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyOrderSeedChanged: {
+                                    txtOrderingSeed.text = randomSeed
+                                    txtOrderingSeed.valid = isValid
+                                }
+                            }
+                        }
+
+
+                        Item {Layout.preferredWidth: 5}
+
+                        BasicComponents.Button {
+                            id: btnGenerateOrderSeed
+
+                            function generateNewSeed() {
+                                simulationParams.slotGenerateOrderSeed()
+                            }
+
+                            enabled: (txtNoderOrderList.text.length === 0 || txtNoderOrderList.pathValid === false)
+
+
+                            text: "Generate Seed"
+                            onClicked: {
+                                btnGenerateOrderSeed.generateNewSeed()
+                            }
+                        }
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    Item {Layout.preferredHeight: 10}
+                }
+            }
+        }
+    } // END PANE
+
+
+    /*
+    // Output Options
+    Item {
+        id: paneOutput
+
+        anchors.left: root.left
+        anchors.right: root.right
+
+        anchors.top: paneArrivals.bottom
+
+        height: childrenRect.height
+
+        //visible: false
+
+        ColumnLayout {
+            width: parent.width
+
+            Rectangle {
+                radius: 5
+                color: "#F7F7F7"
+
+                Layout.fillWidth: true
+                Layout.margins: 10
+                Layout.preferredHeight: childrenRect.height
+
+                ColumnLayout {
+                    width: parent.width
+
+                    // contents go here
+                    Text {
+                        id: txtOutput
+                        text: "Output Options"
+                        font.family: "Ubuntu"
+                        font.pixelSize: 14
+                        Layout.leftMargin: 10
+                        Layout.topMargin: 10
+                    }
+
+                    Rectangle {
+                        //Layout.fillWidth: true
+                        Layout.preferredHeight: 1
+                        Layout.preferredWidth: txtOutput.paintedWidth * 2
+                        Layout.leftMargin: 10
+                        //Layout.rightMargin: 100
+                        color: "#BFBFBF"
+                    }
+
+                    Item {Layout.preferredHeight: 5}
+
+                    // output folder
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Output Folder Path"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
+                        TextField {
+                            id: txtOutputFolderPath
+                            Layout.preferredWidth: 300
+                            property bool pathValid: true
+
+                            color: txtOutputFolderPath.pathValid ? "black" : "#E24670"
+
+                            //text: "../../dgs-graphstream/output/"
+
+                            property bool disableUpdate: false
+
+                            background: Rectangle {
+                                color: "white"
+                                border.color: "#BFBFBF"
+                                border.width: 1
+                            }
+
+                            onTextChanged: {
+                                if(txtOutputFolderPath.disableUpdate === false) {
+                                    simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
+                                }
+                            }
+
+                            Connections {
+                                target: simulationParams
+                                onNotifyOutputPathChanged: {
+                                    txtOutputFolderPath.pathValid = folderExists
+                                    if(txtOutputFolderPath.text !== outputPath) {
+                                        txtOutputFolderPath.disableUpdate = true
+                                        txtOutputFolderPath.text = outputPath
+                                        txtOutputFolderPath.disableUpdate = false
+                                    }
+                                }
+                            }
+                        }
+
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    Text {
+                        id: txtFullOutputPath
+
+                        property string path: ""
+                        property string errorStr: "<b>Folder Doesn't Exist</b>: "
+                        property bool showError: false
+
+                        Layout.leftMargin: 15
+
+                        text: txtFullOutputPath.showError ? txtFullOutputPath.errorStr + txtFullOutputPath.path : txtFullOutputPath.path
+                        font.family: "Open Sans"
+                        font.pixelSize: 10
+                        color: txtFullOutputPath.showError ? "#E24670" : "#858585"
+
+                        Connections {
+                            target: simulationParams
+                            onNotifyOutputPathChanged: {
+                                if(outputPath.length === 0) {
+                                    outputPath = 'output folder is required'
+                                }
+
+                                txtFullOutputPath.path = outputPath
+
+                                txtFullOutputPath.showError = !folderExists
+                            }
+                        }
+                    }
+
+                    Item {Layout.preferredHeight: 10}
+                }
+            }
+        }
+    } // END PANE
+    */
+
+    Item {
+        id: paneMoreInputs
+        anchors.left: root.left
+        anchors.right: root.right
+
+        anchors.top: paneArrivals.bottom
+        height: childrenRect.height
+
+        ColumnLayout {
+            width: parent.width
+
+            Rectangle {
+                radius: 5
+                color: "#F7F7F7"
+
+                Layout.fillWidth: true
+                Layout.margins: 10
+                Layout.preferredHeight: childrenRect.height
+
+                ColumnLayout {
+                    width: parent.width
+
+                    // contents go here
+                    Text {
+                        id: txtAdditionalInputs
+                        text: "Additional Input Parameters"
+                        font.family: "Ubuntu"
+                        font.pixelSize: 14
+                        Layout.leftMargin: 10
+                        Layout.topMargin: 10
+                    }
+
+                    Rectangle {
+                        Layout.preferredHeight: 1
+                        Layout.preferredWidth: txtAdditionalInputs.paintedWidth * 2
+                        Layout.leftMargin: 10
+                        color: "#BFBFBF"
+                    }
+
+                    Item {Layout.preferredHeight: 5}
 
 
                     // Filter List
@@ -316,7 +648,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Filter List File Path"
+                            text: "Nodes to ignore File Path"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }
@@ -334,14 +666,17 @@ Item {
                                 simulationParams.slotSetFilterPath(txtFilterListPath.text)
                             }
 
-                            Component.onCompleted: {
+                            /*Component.onCompleted: {
                                 simulationParams.slotSetFilterPath(txtFilterListPath.text)
-                            }
+                            }*/
 
                             Connections {
                                 target: simulationParams
                                 onNotifyFilterPathChanged: {
                                     txtFilterListPath.pathValid = pathValid
+                                    if(txtFilterListPath.text !== filterPath) {
+                                        txtFilterListPath.text = filterPath
+                                    }
                                 }
                             }
                         }
@@ -367,7 +702,7 @@ Item {
                             target: simulationParams
                             onNotifyFilterPathChanged: {
                                 txtFullFilterPath.path = filterPath
-                                txtFullFilterPath.showError = !pathValid
+                                txtFullFilterPath.showError = !pathValid && filterPath.length > 0
                             }
                         }
                     }
@@ -375,6 +710,8 @@ Item {
                     // Weight attribute
                     RowLayout {
                         Layout.fillWidth: true
+
+                        visible: false
 
                         Text {
                             text: "Node Weight Attribute"
@@ -395,9 +732,9 @@ Item {
                                 simulationParams.slotSetNodeWeightAttribute(txtNodeWeightAttribute.text)
                             }
 
-                            Component.onCompleted: {
+                            /*Component.onCompleted: {
                                 simulationParams.slotSetNodeWeightAttribute(txtNodeWeightAttribute.text)
-                            }
+                            }*/
 
                             Connections {
                                 target: simulationParams
@@ -413,6 +750,8 @@ Item {
                     // Edge attribute
                     RowLayout {
                         Layout.fillWidth: true
+
+                        visible: false
 
                         Text {
                             text: "Edge Weight Attribute"
@@ -433,9 +772,9 @@ Item {
                                 simulationParams.slotSetEdgeWeightAttribute(txtEdgeWeightAttribute.text)
                             }
 
-                            Component.onCompleted: {
+                            /*Component.onCompleted: {
                                 simulationParams.slotSetEdgeWeightAttribute(txtEdgeWeightAttribute.text)
-                            }
+                            }*/
 
                             Connections {
                                 target: simulationParams
@@ -448,51 +787,11 @@ Item {
                         Item {Layout.fillWidth: true}
                     }
 
-                    // clustering seed
-                    RowLayout {
-                        Layout.fillWidth: true
-
-                        Text {
-                            id: txtOrderSeed
-                            property int seedValue: 0
-                            text: "Order Random Seed: <b>" + String(txtOrderSeed.seedValue) + "</b>"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-
-                            Connections {
-                                target: simulationParams
-                                onNotifyOrderSeedChanged: {
-                                    txtOrderSeed.seedValue = randomSeed
-                                }
-                            }
-
-                            Component.onCompleted: {
-                                btnGenerateOrderSeed.generateNewSeed()
-                            }
-
-                        }
-
-                        Item {Layout.preferredWidth: 5}
-
-                        BasicComponents.Button {
-                            id: btnGenerateOrderSeed
-
-                            function generateNewSeed() {
-                                simulationParams.slotGenerateOrderSeed()
-                            }
-
-                            text: "Generate Seed"
-                            onClicked: {
-                                btnGenerateOrderSeed.generateNewSeed()
-                            }
-                        }
-                        Item {Layout.fillWidth: true}
-                    }
-
                     Item {Layout.preferredHeight: 10}
                 }
             }
         }
     } // END PANE
+
 
 }

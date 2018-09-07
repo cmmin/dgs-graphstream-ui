@@ -7,7 +7,7 @@ import "./../basic/" as BasicComponents
 Item {
     id: root
 
-    property bool randomAssignments: (txtRandomAssignments.text === 'Yes')
+    property string assignmentsMode: ''
     property string clusterMode: ''
     property string scheme: ''
     property string nodeSizeMode: ''
@@ -100,11 +100,22 @@ Item {
                     Item {Layout.preferredHeight: 5}
 
                     Flickable {
+                        id: flk
                         Layout.fillHeight: true
                         Layout.fillWidth: true
                         Layout.margins: 5
 
-                        ScrollBar.vertical: ScrollBar { active: true }
+                        property bool scrollActive: true
+
+                        ScrollBar.vertical: ScrollBar {
+                            id: flkSB
+                            active: true
+                            onActiveChanged: {
+                                if(flkSB.active !== flk.scrollActive) {
+                                    flkSB.active = flk.scrollActive
+                                }
+                            }
+                         }
 
 
                         clip: true
@@ -168,13 +179,13 @@ Item {
                                 Text { id: txtOrderSeed; text: ""; font.family: "Open Sans" }
                                 Item {Layout.fillWidth: true}
 
-                                Text { text: "Node Weight Attribute"; font.family: "Ubuntu"; }
+                                /*Text { text: "Node Weight Attribute"; font.family: "Ubuntu"; }
                                 Text { id: txtNodeWeightAttribute; text: ""; font.family: "Open Sans" }
                                 Item {Layout.fillWidth: true}
 
                                 Text { text: "Edge Weight Attribute"; font.family: "Ubuntu"; }
                                 Text { id: txtEdgeWeightAttribute; text: ""; font.family: "Open Sans" }
-                                Item {Layout.fillWidth: true}
+                                Item {Layout.fillWidth: true}*/
 
 
                                 Item {Layout.preferredWidth: 5; Layout.preferredHeight: 5}
@@ -185,33 +196,34 @@ Item {
                                 Item { Layout.preferredWidth: 5 }
                                 Item {Layout.fillWidth: true}
 
-                                Text { text: "Assignments File Path"; font.family: "Ubuntu"; visible: !root.randomAssignments; }
-                                Text { id: txtAssignmentsFilePath; text: ""; font.family: "Open Sans"; visible: !root.randomAssignments; }
-                                Item {Layout.fillWidth: true; visible: !root.randomAssignments;}
-
-                                Text { text: "Random Assignments Mode"; font.family: "Ubuntu"; }
-                                Text { id: txtRandomAssignments; text: ""; font.family: "Open Sans" }
+                                Text { text: "Assignments Mode"; font.family: "Ubuntu"; }
+                                Text { id: txtAssignmentsMode; text: ""; font.family: "Open Sans" }
                                 Item {Layout.fillWidth: true}
 
-                                Text { text: "Partition Seed"; font.family: "Ubuntu"; }
-                                Text { id: txtPartitionSeed; text: ""; font.family: "Open Sans" }
-                                Item {Layout.fillWidth: true}
+                                Text { text: "Assignments File Path"; font.family: "Ubuntu"; visible: root.assignmentsMode === 'file'; }
+                                Text { id: txtAssignmentsFilePath; text: ""; font.family: "Open Sans"; visible: root.assignmentsMode === 'file'; }
+                                Item {Layout.fillWidth: true; visible: root.assignmentsMode === 'file';}
 
-                                Text { text: "Number of Partitions"; font.family: "Ubuntu"; visible: root.randomAssignments; }
-                                Text { id: txtNumPartitions; text: ""; font.family: "Open Sans"; visible: root.randomAssignments; }
-                                Item {Layout.fillWidth: true; visible: root.randomAssignments;}
+                                Text { text: "Number of Partitions"; font.family: "Ubuntu"; visible: root.assignmentsMode !== 'file'; }
+                                Text { id: txtNumPartitions; text: ""; font.family: "Open Sans"; visible: root.assignmentsMode !== 'file'; }
+                                Item {Layout.fillWidth: true; visible: root.assignmentsMode !== 'file';}
 
-                                Text { text: "Load Imbalance"; font.family: "Ubuntu"; visible: root.randomAssignments;}
-                                Text { id: txtLoadImbalance; text: ""; font.family: "Open Sans"; visible: root.randomAssignments; }
-                                Item { Layout.fillWidth: true; visible: root.randomAssignments;}
+                                Text { text: "Load Imbalance"; font.family: "Ubuntu"; visible: root.assignmentsMode === 'metis';}
+                                Text { id: txtLoadImbalance; text: ""; font.family: "Open Sans"; visible: root.assignmentsMode === 'metis'; }
+                                Item { Layout.fillWidth: true; visible: root.assignmentsMode === 'metis';}
 
-                                Text { text: "Partition Weights"; font.family: "Ubuntu"; visible: root.randomAssignments; }
-                                Text { id: txtPartitionWeights; text: ""; font.family: "Open Sans"; visible: root.randomAssignments; }
-                                Item { Layout.fillWidth: true; visible: root.randomAssignments;}
+                                Text { text: "Partition Weights"; font.family: "Ubuntu"; visible: root.assignmentsMode !== 'file'; }
+                                Text { id: txtPartitionWeights; text: ""; font.family: "Open Sans"; visible: root.assignmentsMode !== 'file'; }
+                                Item { Layout.fillWidth: true; visible: root.assignmentsMode !== 'file';}
+
+                                Text { text: "Partition Seed"; font.family: "Ubuntu"; visible: root.assignmentsMode === 'random';}
+                                Text { id: txtPartitionSeed; text: ""; font.family: "Open Sans"; visible: root.assignmentsMode === 'random';}
+                                Item {Layout.fillWidth: true; visible: root.assignmentsMode === 'random';}
 
                                 Text { text: "Visible Partitions"; font.family: "Ubuntu";}
                                 Text { id: txtVisiblePartitions; text: ""; font.family: "Open Sans";}
                                 Item { Layout.fillWidth: true;}
+
 
 
 
@@ -227,15 +239,13 @@ Item {
                                 Text { id: txtClusteringMode; text: ""; font.family: "Open Sans" }
                                 Item {Layout.fillWidth: true}
 
-                                Text { text: "Cluster Seed"; font.family: "Ubuntu"; visible: root.clusterMode !== 'graphviz' && root.scheme !== 'edges-cut';}
-                                Text { id: txtClusteringSeed; text: ""; font.family: "Open Sans"; visible: root.clusterMode !== 'graphviz' && root.scheme !== 'edges-cut'; }
-                                Item {Layout.fillWidth: true; visible: root.clusterMode !== 'graphviz' && root.scheme !== 'edges-cut';}
+                                Text { text: "Cluster Seed"; font.family: "Ubuntu"; visible: root.clusterMode !== 'graphviz' && root.scheme !== 'cut-edges';}
+                                Text { id: txtClusteringSeed; text: ""; font.family: "Open Sans"; visible: root.clusterMode !== 'graphviz' && root.scheme !== 'cut-edges'; }
+                                Item {Layout.fillWidth: true; visible: root.clusterMode !== 'graphviz' && root.scheme !== 'cut-edges';}
 
                                 Text { text: "Infomap Calls"; font.family: "Ubuntu"; visible: root.clusterMode === 'oslom2' && root.scheme === 'communities'; }
                                 Text { id: txtInfomapCalls; text: ""; font.family: "Open Sans"; visible: root.clusterMode === 'oslom2' && root.scheme === 'communities'; }
                                 Item {Layout.fillWidth: true; visible: root.clusterMode === 'oslom2' && root.scheme === 'communities';}
-
-
 
                                 Item {Layout.preferredWidth: 5; Layout.preferredHeight: 5}
                                 Item { Layout.preferredWidth: 5 }
@@ -293,7 +303,7 @@ Item {
                                 Item { Layout.preferredWidth: 5 }
                                 Item {Layout.fillWidth: true}
 
-                                Text { text: "Image Properties"; font.family: "Ubuntu"; font.bold: true }
+                                Text { text: "Image Rendering Properties"; font.family: "Ubuntu"; font.bold: true }
                                 Item { Layout.preferredWidth: 5 }
                                 Item {Layout.fillWidth: true}
 
@@ -346,17 +356,17 @@ Item {
                                 Text { id: txtImageLabelSize; text: ""; font.family: "Open Sans" }
                                 Item {Layout.fillWidth: true}
 
-                                Text { text: "Node Shadow Color"; font.family: "Ubuntu"; visible: root.nodeSizeMode === 'highlight-new'; }
-                                Text { id: txtImageNodeShadowColor; text: ""; font.family: "Open Sans"; visible: root.nodeSizeMode === 'highlight-new'; }
-                                Item {Layout.fillWidth: true; visible: root.nodeSizeMode === 'highlight-new';}
+                                Text { text: "Node Shadow Color"; font.family: "Ubuntu"; visible: root.nodeSizeMode === 'highlight-new' && false; }
+                                Text { id: txtImageNodeShadowColor; text: ""; font.family: "Open Sans"; visible: root.nodeSizeMode === 'highlight-new' && false; }
+                                Item {Layout.fillWidth: true; visible: root.nodeSizeMode === 'highlight-new' && false;}
 
-                                Text { text: "Cut Edge Length"; font.family: "Ubuntu"; visible: root.scheme === 'edges-cut';}
-                                Text { id: txtImageCutEdgeLength; text: ""; font.family: "Open Sans"; visible: root.scheme === 'edges-cut'; }
-                                Item {Layout.fillWidth: true; visible: root.scheme === 'edges-cut';}
+                                Text { text: "Cut Edge Length"; font.family: "Ubuntu"; visible: root.scheme === 'cut-edges';}
+                                Text { id: txtImageCutEdgeLength; text: ""; font.family: "Open Sans"; visible: root.scheme === 'cut-edges'; }
+                                Item {Layout.fillWidth: true; visible: root.scheme === 'cut-edges';}
 
-                                Text { text: "Cut Edge Node Size"; font.family: "Ubuntu"; visible: root.scheme === 'edges-cut'; }
-                                Text { id: txtImageCutEdgeNodeSize; text: ""; font.family: "Open Sans"; visible: root.scheme === 'edges-cut'; }
-                                Item {Layout.fillWidth: true; visible: root.scheme === 'edges-cut';}
+                                Text { text: "Cut Edge Node Size"; font.family: "Ubuntu"; visible: root.scheme === 'cut-edges'; }
+                                Text { id: txtImageCutEdgeNodeSize; text: ""; font.family: "Open Sans"; visible: root.scheme === 'cut-edges'; }
+                                Item {Layout.fillWidth: true; visible: root.scheme === 'cut-edges';}
 
 
 
@@ -430,16 +440,7 @@ Item {
 
                                     onNotifyOrderSeedChanged: {
                                         txtOrderSeed.text = randomSeed
-                                    }
-
-                                    onNotifyNodeWeightAttributeChanged: {
-                                        txtNodeWeightAttribute.text = nodeWeightAttribute
-                                        txtNodeWeightAttribute.color = isValid ? "black" : "#E24670"
-                                    }
-
-                                    onNotifyEdgeWeightAttributeChanged: {
-                                        txtEdgeWeightAttribute.text = edgeWeightAttribute
-                                        txtEdgeWeightAttribute.color = isValid ? "black" : "#E24670"
+                                        txtOrderSeed.color = isValid ? "black" : "#E24670"
                                     }
 
                                     onNotifyAssignmentsFilePathChanged: {
@@ -448,9 +449,11 @@ Item {
                                     }
                                     onNotifyPartitionSeedChanged: {
                                         txtPartitionSeed.text = randomSeed
+                                        txtPartitionSeed.color = isValid ? "black" : "#E24670"
                                     }
-                                    onNotifyRandomAssignmentsChanged: {
-                                        txtRandomAssignments.text = randomAssignments ? "Yes" : "No"
+                                    onNotifyAssignmentModeChanged: {
+                                        txtAssignmentsMode.text = assignmentsMode
+                                        root.assignmentsMode = assignmentsMode
                                     }
                                     onNotifyNumPartitionsChanged: {
                                         txtNumPartitions.text = numPartitions
@@ -479,6 +482,7 @@ Item {
 
                                     onNotifyClusterSeedChanged: {
                                         txtClusteringSeed.text = randomSeed
+                                        txtClusteringSeed.color = isValid ? "black" : "#E24670"
                                     }
 
                                     onNotifyInfomapCallsChanged: {
@@ -499,6 +503,7 @@ Item {
                                     }
                                     onNotifyLayoutRandomSeedChanged: {
                                         txtLayoutSeed.text = randomSeed
+                                        txtLayoutSeed.color = isValid ? "black" : "#E24670"
                                     }
 
                                     onNotifyColorSchemeChanged: {
@@ -564,6 +569,7 @@ Item {
 
                                     onNotifyColoringRandomSeedChanged: {
                                         txtColoringSeed.text = randomSeed
+                                        txtColoringSeed.color = isValid ? "black" : "#E24670"
                                     }
 
                                     onNotifyVideoFullPathChanged: {
@@ -609,7 +615,7 @@ Item {
 
         height: childrenRect.height
 
-        visible: false
+        //visible: false
 
         //visible: !paneDetails.visible
 
@@ -662,7 +668,17 @@ Item {
                             anchors.fill: parent
                             anchors.margins: 5
 
-                            ScrollBar.vertical: ScrollBar { active: true }
+                            property bool scrollActive: true
+
+                            ScrollBar.vertical: ScrollBar {
+                                id: lvSB
+                                active: outputLV.scrollActive
+                                onActiveChanged: {
+                                    if (lvSB.active !== outputLV.scrollActive) {
+                                        lvSB.active = outputLV.scrollActive
+                                    }
+                                }
+                             }
 
                             model: ListModel {
                                 id: outputLM
@@ -675,7 +691,7 @@ Item {
 
                                 height: txtOutputLine.paintedHeight + 4
 
-                                Text {
+                                TextEdit {
                                     id: txtOutputLine
                                     anchors.left: parent.left
                                     anchors.top: parent.top
@@ -684,9 +700,13 @@ Item {
                                     font.family: "Open Sans"
                                     font.pixelSize: 12
 
-                                    text: timestamp + ': ' + outputLine
+                                    readOnly: true
+                                    selectByMouse: true
+                                    textFormat: Text.RichText
+
+                                    text: '<b>' + timestamp + '</b>: ' + outputLine
                                     width: outputLV.width
-                                    wrapMode: Text.WrapAnywhere
+                                    wrapMode: Text.WordWrap
                                 }
                             }
                         }
@@ -747,13 +767,39 @@ Item {
                     RowLayout {
                         Item {Layout.fillWidth: true}
 
+                        Text {
+                            id: txtNumErrors
+                            property int errors: 0
+                            text: "There " + (txtNumErrors.errors === 1 ? "is " : "are ") + + String(txtNumErrors.errors) + " error" + (txtNumErrors.errors === 1 ? "" : "s") + " in the chosen parameters."
+
+                            visible: txtNumErrors.errors > 0
+                            color: "#E24670"
+                            font.family: "Open Sans"
+
+                            Connections {
+                                target: dgsGraphstream
+                                onNotifyErrorCount: {
+                                    txtNumErrors.errors = errors
+                                }
+                            }
+                        }
+
+                        Item {width: 1}
+
+                        BasicComponents.Busyindicator {
+                            id: busyIndicator
+                            running: btnStart.isRunning
+                            Layout.preferredHeight: 25
+                            Layout.preferredWidth: 25
+                        }
+
                         BasicComponents.Button {
                             id:btnStart
                             text: "Start"
 
                             property bool isRunning: false
 
-                            enabled: btnStart.isRunning === false
+                            enabled: btnStart.isRunning === false && txtNumErrors.errors === 0
 
                             onClicked: {
                                 if (paneProgramOutput.visible === true) {

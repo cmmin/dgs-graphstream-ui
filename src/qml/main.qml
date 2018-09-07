@@ -36,10 +36,29 @@ ApplicationWindow {
             anchors.right: contents.right
         }
 
+        Components.LoadProjectWizardPage {
+            id: loadProjectPage
+
+            visible: navigationBar.settingsActivated === false && loadProjectPage.projectLoaded === false
+
+            anchors.left: contents.left
+            anchors.top: navigationBar.bottom
+            anchors.right: contents.right
+            anchors.bottom: contents.bottom
+
+            onCreateNewProject: {
+                loadProjectPage.projectLoaded = simulationParams.slotCreateNewProject(path, exampleID)
+            }
+
+            onOpenProject: {
+                loadProjectPage.projectLoaded = simulationParams.slotLoadProject(path)
+            }
+        }
+
         Components.SimulationGenerationPage {
             id: simulationPage
 
-            visible: navigationBar.settingsActivated === false
+            visible: navigationBar.settingsActivated === false && loadProjectPage.projectLoaded === true
 
             anchors.left: contents.left
             anchors.top: navigationBar.bottom

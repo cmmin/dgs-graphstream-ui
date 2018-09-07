@@ -105,6 +105,7 @@ Item {
                         }
 
                         BasicComponents.Combo {
+                            id: cmbxGraphLayout
                             model: ["springbox", "linlog"]
 
                             Layout.preferredWidth: 200
@@ -119,9 +120,18 @@ Item {
                                 }
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetGraphLayout('springbox')
+                            Connections {
+                                target: simulationParams
+                                onNotifyGraphLayoutChanged: {
+                                    if(graphLayout === 'springbox') {
+                                        cmbxGraphLayout.currentIndex = 0
+                                    }
+                                    else {
+                                        cmbxGraphLayout.currentIndex = 1
+                                    }
+                                }
                             }
+
                         }
                         Item {Layout.fillWidth: true}
                     }
@@ -152,8 +162,13 @@ Item {
                                 simulationParams.slotSetLayoutLinlogForce(sliderLinlogForce.value)
                             }
 
-                            Component.onCompleted: {
-                                simulationParams.slotSetLayoutLinlogForce(sliderLinlogForce.value)
+                            Connections {
+                                target: simulationParams
+                                onNotifyLayoutLinlogForceChanged: {
+                                    if(linlogForce !== sliderLinlogForce.value) {
+                                        sliderLinlogForce.value = linlogForce
+                                    }
+                                }
                             }
                         }
 
@@ -212,6 +227,11 @@ Item {
                                     }
                                     else {
                                         sldrAttraction.value = 0.0
+                                    }
+                                }
+                                onNotifyLayoutAttractionChanged: {
+                                    if(attraction !== sldrAttraction.value) {
+                                        sldrAttraction.value = attraction
                                     }
                                 }
                             }
@@ -278,6 +298,11 @@ Item {
                                         sldrRepulsion.value = -1.2
                                     }
                                 }
+                                onNotifyLayoutRepulsionChanged: {
+                                    if(repulsion !== sldrRepulsion.value) {
+                                        sldrRepulsion.value = repulsion
+                                    }
+                                }
                             }
                         }
 
@@ -301,24 +326,36 @@ Item {
                     RowLayout {
                         Layout.fillWidth: true
 
+
                         Text {
-                            id: txtLayoutRandomSeed
-                            property int seedValue
-                            text: "Layout Random Seed: <b>" + String(txtLayoutRandomSeed.seedValue) + "</b>"
+                            property int seedValue: 0
+                            text: "Layout Random Seed"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Textfield {
+                            id: txtLayoutSeed
+                            Layout.preferredWidth: 100
+                            text: ""
+                            color: txtLayoutSeed.valid === false ? "#E24670" : "black"
+
+                            property bool disableUpdate: false
+                            property bool valid: true
+
+                            onTextChanged: {
+                                if (txtLayoutSeed.disableUpdate === false) {
+                                    simulationParams.slotSetLayoutSeed(txtLayoutSeed.text)
+                                }
+                            }
 
                             Connections {
                                 target: simulationParams
                                 onNotifyLayoutRandomSeedChanged: {
-                                    txtLayoutRandomSeed.seedValue = randomSeed
+                                    txtLayoutSeed.text = randomSeed
+                                    txtLayoutSeed.valid = isValid
                                 }
                             }
-
-                            Component.onCompleted: {
-                                btnGenerateLayoutSeed.generateNewSeed()
-                            }
-
                         }
 
                         Item {Layout.preferredWidth: 5}
@@ -401,8 +438,8 @@ Item {
                         }
 
                         BasicComponents.Combo {
-
-                            model: ["pastel", "primary-colors"]
+                            id: cmbxColorScheme
+                            model: ["pastel", "primary-colors", "node-color"]
 
                             Layout.preferredWidth: 200
                             Layout.leftMargin: 15
@@ -416,15 +453,28 @@ Item {
                                     // edges-cut
                                     simulationParams.slotSetColorScheme('primary-colors')
                                 }
+                                if(index === 2) {
+                                    // edges-cut
+                                    simulationParams.slotSetColorScheme('node-color')
+                                }
                             }
-
-                            Component.onCompleted: {
-                                simulationParams.slotSetColorScheme('pastel')
+                            Connections {
+                                target: simulationParams
+                                onNotifyColorSchemeChanged: {
+                                    if(colorScheme === 'pastel') {
+                                        cmbxColorScheme.currentIndex = 0
+                                    }
+                                    else if(colorScheme === 'node-color') {
+                                        cmbxColorScheme.currentIndex = 2
+                                    }
+                                    else {
+                                        cmbxColorScheme.currentIndex = 1
+                                    }
+                                }
                             }
                         }
 
                         Item {Layout.fillWidth: true}
-
                     }
 
 
@@ -432,9 +482,11 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Node Color"
+                            text: "Single Node Color"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+                            color: cmbxColorScheme.currentIndex === 2 ? "black" : "#858585"
+
                         }
 
                         BasicComponents.Textfield {
@@ -443,15 +495,13 @@ Item {
 
                             property bool colorValid: true
 
-                            color: txtNodeColor.colorValid ? txtNodeColor.text : "#E24670"
+                            color: txtNodeColor.colorValid ? "black" : "#E24670"
 
                             text: ""
 
-                            onTextChanged: {
-                                simulationParams.slotSetNodeColor(txtNodeColor.text)
-                            }
+                            enabled: cmbxColorScheme.currentIndex === 2
 
-                            Component.onCompleted: {
+                            onTextChanged: {
                                 simulationParams.slotSetNodeColor(txtNodeColor.text)
                             }
 
@@ -459,13 +509,34 @@ Item {
                                 target: simulationParams
                                 onNotifyNodeColorChanged: {
                                     txtNodeColor.colorValid = colorValid
+                                    if(txtNodeColor.text !== nodeColor) {
+                                        txtNodeColor.text = nodeColor
+                                    }
                                 }
+                            }
+                        }
+
+                        BasicComponents.Button {
+                            text: "Pick Color"
+                            onClicked: {
+                                singleNodeColorPicker.visible = true
+                            }
+                            enabled: cmbxColorScheme.currentIndex === 2
+                        }
+
+                        BasicComponents.Colorpicker {
+                            id: singleNodeColorPicker
+                            onColorChosen: {
+                                txtNodeColor.text = color
                             }
                         }
 
                         Rectangle {
                             Layout.preferredHeight: txtNodeColor.height
                             Layout.preferredWidth: txtNodeColor.height
+
+                            border.width: 1
+                            border.color: "#858585"
 
                             color: txtNodeColor.colorValid ? txtNodeColor.text : "transparent"
                         }
@@ -478,24 +549,36 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            id: txtColoringSeed
-                            property int seedValue
-                            text: "Coloring Random Seed: <b>" + String(txtColoringSeed.seedValue) + "</b>"
+                            property int seedValue: 0
+                            text: "Coloring Random Seed"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.Textfield {
+                            id: txtColoringSeed
+                            Layout.preferredWidth: 100
+                            text: ""
+                            color: txtColoringSeed.valid === false ? "#E24670" : "black"
+
+                            property bool disableUpdate: false
+                            property bool valid: true
+
+                            onTextChanged: {
+                                if (txtColoringSeed.disableUpdate === false) {
+                                    simulationParams.slotSetColoringSeed(txtColoringSeed.text)
+                                }
+                            }
 
                             Connections {
                                 target: simulationParams
                                 onNotifyColoringRandomSeedChanged: {
-                                    txtColoringSeed.seedValue = randomSeed
+                                    txtColoringSeed.text = randomSeed
+                                    txtColoringSeed.valid = isValid
                                 }
                             }
-
-                            Component.onCompleted: {
-                                btnGenerateColorSeed.generateNewSeed()
-                            }
-
                         }
+
 
                         Item {Layout.preferredWidth: 5}
 
