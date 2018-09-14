@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 
 import "./basic" as BasicComponents
 
@@ -75,7 +75,7 @@ Item {
 
     ButtonGroup {
         id: chckGroup
-        exclusive: true
+        //exclusive: true
     }
 
     RowLayout {
@@ -290,24 +290,37 @@ Item {
 
                 Layout.preferredWidth: 150
 
-                property string exampleID: 'ex1'
-                property string exampleDescription: "Description for example " + cmbExample.exampleID
+                property string exampleID: ''
+                property string exampleDescription: ''
+                property string examplePath: ''
 
                 onExampleIDChanged: {
-                    cmbExample.exampleDescription = "Description for example " + cmbExample.exampleID
+                    cmbExample.exampleDescription = examples.exampleDescription(cmbExample.exampleID)
+                    cmbExample.examplePath = examples.examplePath(cmbExample.exampleID)
                 }
 
-                width: 150
+                width: 350
 
-                model: ["Example 1", "Example 2"]
+                model: []
+                property var modelExampleKey: []
 
                 onActivated: {
-                    if(index === 0) {
-                        cmbExample.exampleID = 'ex1'
+                    cmbExample.exampleID = cmbExample.modelExampleKey[index]
+                    cmbExample.exampleDescription = examples.exampleDescription(cmbExample.exampleID)
+                }
+
+                Component.onCompleted: {
+                    cmbExample.modelExampleKey = examples.examples()
+
+                    var m = []
+
+                    for(var i = 0; i < cmbExample.modelExampleKey.length; i++) {
+                        if (i === 0) {
+                            cmbExample.exampleID = cmbExample.modelExampleKey[i]
+                        }
+                        m.push(examples.exampleTitle(cmbExample.modelExampleKey[i]))
                     }
-                    if(index === 1) {
-                        cmbExample.exampleID = 'ex2'
-                    }
+                    cmbExample.model = m
                 }
             }
 

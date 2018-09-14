@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.2
 
 import "./../basic/" as BasicComponents
 
@@ -131,6 +131,13 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipImageWidth')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                     }
 
                     // height = textfield
@@ -172,6 +179,12 @@ Item {
                             text: "pixels"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipImageHeight')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
                     }
 
@@ -220,6 +233,11 @@ Item {
                                     txtBorderSize.text = String(borderSize)
                                 }
                             }
+                        }
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipBorderSize')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -331,6 +349,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipNodeSizeMode')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -387,6 +411,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipNodeSize')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -440,6 +470,12 @@ Item {
                                     txtEdgeSize.text = String(edgeSize)
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipEdgeSize')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -503,6 +539,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipMinNodeSize')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
                     // max node size = slider
@@ -564,6 +606,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipMaxNodeSize')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -615,6 +663,12 @@ Item {
 
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipLabelNodeType')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -663,6 +717,12 @@ Item {
                                     txtLabelSize.text = String(labelSize)
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipLabelSize')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -731,6 +791,12 @@ Item {
                             Layout.leftMargin: 15
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipCutEdgeSize')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -796,6 +862,12 @@ Item {
                             text: "<i>only for cut-edges scheme</i>"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipCutEdgePercent')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}

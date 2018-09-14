@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.2
 
 import "./../basic/" as BasicComponents
 
@@ -129,6 +129,12 @@ Item {
                                     }
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipOutputFolderPath')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -267,6 +273,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipVideoFilePath')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -319,6 +331,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipFPS')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -368,6 +386,12 @@ Item {
                                     txtPaddingTime.text = String(paddingTime)
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipPaddingTime')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -448,6 +472,12 @@ Item {
 
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipPDFOutput')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -504,6 +534,12 @@ Item {
                                     txtPDFFramePercentage.text = String(pdfFramePercentage)
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipFrameConversion')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}

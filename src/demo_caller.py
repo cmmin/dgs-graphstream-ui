@@ -14,29 +14,7 @@ def _checkLineOutput(line):
 
         print("--", tstamp, output)
 
-def lineCount(path):
-    with open(path, 'r+') as f:
-        c = 0
-        for line in f:
-            c += 1
-        return c
-    return 0
-
-def getLineCount():
-    t = 0
-    for root, dirs, files in os.walk("."):
-        #path = root.split(os.sep)
-        for f in files:
-            if f.endswith('.qml') or f.endswith('.py'):
-                fp = os.path.join(root, f)
-                t += lineCount(fp)
-                print(fp, lineCount(fp))
-    print(t)
-
 if __name__ == '__main__':
-    getLineCount()
-    exit()
-
     dgsPath = '/Users/voreno/Development/graphstream/dgs-graphstream'
     inputPath = 'inputs'
     outputPath = '/Users/voreno/Desktop/output'

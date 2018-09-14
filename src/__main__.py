@@ -8,6 +8,7 @@ from simulationparameters import SimulationParameters
 from dgswrapper import DGSWrapper
 from settings import DGSSettings
 from uitexts import UITexts
+from examples import ExampleManager
 
 if __name__ == '__main__':
     import sys
@@ -23,8 +24,11 @@ if __name__ == '__main__':
     uiTexts = UITexts()
     uiTexts.load('qml/assets/uitext.csv')
 
-    simParams = SimulationParameters()
+    examples = ExampleManager(app)
+    examples.load(os.path.join(os.getcwd(), '..', 'examples'))
+
     dgsSettings = DGSSettings(app)
+    simParams = SimulationParameters()
     dgsWrapper = DGSWrapper(simParams, dgsSettings)
 
     simParams.notifySavingSettings.connect(dgsWrapper.checkForParamErrors)
@@ -38,6 +42,7 @@ if __name__ == '__main__':
     engine.rootContext().setContextProperty("dgsGraphstream", dgsWrapper)
     engine.rootContext().setContextProperty("dgsSettings", dgsSettings)
     engine.rootContext().setContextProperty("uiTexts", uiTexts)
+    engine.rootContext().setContextProperty("examples", examples)
 
     # Load the qml file into the engine
     engine.load("qml/main.qml")

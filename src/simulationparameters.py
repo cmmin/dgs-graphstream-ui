@@ -168,6 +168,26 @@ class SimulationParameters(QObject):
             return loaded
         return False
 
+    @pyqtSlot(str, bool, result=bool)
+    def slotCreateNewProject(self, projectPath, fromExample):
+        if (os.path.exists(projectPath)):
+            # create output subfolder
+            self.settingsPath = os.path.join(projectPath, 'dgs_config.txt')
+            self.outputPath = os.path.join(projectPath, 'output')
+
+            os.makedirs(self.outputPath)
+
+            if fromExample == False:
+                self.saveEnabled = True
+                loaded = self.saveSettings()
+                self.saveEnabled = False
+
+            loaded = self.loadSettings()
+            self.saveEnabled = True
+            return loaded
+        return False
+
+    '''
     @pyqtSlot(str, str, result=bool)
     def slotCreateNewProject(self, projectPath, exampleID):
         if (os.path.exists(projectPath)):
@@ -185,8 +205,7 @@ class SimulationParameters(QObject):
                 self.saveEnabled = True
                 return loaded
         return False
-
-
+    '''
     # SIGNALS
     # required
     notifyGraphFilePathChanged = pyqtSignal(str, bool, arguments=["graphFilePath", "fileExistsAtPath"])

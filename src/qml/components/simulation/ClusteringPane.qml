@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.2
 
 import "./../basic/" as BasicComponents
 
@@ -181,6 +181,13 @@ Item {
                                 }
                             }
                         }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipColorClusteringProgram')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -258,6 +265,13 @@ Item {
                                     txtInfomapCalls.text = String(infomapCalls)
                                 }
                             }
+                        }
+
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipInfomapCalls')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Text {
@@ -377,6 +391,12 @@ Item {
                                     return false
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipClusteringSeed')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}

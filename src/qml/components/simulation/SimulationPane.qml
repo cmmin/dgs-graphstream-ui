@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.2
 
 import "./../basic/" as BasicComponents
 
@@ -67,7 +67,7 @@ Item {
                     // contents go here
                     Text {
                         id: txtLayout
-                        text: "Layout Scheme"
+                        text: "Simulation Scheme"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -85,40 +85,56 @@ Item {
 
                     Item {Layout.preferredHeight: 5}
 
-                    BasicComponents.Combo {
-                        id: cmbxScheme
-                        model: ["Showcase Communities", "Showcase Edges Cut"]
+                    RowLayout {
 
-                        Layout.preferredWidth: 300
-                        Layout.leftMargin: 15
+                      BasicComponents.Combo {
+                          id: cmbxScheme
+                          model: ["Showcase Communities", "Showcase Edges Cut"]
 
-                        onActivated: {
-                            if(index === 0) {
-                                // communities
-                                simulationParams.slotSetScheme('communities')
-                            }
-                            if(index === 1) {
-                                // cut-edges
-                                simulationParams.slotSetScheme('cut-edges')
-                            }
-                        }
+                          Layout.preferredWidth: 300
+                          Layout.leftMargin: 15
 
-                        /*Component.onCompleted: {
-                            simulationParams.slotSetScheme('communities')
-                        }*/
-                        Connections {
-                            target: simulationParams
-                            onNotifySchemeChanged: {
-                                if (scheme === 'communities') {
-                                    cmbxScheme.currentIndex = 0
-                                }
-                                else {
-                                    cmbxScheme.currentIndex = 1
-                                }
-                            }
-                        }
+                          onActivated: {
+                              if(index === 0) {
+                                  // communities
+                                  simulationParams.slotSetScheme('communities')
+                              }
+                              if(index === 1) {
+                                  // cut-edges
+                                  simulationParams.slotSetScheme('cut-edges')
+                              }
+                          }
+
+                          /*Component.onCompleted: {
+                              simulationParams.slotSetScheme('communities')
+                          }*/
+                          Connections {
+                              target: simulationParams
+                              onNotifySchemeChanged: {
+                                  if (scheme === 'communities') {
+                                      cmbxScheme.currentIndex = 0
+                                  }
+                                  else {
+                                      cmbxScheme.currentIndex = 1
+                                  }
+                              }
+                          }
+
+
+                      }
+
+                      BasicComponents.TooltipIcon {
+                          text: uiTexts.get('tooltipScheme')
+                          Layout.preferredWidth: 24
+                          Layout.preferredHeight: 24
+                      }
+                      Item {Layout.fillWidth: true}
                     }
+
                     Item {Layout.preferredHeight: 10}
+
+
+
                 }
             }
         }
@@ -174,26 +190,7 @@ Item {
                             text: "Graph File Path"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
-
-                            property bool hovered: false
-                            MouseArea {
-                                anchors.fill:parent
-                                hoverEnabled: true
-                                onEntered: {
-                                    parent.hovered = true
-                                }
-                                onExited: {
-                                    parent.hovered = false
-                                }
-                            }
                         }
-
-                        BasicComponents.Tooltip {
-                            parent: lblGraphFilePath
-                            text: uiTexts.get('tooltipGraphFilePath')
-                            visible: lblGraphFilePath.hovered
-                        }
-
 
                         BasicComponents.Textfield {
                             id: txtGraphFilePath
@@ -215,6 +212,12 @@ Item {
                                     }
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipGraphFilePath')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Text {
@@ -259,6 +262,13 @@ Item {
                                 }
                             }
                         }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipGraphFormat')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
 
                         Item {Layout.fillWidth: true}
                     }
@@ -371,6 +381,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipNodeOrderFilePath')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -441,6 +457,7 @@ Item {
                         }
 
 
+
                         Item {Layout.preferredWidth: 5}
 
                         BasicComponents.Button {
@@ -458,6 +475,14 @@ Item {
                                 btnGenerateOrderSeed.generateNewSeed()
                             }
                         }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipNodeOrderRandomSeed')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -680,6 +705,13 @@ Item {
                                 }
                             }
                         }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipNodesIgnoreFilePath')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
 
                         Item {Layout.fillWidth: true}
                     }

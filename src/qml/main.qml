@@ -34,12 +34,14 @@ ApplicationWindow {
             anchors.left: contents.left
             anchors.top: contents.top
             anchors.right: contents.right
+
         }
 
         Components.LoadProjectWizardPage {
             id: loadProjectPage
 
             visible: navigationBar.settingsActivated === false && loadProjectPage.projectLoaded === false
+            //projectLoaded: true
 
             anchors.left: contents.left
             anchors.top: navigationBar.bottom
@@ -47,7 +49,9 @@ ApplicationWindow {
             anchors.bottom: contents.bottom
 
             onCreateNewProject: {
-                loadProjectPage.projectLoaded = simulationParams.slotCreateNewProject(path, exampleID)
+                examples.createExample(exampleID, path)
+                var fromExample = (exampleID.length > 0)
+                loadProjectPage.projectLoaded = simulationParams.slotCreateNewProject(path, fromExample)
             }
 
             onOpenProject: {

@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.2
 
 import "./../basic/" as BasicComponents
 
@@ -133,6 +133,13 @@ Item {
                             }
 
                         }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipGraphLayoutMode')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -186,6 +193,12 @@ Item {
                                     txtForce.text = String(linlogForce)
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipForce')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -249,6 +262,13 @@ Item {
                                     txtAttraction.text = String(attraction)
                                 }
                             }
+                        }
+
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipAttractionFactor')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -320,6 +340,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipRepulsionFactor')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -371,6 +397,12 @@ Item {
                             onClicked: {
                                 btnGenerateLayoutSeed.generateNewSeed()
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipLayoutSeed')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -474,6 +506,12 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipColorScheme')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -541,6 +579,12 @@ Item {
                             color: txtNodeColor.colorValid ? txtNodeColor.text : "transparent"
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipNodeColor')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
 
                     }
@@ -593,6 +637,12 @@ Item {
                             onClicked: {
                                 btnGenerateColorSeed.generateNewSeed()
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipColorSeed')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}

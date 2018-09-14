@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.2
 
 import "./../basic/" as BasicComponents
 
@@ -167,6 +167,13 @@ Item {
                                 }
                             }
                         }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipColorClustering')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
+
                         Item {Layout.fillWidth: true}
                     }
 
@@ -209,6 +216,12 @@ Item {
                                     }
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipAssignmentsFilePath')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -291,6 +304,11 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipNumPartitions')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
 
                         Item {Layout.fillWidth: true}
                     }
@@ -349,6 +367,11 @@ Item {
                             }
                         }
 
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipPartitionsImbalance')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
+                        }
 
                         Item {Layout.fillWidth: true}
                     }
@@ -396,6 +419,12 @@ Item {
                                     txtPartitionWeights.text = s
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipPartitionWeights')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Text {
@@ -452,6 +481,12 @@ Item {
                                     txtVisiblePartitions.text = s
                                 }
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipVisiblePartitions')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Text {
@@ -516,6 +551,12 @@ Item {
                             onClicked: {
                                 btnGeneratePartitionSeed.generateNewSeed()
                             }
+                        }
+
+                        BasicComponents.TooltipIcon {
+                            text: uiTexts.get('tooltipPartitionSeed')
+                            Layout.preferredWidth: 24
+                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
