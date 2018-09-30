@@ -2,7 +2,7 @@ import os
 from os import walk
 from distutils.dir_util import copy_tree
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
-import ipdb; debug=ipdb.set_trace
+#import ipdb; debug=ipdb.set_trace
 
 class ExampleManager(QObject):
     def __init__(self, parent = None):

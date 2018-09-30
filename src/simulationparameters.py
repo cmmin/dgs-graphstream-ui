@@ -5,7 +5,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 from utils import generateRandomSeed
 from configwriter import saveConfigSettings, loadConfigSettings
 
-import ipdb; debug = ipdb.set_trace
+#import ipdb; debug = ipdb.set_trace
 
 def composeAbsolutePath(path):
     '''

@@ -6,7 +6,7 @@ import subprocess
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QFontDatabase
 
-import ipdb; debug =ipdb.set_trace
+#import ipdb; debug =ipdb.set_trace
 
 def generateRandomSeed():
     return random.randint(1, 10**6)
