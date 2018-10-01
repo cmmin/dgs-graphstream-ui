@@ -25,7 +25,7 @@ if __name__ == '__main__':
     uiTexts.load('qml/assets/uitext.csv')
 
     examples = ExampleManager(app)
-    examples.load(os.path.join(os.getcwd(), '..', 'examples'))
+    examples.load(os.path.abspath(os.path.join(os.getcwd(), '..', 'examples')))
 
     dgsSettings = DGSSettings(app)
     simParams = SimulationParameters()

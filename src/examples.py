@@ -88,6 +88,9 @@ class Example:
                 self.title = self.folderName
 
 def loadExampleFolders(examplesFolderPath):
+    if not os.path.isdir(examplesFolderPath):
+        os.makedirs(examplesFolderPath)
+
     examples = {}
     keys = []
     values = []
