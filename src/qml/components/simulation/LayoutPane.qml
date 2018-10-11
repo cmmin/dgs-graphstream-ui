@@ -399,12 +399,6 @@ Item {
                             }
                         }
 
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipLayoutSeed')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
-
                         Item {Layout.fillWidth: true}
                     }
 
@@ -471,7 +465,7 @@ Item {
 
                         BasicComponents.Combo {
                             id: cmbxColorScheme
-                            model: ["pastel", "primary-colors", "node-color"]
+                            model: ["pastel colors", "primary colors", "single color"]
 
                             Layout.preferredWidth: 200
                             Layout.leftMargin: 15
@@ -637,12 +631,6 @@ Item {
                             onClicked: {
                                 btnGenerateColorSeed.generateNewSeed()
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipColorSeed')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
