@@ -387,7 +387,7 @@ class SimulationParameters(QObject):
                     break
             if total == 1.0:
                 isValid = True
-            elif total >= 0.99 and total <= 1.0:
+            elif total >= 0.985 and total <= 1.0:
                 if lastWeight > 0.0 and len(weights) == self.numPartitions:
                     weights[self.numPartitions - 1] = lastWeight
                 isValid = True

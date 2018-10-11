@@ -9,7 +9,7 @@ Item {
 
     property string scheme: ""
     property string clustering: ""
-    property string assignmentsMode: ""
+    property string assignmentsMode: "metis"
 
     Connections {
         target: simulationParams
@@ -105,7 +105,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Color Clustering Program"
+                            text: "Partitioning Method"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -123,8 +123,8 @@ Item {
                             id: cmbxRandomAssignments
 
 
-                            model: ["Random Assignments", "From Assignments File"]
-                            //model: ["METIS Partitioning", "Random Assignments", "From Assignments File"]
+                            //model: ["Random Assignments", "From Assignments File"]
+                            model: ["METIS Partitioning", "Random Assignments", "From Assignments File"]
 
 
                             //property bool checked: false
@@ -133,14 +133,14 @@ Item {
                             Layout.leftMargin: 15
 
                             onActivated: {
-                                if(index === 0) {
+                                if(index === 1) {
                                     // random
                                     simulationParams.slotSetAssignmentsMode('random')
                                 }
-                                if(index === 1) {
+                                if(index === 2) {
                                     simulationParams.slotSetAssignmentsMode('file')
                                 }
-                                if(index === 2) {
+                                if(index === 0) {
                                     // metis
                                     simulationParams.slotSetAssignmentsMode('metis')
                                 }
@@ -151,13 +151,13 @@ Item {
                                 onNotifyAssignmentModeChanged: {
                                     var targetIndex = 0
                                     if(assignmentsMode === 'random') {
-                                        targetIndex = 0
-                                    }
-                                    if(assignmentsMode === 'file') {
                                         targetIndex = 1
                                     }
-                                    if(assignmentsMode === 'metis') {
+                                    if(assignmentsMode === 'file') {
                                         targetIndex = 2
+                                    }
+                                    if(assignmentsMode === 'metis') {
+                                        targetIndex = 0
                                     }
 
                                     if(cmbxRandomAssignments.currentIndex !== targetIndex) {
@@ -241,6 +241,8 @@ Item {
                         font.pixelSize: 10
                         color: txtFullAssignmentsPath.showError ? "#E24670" : "#858585"
 
+                        visible: txtFullAssignmentsPath.path.length > 0
+
                         Connections {
                             target: simulationParams
                             onNotifyAssignmentsFilePathChanged: {
@@ -304,18 +306,31 @@ Item {
                             }
                         }
 
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipNumPartitions')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
+                        Item {Layout.fillWidth: true}
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Advanced Options"
+                            Layout.leftMargin: 15
+                            font.family: "Open Sans"
+                        }
+
+                        BasicComponents.SimpleSwitch {
+                            id: switchAdvanceMode
                         }
 
                         Item {Layout.fillWidth: true}
                     }
 
+
                     // load imbalance
                     RowLayout {
                         Layout.fillWidth: true
+
+                        visible: switchAdvanceMode.checked
 
                         Text {
                             text: "Partitioning Imbalance"
@@ -329,7 +344,7 @@ Item {
                             id: sldrLoadImbalance
 
                             from: 1.0
-                            to: 2.0
+                            to: 1.05
                             value: 1.001
                             stepSize: 0.001
 
@@ -379,6 +394,7 @@ Item {
                     // partition weights
                     RowLayout {
                         Layout.fillWidth: true
+                        visible: switchAdvanceMode.checked
 
                         Text {
                             text: "Partition Weights"
@@ -440,6 +456,7 @@ Item {
                     // visible partitions
                     RowLayout {
                         Layout.fillWidth: true
+                        visible: switchAdvanceMode.checked
 
                         Text {
                             text: "Visible Partitions"
@@ -502,6 +519,7 @@ Item {
                     // partition seed
                     RowLayout {
                         Layout.fillWidth: true
+                        visible: switchAdvanceMode.checked
 
                         Text {
                             color: root.assignmentsMode === 'random' ? "black" : "#858585"
@@ -551,12 +569,6 @@ Item {
                             onClicked: {
                                 btnGeneratePartitionSeed.generateNewSeed()
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipPartitionSeed')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
