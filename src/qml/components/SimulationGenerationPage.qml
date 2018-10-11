@@ -8,7 +8,7 @@ Item {
 
     //color: "#F7F7F7"
 
-    SimulationSettingsList {
+    /*SimulationSettingsList {
         id: paneList
 
         z: 1
@@ -27,6 +27,21 @@ Item {
             paneList.addPane("Output", "output")
             paneList.addPane("Run", "run")
 
+            paneList.changePane("simulation")
+        }
+    }*/
+
+    SimulationSettingsListV2 {
+        id: paneList
+
+        z: 1
+
+        width: 250
+        anchors.top: root.top
+        anchors.left: root.left
+        anchors.bottom: root.bottom
+
+        Component.onCompleted: {
             paneList.changePane("simulation")
         }
     }
