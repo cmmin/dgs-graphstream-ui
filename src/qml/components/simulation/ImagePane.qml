@@ -131,13 +131,6 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipImageWidth')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
-
                     }
 
                     // height = textfield
@@ -180,12 +173,6 @@ Item {
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipImageHeight')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
                     }
 
                     // border size = textfield
@@ -223,21 +210,16 @@ Item {
 
                         Text {
                             id: txtBorderSize
-                            text: ""
+                            text: "1 pixel"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
                             Connections {
                                 target: simulationParams
                                 onNotifyImageBorderSizeChanged: {
-                                    txtBorderSize.text = String(borderSize)
+                                    txtBorderSize.text = String(borderSize) + (borderSize == 1 ? " pixel" : " pixels")
                                 }
                             }
-                        }
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipBorderSize')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -306,7 +288,7 @@ Item {
 
                         BasicComponents.Combo {
                             id: cmbxNodeSizeMode
-                            model: ["fixed", "highlight-new", "centrality"]
+                            model: ["highlight-new", "centrality", "fixed"]
 
                             property string mode: 'fixed'
 
@@ -314,17 +296,17 @@ Item {
                             Layout.leftMargin: 15
 
                             onActivated: {
-                                if(index === 0) {
+                                if(index === 2) {
                                     // communities
                                     simulationParams.slotSetImageNodeSizeMode('fixed')
                                     cmbxNodeSizeMode.mode = 'fixed'
                                 }
-                                if(index === 1) {
+                                if(index === 0) {
                                     // cut-edges
                                     simulationParams.slotSetImageNodeSizeMode('highlight-new')
                                     cmbxNodeSizeMode.mode = 'highlight-new'
                                 }
-                                if(index === 2) {
+                                if(index === 1) {
                                     // cut-edges
                                     simulationParams.slotSetImageNodeSizeMode('centrality')
                                     cmbxNodeSizeMode.mode = 'centrality'
@@ -334,15 +316,15 @@ Item {
                                 target: simulationParams
                                 onNotifyImageNodeSizeModeChanged: {
                                     if(nodeSizeMode === 'fixed') {
-                                        cmbxNodeSizeMode.currentIndex = 0
+                                        cmbxNodeSizeMode.currentIndex = 2
                                         cmbxNodeSizeMode.mode = 'fixed'
                                     }
                                     else if(nodeSizeMode === 'centrality') {
-                                        cmbxNodeSizeMode.currentIndex = 2
+                                        cmbxNodeSizeMode.currentIndex = 1
                                         cmbxNodeSizeMode.mode = 'centrality'
                                     }
                                     else {
-                                        cmbxNodeSizeMode.currentIndex = 1
+                                        cmbxNodeSizeMode.currentIndex = 0
                                         cmbxNodeSizeMode.mode = 'highlight-new'
                                     }
                                 }
@@ -397,7 +379,7 @@ Item {
 
                         Text {
                             id: txtNodeSize
-                            text: ""
+                            text: "20 pixels"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -406,15 +388,9 @@ Item {
                             Connections {
                                 target: simulationParams
                                 onNotifyImageNodeSizeChanged: {
-                                    txtNodeSize.text = String(nodeSize)
+                                    txtNodeSize.text = String(nodeSize) + (nodeSize == 1 ? " pixel" : " pixels")
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipNodeSize')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -458,7 +434,7 @@ Item {
 
                         Text {
                             id: txtEdgeSize
-                            text: ""
+                            text: "1 pixel"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -467,15 +443,9 @@ Item {
                             Connections {
                                 target: simulationParams
                                 onNotifyImageEdgeSizeChanged: {
-                                    txtEdgeSize.text = String(edgeSize)
+                                    txtEdgeSize.text = String(edgeSize) + (edgeSize == 1 ? " pixel" : " pixels")
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipEdgeSize')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -521,7 +491,7 @@ Item {
 
                         Text {
                             id: txtMinNodeSize
-                            text: ""
+                            text: "20 pixels"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -530,19 +500,13 @@ Item {
                             Connections {
                                 target: simulationParams
                                 onNotifyImageMinNodeSizeChanged: {
-                                    txtMinNodeSize.text = String(minNodeSize)
+                                    txtMinNodeSize.text = String(minNodeSize) + (minNodeSize == 1 ? " pixel" : " pixels")
                                 }
                                 onNotifyImageMaxNodeSizeChanged: {
                                     // when min node is increased
                                     sldrMinNodeSize.to = maxNodeSize - 1
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipMinNodeSize')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -552,7 +516,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Minimum Node Size"
+                            text: "Maximum Node Size"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -588,7 +552,7 @@ Item {
 
                         Text {
                             id: txtMaxNodeSize
-                            text: ""
+                            text: "60 pixels"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -597,19 +561,13 @@ Item {
                             Connections {
                                 target: simulationParams
                                 onNotifyImageMaxNodeSizeChanged: {
-                                    txtMaxNodeSize.text = String(maxNodeSize)
+                                    txtMaxNodeSize.text = String(maxNodeSize) + (maxNodeSize == 1 ? " pixel" : " pixels")
                                 }
                                 onNotifyImageMinNodeSizeChanged: {
                                     // when min node is increased
                                     sldrMaxNodeSize.from = minNodeSize + 1
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipMaxNodeSize')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -627,20 +585,20 @@ Item {
 
                         BasicComponents.Combo {
                             id: cmbxLblNodeType
-                            model: ["id", "order"]
+                            model: ["order", "id"]
 
-                            property string mode: 'id'
+                            property string mode: 'order'
 
                             Layout.preferredWidth: 150
                             Layout.leftMargin: 15
 
                             onActivated: {
-                                if(index === 0) {
+                                if(index === 1) {
                                     // communities
                                     simulationParams.slotSetImageLabelType('id')
                                     cmbxLblNodeType.mode = 'id'
                                 }
-                                if(index === 1) {
+                                if(index === 0) {
                                     // cut-edges
                                     simulationParams.slotSetImageLabelType('order')
                                     cmbxLblNodeType.mode = 'order'
@@ -652,11 +610,11 @@ Item {
                                 onNotifyImageLabelTypeChanged: {
                                     if(labelType === 'id') {
                                         cmbxLblNodeType.mode = 'id'
-                                        cmbxLblNodeType.currentIndex = 0
+                                        cmbxLblNodeType.currentIndex = 1
                                     }
                                     else {
                                         cmbxLblNodeType.mode = 'order'
-                                        cmbxLblNodeType.currentIndex = 1
+                                        cmbxLblNodeType.currentIndex = 0
                                     }
                                 }
                             }
@@ -707,22 +665,16 @@ Item {
 
                         Text {
                             id: txtLabelSize
-                            text: ""
+                            text: "10 pixels"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
                             Connections {
                                 target: simulationParams
                                 onNotifyImageLabelSizeChanged: {
-                                    txtLabelSize.text = String(labelSize)
+                                    txtLabelSize.text = String(labelSize) + (labelSize == 1 ? " pixel" : " pixels")
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipLabelSize')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -767,7 +719,7 @@ Item {
 
                         Text {
                             id: txtCutEdgeNodeSize
-                            text: ""
+                            text: "10 pixels"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -776,7 +728,7 @@ Item {
                             Connections {
                                 target: simulationParams
                                 onNotifyImageCutEdgeNodeSizeChanged: {
-                                    txtCutEdgeNodeSize.text = String(cutEdgeNodeSize)
+                                    txtCutEdgeNodeSize.text = String(cutEdgeNodeSize) + (cutEdgeNodeSize == 1 ? " pixel" : " pixels")
                                 }
                             }
                         }
@@ -840,7 +792,7 @@ Item {
 
                         Text {
                             id: txtCutEdgeLength
-                            text: ""
+                            text: "50%"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 

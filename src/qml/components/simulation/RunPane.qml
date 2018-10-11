@@ -765,6 +765,14 @@ Item {
                     Item {Layout.preferredHeight: 5}
 
                     RowLayout {
+
+                        Item {width: 1}
+
+                        Text {
+                            text: "This may take a few minutes to run."
+                            font.family: "Open Sans"
+                        }
+
                         Item {Layout.fillWidth: true}
 
                         Text {

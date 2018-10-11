@@ -23,7 +23,7 @@ Item {
             paneList.addPane("Partitioning", "partition")
             paneList.addPane("Community Node Coloring", "clustering")
             paneList.addPane("Layout & Coloring", "layout")
-            paneList.addPane("Image Rendering", "image")
+            paneList.addPane("Image Size", "image")
             paneList.addPane("Output", "output")
             paneList.addPane("Run", "run")
 
