@@ -1,0 +1,2 @@
+title=EX2 Title
+description=EX2 Description for this example on a single line

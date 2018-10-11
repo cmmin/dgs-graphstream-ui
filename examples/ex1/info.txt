@@ -1,0 +1,2 @@
+title=EX1 Title for this example
+description=EX1 Description for this example on a single line

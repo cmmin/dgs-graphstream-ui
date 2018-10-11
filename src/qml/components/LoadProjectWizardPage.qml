@@ -83,6 +83,7 @@ Item {
         anchors.left: root.left
         anchors.right: root.right
         anchors.top: txtDescription.bottom
+        anchors.topMargin: 50
 
         Item {Layout.fillWidth: true}
 
@@ -99,13 +100,6 @@ Item {
         }
 
         Item {Layout.fillWidth: true}
-
-        Text {
-            text: "-- or --"
-
-            font.family: "Ubuntu"
-            font.pixelSize: 18
-        }
 
         Item {Layout.fillWidth: true}
 
