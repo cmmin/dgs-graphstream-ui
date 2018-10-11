@@ -14,6 +14,9 @@ Rectangle {
 
     property string currentProjectPath: ""
 
+    property bool wizardVisible: false
+    signal openProjectWizard
+
     Connections {
         target: dgsSettings
         onNotifyOverallValidationChanged: {
@@ -50,7 +53,44 @@ Rectangle {
 
         Item {Layout.fillWidth: true} // filler spacer
 
-        // Settings button
+        Rectangle {
+            Layout.fillHeight: true
+            Layout.preferredWidth: txtOpenWizard.paintedWidth + 12
+
+            visible: !root.settingsActivated && !root.wizardVisible
+
+            Text {
+                id: txtOpenWizard
+                text: "Open Project Wizard"
+                font.family: "Ubuntu"
+                font.pixelSize: 16
+                anchors.centerIn: parent
+            }
+
+            Rectangle {
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 1
+                color: "#BFBFBF"
+            }
+
+            Rectangle {
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 1
+                color: "#BFBFBF"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.openProjectWizard()
+                }
+            }
+        }
+
 
         Rectangle {
             Layout.fillHeight: true

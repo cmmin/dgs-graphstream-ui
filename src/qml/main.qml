@@ -35,13 +35,18 @@ ApplicationWindow {
             anchors.top: contents.top
             anchors.right: contents.right
 
+            wizardVisible: loadProjectPage.visible
+
+            onOpenProjectWizard: {
+                loadProjectPage.projectLoaded = false
+            }
         }
 
         Components.LoadProjectWizardPage {
             id: loadProjectPage
 
             visible: navigationBar.settingsActivated === false && loadProjectPage.projectLoaded === false
-            projectLoaded: true
+            //projectLoaded: true
 
             anchors.left: contents.left
             anchors.top: navigationBar.bottom
