@@ -215,7 +215,7 @@ Item {
 
         Text {
             id: txtCreateStep2
-            text: "Step 2: Create new empty project, or from an example."
+            text: "Step 2: Create new project or use example project"
 
             anchors.top: rwOutputExists.bottom
             anchors.left: parent.left
@@ -236,7 +236,7 @@ Item {
 
             width: 150
 
-            model: ["Empty Project", "From Example"]
+            model: ["New Project", "Example Project"]
 
             onActivated: {
                 if(index === 0) {
@@ -282,7 +282,7 @@ Item {
             BasicComponents.Combo {
                 id: cmbExample
 
-                Layout.preferredWidth: 150
+                Layout.preferredWidth: 350
 
                 property string exampleID: ''
                 property string exampleDescription: ''
