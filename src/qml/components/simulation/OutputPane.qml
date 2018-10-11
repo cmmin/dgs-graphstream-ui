@@ -131,12 +131,6 @@ Item {
                             }
                         }
 
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipOutputFolderPath')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
-
                         Item {Layout.fillWidth: true}
                     }
 
@@ -222,7 +216,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Video File Path"
+                            text: "Video File Name"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }
@@ -234,7 +228,7 @@ Item {
 
                             color: txtVideoPath.pathValid ? "black" : "#E24670"
 
-                            text: "vid.mp4"
+                            text: "vid"
 
                             background: Rectangle {
                                 color: "white"
@@ -271,12 +265,6 @@ Item {
                                     txtFullVideoPath.pathValid = isValid
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipVideoFilePath')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -319,22 +307,16 @@ Item {
 
                         Text {
                             id: txtFPS
-                            text: ""
+                            text: "8 FPS"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
                             Connections {
                                 target: simulationParams
                                 onNotifyVideoFPSChanged: {
-                                    txtFPS.text = String(fps)
+                                    txtFPS.text = String(fps) + " FPS"
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipFPS')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Item {Layout.fillWidth: true}
@@ -376,14 +358,14 @@ Item {
 
                         Text {
                             id: txtPaddingTime
-                            text: ""
+                            text: "2.0s"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
                             Connections {
                                 target: simulationParams
                                 onNotifyVideoPaddingTimeChanged: {
-                                    txtPaddingTime.text = String(paddingTime)
+                                    txtPaddingTime.text = String(paddingTime) + "s"
                                 }
                             }
                         }
@@ -472,12 +454,6 @@ Item {
 
                         }
 
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipPDFOutput')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
-
                         Item {Layout.fillWidth: true}
                     }
 
@@ -522,7 +498,7 @@ Item {
 
                         Text {
                             id: txtPDFFramePercentage
-                            text: ""
+                            text: "20%"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -531,7 +507,7 @@ Item {
                             Connections {
                                 target: simulationParams
                                 onNotifyPDFFramePercentageChanged: {
-                                    txtPDFFramePercentage.text = String(pdfFramePercentage)
+                                    txtPDFFramePercentage.text = String(pdfFramePercentage) + "%"
                                 }
                             }
                         }
