@@ -67,7 +67,7 @@ Item {
                     // contents go here
                     Text {
                         id: txtLayout
-                        text: "Simulation Scheme"
+                        text: "Simulation"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -87,6 +87,12 @@ Item {
 
                     RowLayout {
 
+                        Text {
+                            text: "Simulation Mode"
+                            font.family: "Open Sans"
+                            Layout.leftMargin: 15
+                        }
+
                       BasicComponents.Combo {
                           id: cmbxScheme
                           model: ["Showcase Communities", "Showcase Edges Cut"]
@@ -105,9 +111,6 @@ Item {
                               }
                           }
 
-                          /*Component.onCompleted: {
-                              simulationParams.slotSetScheme('communities')
-                          }*/
                           Connections {
                               target: simulationParams
                               onNotifySchemeChanged: {
@@ -119,8 +122,6 @@ Item {
                                   }
                               }
                           }
-
-
                       }
 
                       BasicComponents.TooltipIcon {
@@ -130,56 +131,6 @@ Item {
                       }
                       Item {Layout.fillWidth: true}
                     }
-
-                    Item {Layout.preferredHeight: 10}
-
-
-
-                }
-            }
-        }
-    } // END PANE
-
-    Item {
-        id: paneInputs
-        anchors.left: root.left
-        anchors.right: root.right
-
-        anchors.top: paneScheme.bottom
-        height: childrenRect.height
-
-        ColumnLayout {
-            width: parent.width
-
-            Rectangle {
-                radius: 5
-                color: "#F7F7F7"
-
-                Layout.fillWidth: true
-                Layout.margins: 10
-                Layout.preferredHeight: childrenRect.height
-
-                ColumnLayout {
-                    width: parent.width
-
-                    // contents go here
-                    Text {
-                        id: txtInputs
-                        text: "Graph Inputs"
-                        font.family: "Ubuntu"
-                        font.pixelSize: 14
-                        Layout.leftMargin: 10
-                        Layout.topMargin: 10
-                    }
-
-                    Rectangle {
-                        Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtInputs.paintedWidth * 2
-                        Layout.leftMargin: 10
-                        color: "#BFBFBF"
-                    }
-
-                    Item {Layout.preferredHeight: 5}
 
                     // input graph
                     RowLayout {
@@ -212,12 +163,6 @@ Item {
                                     }
                                 }
                             }
-                        }
-
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipGraphFilePath')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
                         }
 
                         Text {
@@ -263,13 +208,6 @@ Item {
                             }
                         }
 
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipGraphFormat')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
-
-
                         Item {Layout.fillWidth: true}
                     }
 
@@ -287,6 +225,8 @@ Item {
                         font.pixelSize: 10
                         color: txtFullGraphPath.showError ? "#E24670" : "#858585"
 
+                        visible: txtFullGraphPath.path.length > 0
+
                         Connections {
                             target: simulationParams
                             onNotifyGraphFilePathChanged: {
@@ -294,6 +234,22 @@ Item {
                                 txtFullGraphPath.showError = !fileExistsAtPath
                             }
                         }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
+                        Text {
+                            text: "Advanced Options"
+                            Layout.leftMargin: 15
+                            font.family: "Open Sans"
+                        }
+
+                        BasicComponents.SimpleSwitch {
+                            id: switchAdvanceMode
+                        }
+
+                        Item {Layout.fillWidth: true}
                     }
 
                     Item {Layout.preferredHeight: 10}
@@ -307,7 +263,9 @@ Item {
         anchors.left: root.left
         anchors.right: root.right
 
-        anchors.top: paneInputs.bottom
+        visible: switchAdvanceMode.checked
+
+        anchors.top: paneScheme.bottom
         height: childrenRect.height
 
         ColumnLayout {
@@ -476,13 +434,6 @@ Item {
                             }
                         }
 
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipNodeOrderRandomSeed')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
-
-
                         Item {Layout.fillWidth: true}
                     }
 
@@ -491,145 +442,13 @@ Item {
             }
         }
     } // END PANE
-
-
-    /*
-    // Output Options
-    Item {
-        id: paneOutput
-
-        anchors.left: root.left
-        anchors.right: root.right
-
-        anchors.top: paneArrivals.bottom
-
-        height: childrenRect.height
-
-        //visible: false
-
-        ColumnLayout {
-            width: parent.width
-
-            Rectangle {
-                radius: 5
-                color: "#F7F7F7"
-
-                Layout.fillWidth: true
-                Layout.margins: 10
-                Layout.preferredHeight: childrenRect.height
-
-                ColumnLayout {
-                    width: parent.width
-
-                    // contents go here
-                    Text {
-                        id: txtOutput
-                        text: "Output Options"
-                        font.family: "Ubuntu"
-                        font.pixelSize: 14
-                        Layout.leftMargin: 10
-                        Layout.topMargin: 10
-                    }
-
-                    Rectangle {
-                        //Layout.fillWidth: true
-                        Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtOutput.paintedWidth * 2
-                        Layout.leftMargin: 10
-                        //Layout.rightMargin: 100
-                        color: "#BFBFBF"
-                    }
-
-                    Item {Layout.preferredHeight: 5}
-
-                    // output folder
-                    RowLayout {
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: "Output Folder Path"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-                        }
-
-                        TextField {
-                            id: txtOutputFolderPath
-                            Layout.preferredWidth: 300
-                            property bool pathValid: true
-
-                            color: txtOutputFolderPath.pathValid ? "black" : "#E24670"
-
-                            //text: "../../dgs-graphstream/output/"
-
-                            property bool disableUpdate: false
-
-                            background: Rectangle {
-                                color: "white"
-                                border.color: "#BFBFBF"
-                                border.width: 1
-                            }
-
-                            onTextChanged: {
-                                if(txtOutputFolderPath.disableUpdate === false) {
-                                    simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
-                                }
-                            }
-
-                            Connections {
-                                target: simulationParams
-                                onNotifyOutputPathChanged: {
-                                    txtOutputFolderPath.pathValid = folderExists
-                                    if(txtOutputFolderPath.text !== outputPath) {
-                                        txtOutputFolderPath.disableUpdate = true
-                                        txtOutputFolderPath.text = outputPath
-                                        txtOutputFolderPath.disableUpdate = false
-                                    }
-                                }
-                            }
-                        }
-
-                        Item {Layout.fillWidth: true}
-                    }
-
-                    Text {
-                        id: txtFullOutputPath
-
-                        property string path: ""
-                        property string errorStr: "<b>Folder Doesn't Exist</b>: "
-                        property bool showError: false
-
-                        Layout.leftMargin: 15
-
-                        text: txtFullOutputPath.showError ? txtFullOutputPath.errorStr + txtFullOutputPath.path : txtFullOutputPath.path
-                        font.family: "Open Sans"
-                        font.pixelSize: 10
-                        color: txtFullOutputPath.showError ? "#E24670" : "#858585"
-
-                        Connections {
-                            target: simulationParams
-                            onNotifyOutputPathChanged: {
-                                if(outputPath.length === 0) {
-                                    outputPath = 'output folder is required'
-                                }
-
-                                txtFullOutputPath.path = outputPath
-
-                                txtFullOutputPath.showError = !folderExists
-                            }
-                        }
-                    }
-
-                    Item {Layout.preferredHeight: 10}
-                }
-            }
-        }
-    } // END PANE
-    */
 
     Item {
         id: paneMoreInputs
         anchors.left: root.left
         anchors.right: root.right
+
+        visible: switchAdvanceMode.checked
 
         anchors.top: paneArrivals.bottom
         height: childrenRect.height
@@ -824,6 +643,5 @@ Item {
             }
         }
     } // END PANE
-
 
 }
