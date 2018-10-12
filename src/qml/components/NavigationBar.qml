@@ -12,10 +12,14 @@ Rectangle {
     property bool settingsActivated: false
     property bool settingsValid: true
 
+    property bool projectLoadedAtLeastOnce: false
+
     property string currentProjectPath: ""
 
     property bool wizardVisible: false
+
     signal openProjectWizard
+    signal backFromProjectWizard
 
     Connections {
         target: dgsSettings
@@ -87,6 +91,44 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     root.openProjectWizard()
+                }
+            }
+        }
+
+        Rectangle {
+            Layout.fillHeight: true
+            Layout.preferredWidth: txtBackWizard.paintedWidth + 12
+
+            visible: !root.settingsActivated && root.wizardVisible && root.projectLoadedAtLeastOnce
+
+            Text {
+                id: txtBackWizard
+                text: "Back to Project"
+                font.family: "Ubuntu"
+                font.pixelSize: 16
+                anchors.centerIn: parent
+            }
+
+            Rectangle {
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 1
+                color: "#BFBFBF"
+            }
+
+            Rectangle {
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                width: 1
+                color: "#BFBFBF"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.backFromProjectWizard()
                 }
             }
         }

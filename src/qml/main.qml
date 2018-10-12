@@ -41,6 +41,10 @@ ApplicationWindow {
                 loadProjectPage.projectLoaded = false
                 loadProjectPage.reset()
             }
+
+            onBackFromProjectWizard: {
+              loadProjectPage.projectLoaded = true              
+            }
         }
 
         Components.LoadProjectWizardPage {
@@ -48,6 +52,7 @@ ApplicationWindow {
 
             visible: navigationBar.settingsActivated === false && loadProjectPage.projectLoaded === false
             //projectLoaded: true
+
 
             anchors.left: contents.left
             anchors.top: navigationBar.bottom
@@ -58,10 +63,12 @@ ApplicationWindow {
                 examples.createExample(exampleID, path)
                 var fromExample = (exampleID.length > 0)
                 loadProjectPage.projectLoaded = simulationParams.slotCreateNewProject(path, fromExample)
+                navigationBar.projectLoadedAtLeastOnce = true
             }
 
             onOpenProject: {
                 loadProjectPage.projectLoaded = simulationParams.slotLoadProject(path)
+                navigationBar.projectLoadedAtLeastOnce = true
             }
         }
 
