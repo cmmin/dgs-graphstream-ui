@@ -16,6 +16,18 @@ Item {
     signal createNewProject(string path, string exampleID)
     signal openProject(string path)
 
+
+    function reset() {
+      chbxLoadProject.checked = false
+      chbxNewProject.checked = false
+      root.existingProjectOutputPath = ''
+      root.newProjectOutputPath = ''
+      txtOutputValid.checkValid()
+      txtNewOutputValid.checkValid()
+      cmbCreate.currentIndex = 0
+      cmbCreate.creatingEmpty = true
+    }
+
     Component.onCompleted: {
         //root.openProject('/Users/voreno/Desktop/tt')
     }

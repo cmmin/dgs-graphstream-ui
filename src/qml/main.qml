@@ -39,6 +39,7 @@ ApplicationWindow {
 
             onOpenProjectWizard: {
                 loadProjectPage.projectLoaded = false
+                loadProjectPage.reset()
             }
         }
 

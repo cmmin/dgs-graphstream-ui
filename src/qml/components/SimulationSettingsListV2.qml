@@ -52,7 +52,7 @@ Rectangle {
             property bool checked: false
 
             colorChecked: "#E3E3E3"
-            colorUnchecked: "#E3E3E3"
+            //colorUnchecked: "#E3E3E3"
 
             onClicked: {
                 advanced.checked = !advanced.checked
@@ -117,6 +117,10 @@ Rectangle {
         SimulationPageButton {
             Layout.fillWidth: true
             Layout.preferredHeight: 40
+
+            visible: advanced.checked
+            colorUnchecked: "#E3E3E3"
+
             paneCode: "output"
             paneTitle: "Output"
             currentPaneCode: root.currentPaneCode

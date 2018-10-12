@@ -1,9 +1,9 @@
-tooltipAssignments,File with list of partition IDs for each node in the graph.
+tooltipAssignments,File with list of partition IDs, for each node in the graph.
 tooltipScheme,tooltipScheme
 tooltipNodeOrderFilePath,tooltipNodeOrderFilePath
 tooltipNodesIgnoreFilePath,tooltipNodesIgnoreFilePath
 tooltipColorClustering,tooltipColorClustering
-tooltipAssignmentsFilePath,tooltipAssignmentsFilePath
+tooltipAssignmentsFilePath,File with list of partition IDs, for each node in the graph.
 tooltipPartitionsImbalance,tooltipPartitionsImbalance
 tooltipPartitionWeights,tooltipPartitionWeights
 tooltipVisiblePartitions,tooltipVisiblePartitions
