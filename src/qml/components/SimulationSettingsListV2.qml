@@ -38,7 +38,7 @@ Rectangle {
             }
         }
 
-        SimulationPageButton {
+        SimulationPageButtonIcon {
             id: advanced
 
             Layout.fillWidth: true
@@ -49,7 +49,7 @@ Rectangle {
             paneTitle: "Advanced Options"
             currentPaneCode: "checked"
 
-            property bool checked: false
+            //property bool checked: false
 
             colorChecked: "#E3E3E3"
             //colorUnchecked: "#E3E3E3"
