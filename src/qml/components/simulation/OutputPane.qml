@@ -94,41 +94,26 @@ Item {
                             Layout.leftMargin: 15
                         }
 
-                        TextField {
-                            id: txtOutputFolderPath
-                            Layout.preferredWidth: 300
-                            property bool pathValid: true
+                        Text {
+                          id: txtOutputFolderPath
+                          Layout.preferredWidth: 300
 
-                            color: txtOutputFolderPath.pathValid ? "black" : "#E24670"
+                          text: ''
+                          font.family: "Open Sans"
+                          Layout.leftMargin: 15
 
-                            //text: "../../dgs-graphstream/output/"
+                          property bool pathValid: true
+                          color: txtOutputFolderPath.pathValid ? "black" : "#E24670"
 
-                            property bool disableUpdate: false
-                            enabled: false
-
-                            background: Rectangle {
-                                color: "white"
-                                border.color: "#BFBFBF"
-                                border.width: 1
-                            }
-
-                            onTextChanged: {
-                                if(txtOutputFolderPath.disableUpdate === false) {
-                                    simulationParams.slotSetOutputPath(txtOutputFolderPath.text)
-                                }
-                            }
-
-                            Connections {
-                                target: simulationParams
-                                onNotifyOutputPathChanged: {
-                                    txtOutputFolderPath.pathValid = folderExists
-                                    if(txtOutputFolderPath.text !== outputPath) {
-                                        txtOutputFolderPath.disableUpdate = true
-                                        txtOutputFolderPath.text = outputPath
-                                        txtOutputFolderPath.disableUpdate = false
-                                    }
-                                }
-                            }
+                          Connections {
+                              target: simulationParams
+                              onNotifyOutputPathChanged: {
+                                  txtOutputFolderPath.pathValid = folderExists
+                                  if(txtOutputFolderPath.text !== outputPath) {
+                                      txtOutputFolderPath.text = outputPath
+                                  }
+                              }
+                          }
                         }
 
                         Item {Layout.fillWidth: true}
@@ -228,7 +213,7 @@ Item {
 
                             color: txtVideoPath.pathValid ? "black" : "#E24670"
 
-                            text: "vid"
+                            text: ""
 
                             background: Rectangle {
                                 color: "white"
@@ -238,6 +223,10 @@ Item {
 
                             onTextChanged: {
                                 simulationParams.slotSetVideoPath(txtVideoPath.text)
+                            }
+
+                            Component.onCompleted: {
+                              txtVideoPath.text = "simulation"
                             }
 
                             Connections {

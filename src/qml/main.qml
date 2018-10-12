@@ -43,7 +43,7 @@ ApplicationWindow {
             }
 
             onBackFromProjectWizard: {
-              loadProjectPage.projectLoaded = true              
+              loadProjectPage.projectLoaded = true
             }
         }
 
@@ -51,7 +51,7 @@ ApplicationWindow {
             id: loadProjectPage
 
             visible: navigationBar.settingsActivated === false && loadProjectPage.projectLoaded === false
-            //projectLoaded: true
+            projectLoaded: true
 
 
             anchors.left: contents.left

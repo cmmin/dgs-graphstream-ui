@@ -392,7 +392,7 @@ Item {
                             id: txtOrderingSeed
                             Layout.preferredWidth: 100
                             text: ""
-                            color: txtOrderingSeed.valid === false ? "#E24670" : "black"
+                            color: txtOrderingSeed.valid === false ? "#E24670" : (txtOrderingSeed.enabled ? "black" : "#858585")
 
                             property bool disableUpdate: false
                             property bool valid: true

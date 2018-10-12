@@ -194,9 +194,8 @@ Item {
                             Layout.preferredWidth: 300
                             property bool pathValid: true
 
-                            color: root.assignmentsMode === 'file' ? txtAssignmentsFilePath.pathValid ? "black" : "#E24670" : "#858585"
+                            color: root.assignmentsMode === 'file' ? (txtAssignmentsFilePath.pathValid ? "black" : "#E24670") : "#858585"
 
-                            //text: "../../dgs-graphstream/inputs/assignments.txt"
                             enabled: root.assignmentsMode === 'file'
 
                             onTextChanged: {
@@ -292,7 +291,7 @@ Item {
 
                         Text {
                             id: txtNumPartitions
-                            text: ""
+                            text: "4"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -343,7 +342,7 @@ Item {
                         BasicComponents.Slider {
                             id: sldrLoadImbalance
 
-                            from: 1.0
+                            from: 1.001
                             to: 1.05
                             value: 1.001
                             stepSize: 0.001
@@ -368,7 +367,7 @@ Item {
 
                         Text {
                             id: txtLoadImbalance
-                            text: ""
+                            text: "1.001"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -409,11 +408,19 @@ Item {
                             Layout.preferredWidth: 300
                             property bool valid: true
 
-                            color: txtPartitionWeights.valid ? "black" : "#E24670"
-
-                            //text: "0.25,0.25,0.25,0.25"
+                            color: txtPartitionWeights.valid ? (txtPartitionWeights.enabled ? "black" : "#858585") : "#E24670"
 
                             enabled: root.assignmentsMode !== 'file'
+
+                            function computeValue(numPartitions) {
+                              var partWeightNum = 1.0 / (1.0 * numPartitions)
+                              var partWeight = String(partWeightNum).substr(0, 5)
+                              var s = partWeight
+                              for(var i = 1; i < numPartitions; i++) {
+                                  s += ',' + partWeight
+                              }
+                              txtPartitionWeights.text = s
+                            }
 
 
                             onTextChanged: {
@@ -426,14 +433,12 @@ Item {
                                     txtPartitionWeights.valid = isValid
                                 }
                                 onNotifyNumPartitionsChanged: {
-                                    var partWeightNum = 1.0 / (1.0 * numPartitions)
-                                    var partWeight = String(partWeightNum).substr(0, 5)
-                                    var s = partWeight
-                                    for(var i = 1; i < numPartitions; i++) {
-                                        s += ',' + partWeight
-                                    }
-                                    txtPartitionWeights.text = s
+                                  txtPartitionWeights.computeValue(numPartitions)
                                 }
+                            }
+
+                            Component.onCompleted: {
+                              txtPartitionWeights.computeValue(4)
                             }
                         }
 
@@ -481,6 +486,17 @@ Item {
 
                             Component.onCompleted: {
                                 simulationParams.slotSetVisiblePartitions(txtVisiblePartitions.text)
+                                txtVisiblePartitions.computeVisible(4)
+                            }
+
+                            function computeVisible(numPartitions) {
+                              var offset = 1
+                              var s = String(offset)
+                              //var remainder = 1.0 - parseFloat(partWeight)
+                              for(var i = 1; i < numPartitions; i++) {
+                                  s += ',' + String(i + offset)
+                              }
+                              txtVisiblePartitions.text = s
                             }
 
                             Connections {
@@ -489,13 +505,7 @@ Item {
                                     txtVisiblePartitions.valid = isValid
                                 }
                                 onNotifyNumPartitionsChanged: {
-                                    var offset = 1
-                                    var s = String(offset)
-                                    //var remainder = 1.0 - parseFloat(partWeight)
-                                    for(var i = 1; i < numPartitions; i++) {
-                                        s += ',' + String(i + offset)
-                                    }
-                                    txtVisiblePartitions.text = s
+                                  txtVisiblePartitions.computeVisible(numPartitions)
                                 }
                             }
                         }
@@ -533,7 +543,7 @@ Item {
                             id: txtPartitioningSeed
                             Layout.preferredWidth: 100
                             text: ""
-                            color: txtPartitioningSeed.valid === false ? "#E24670" : "black"
+                            color: txtPartitioningSeed.valid === false ? "#E24670" : (txtPartitioningSeed.enabled ? "black" : "#858585")
 
                             property bool disableUpdate: false
                             property bool valid: true

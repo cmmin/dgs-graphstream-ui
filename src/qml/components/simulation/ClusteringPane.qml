@@ -246,7 +246,7 @@ Item {
 
                         Text {
                             id: txtInfomapCalls
-                            text: ""
+                            text: "0"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -320,7 +320,7 @@ Item {
                             id: txtClusteringSeed
                             Layout.preferredWidth: 100
                             text: ""
-                            color: txtClusteringSeed.valid === false ? "#E24670" : "black"
+                            color: txtClusteringSeed.valid === false ? "#E24670" : (txtClusteringSeed.enabled ? "black" : "#858585")
 
                             property bool disableUpdate: false
                             property bool valid: true

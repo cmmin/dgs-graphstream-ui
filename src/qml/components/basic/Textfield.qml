@@ -10,7 +10,7 @@ TextField {
         border.width: 1
     }
 
-    //color: root.enabled ? "black" : "#858585"
+    color: root.enabled ? "black" : "#858585"
     //color:  "#858585"
 
     selectByMouse: true

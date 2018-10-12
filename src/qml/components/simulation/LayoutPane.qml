@@ -206,7 +206,7 @@ Item {
 
                                     Text {
                                         id: txtForce
-                                        text: ""
+                                        text: "3.0"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
 
@@ -552,7 +552,7 @@ Item {
 
                                         property bool colorValid: true
 
-                                        color: txtNodeColor.colorValid ? "black" : "#E24670"
+                                        color: txtNodeColor.colorValid ? (txtNodeColor.enabled ? "black" : "#858585") : "#E24670"
 
                                         text: ""
 
