@@ -468,7 +468,7 @@ Item {
 
             BasicComponents.Button {
                 text: "Open Project"
-                Layout.preferredWidth: 100
+                Layout.preferredWidth: 150
 
                 enabled: txtOutputValid.isValid
 

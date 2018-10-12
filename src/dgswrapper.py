@@ -126,7 +126,10 @@ class DGSWrapper(QObject):
 
         # output
         args.append('-o')
-        args.append(self.simulationParams.outputPath)
+        # compute relative path from dgsgraphstream to the output folder
+        # OSLOM2 fails if we give it an absolute path
+        relOutputPath = os.path.relpath(self.simulationParams.outputPath, self.settings.dgsProgramDirectory)
+        args.append(relOutputPath)
 
         # graph file
         args.append('-g')

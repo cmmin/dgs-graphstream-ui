@@ -393,12 +393,6 @@ Item {
                             }
                         }
 
-                        BasicComponents.TooltipIcon {
-                            text: uiTexts.get('tooltipClusteringSeed')
-                            Layout.preferredWidth: 24
-                            Layout.preferredHeight: 24
-                        }
-
                         Item {Layout.fillWidth: true}
                     }
 
