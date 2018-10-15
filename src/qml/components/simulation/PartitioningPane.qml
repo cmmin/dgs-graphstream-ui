@@ -342,10 +342,10 @@ Item {
                         BasicComponents.Slider {
                             id: sldrLoadImbalance
 
-                            from: 1.001
-                            to: 1.05
-                            value: 1.001
-                            stepSize: 0.001
+                            from: 1
+                            to: 5
+                            value: 1
+                            stepSize: 1
 
                             enabled: root.assignmentsMode === 'metis'
 
@@ -367,7 +367,7 @@ Item {
 
                         Text {
                             id: txtLoadImbalance
-                            text: "1.001"
+                            text: "1%"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -376,7 +376,7 @@ Item {
                             Connections {
                                 target: simulationParams
                                 onNotifyLoadImbalanceChanged: {
-                                    txtLoadImbalance.text = String(loadImbalance)
+                                    txtLoadImbalance.text = String(loadImbalance) + "%"
                                 }
                             }
                         }

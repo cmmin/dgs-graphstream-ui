@@ -59,7 +59,9 @@ def loadConfigSettings(settingsPath, simparams):
                         pass
                 elif key == 'ubvec':
                     try:
-                        simparams.slotSetLoadImbalance(float(value))
+                        # convert ubvec to percentage
+                        ubvec = int(float(value) * 1000.0) - 1000
+                        simparams.slotSetLoadImbalance(ubvec)
                     except ValueError as err:
                         pass
                 elif key == 'tpwgts':
