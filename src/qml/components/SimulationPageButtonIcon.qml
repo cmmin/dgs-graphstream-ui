@@ -32,11 +32,11 @@ Rectangle {
     Image {
         anchors.verticalCenter: root.verticalCenter
         anchors.right: root.right
-        anchors.rightMargin: 5
+        anchors.rightMargin: 10
 
         //source: root.checked ? "../assets/icons/chevron_down_light.png" : "../assets/icons/chevron_right_light.png"
         source: "../assets/icons/chevron.png"
-        width: 20; height: 20
+        width: 20; height: 20;
         fillMode: Image.PreserveAspectFit
 
         transformOrigin: Item.Center
