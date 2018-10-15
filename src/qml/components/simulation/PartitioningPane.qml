@@ -183,7 +183,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Assignments File Path"
+                            text: "Assignments File Path "
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                             color: root.assignmentsMode === 'file' ? "black" : "#858585"
@@ -464,7 +464,7 @@ Item {
                         visible: switchAdvanceMode.checked
 
                         Text {
-                            text: "Visible Partitions"
+                            text: "Visible Partitions "
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -473,7 +473,7 @@ Item {
 
                         BasicComponents.Textfield {
                             id: txtVisiblePartitions
-                            Layout.preferredWidth: 200
+                            Layout.preferredWidth: 300
                             property bool valid: true
                             color: txtVisiblePartitions.valid ? "black" : "#E24670"
                             //enabled: cmbxRandomAssignments.checked

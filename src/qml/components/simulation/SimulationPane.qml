@@ -86,6 +86,7 @@ Item {
                     Item {Layout.preferredHeight: 5}
 
                     RowLayout {
+                        Layout.fillWidth: true
 
                         Text {
                             text: "Simulation Mode"
@@ -98,7 +99,7 @@ Item {
                           model: ["Showcase Communities", "Showcase Edges Cut"]
 
                           Layout.preferredWidth: 300
-                          Layout.leftMargin: 15
+                          //Layout.leftMargin: 15
 
                           onActivated: {
                               if(index === 0) {
@@ -138,7 +139,7 @@ Item {
 
                         Text {
                             id: lblGraphFilePath
-                            text: "Graph File Path"
+                            text: "Graph File Path   "
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }
@@ -168,7 +169,7 @@ Item {
                         Text {
                             text: "Graph Format"
                             font.family: "Open Sans"
-                            Layout.leftMargin: 15
+                            //Layout.leftMargin: 15
                         }
 
                         BasicComponents.Combo {

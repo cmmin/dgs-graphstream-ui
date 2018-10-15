@@ -97,7 +97,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Width"
+                            text: "Width "
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
                         }
@@ -129,7 +129,6 @@ Item {
                         Text {
                             text: "pixels"
                             font.family: "Open Sans"
-                            Layout.leftMargin: 15
                         }
                     }
 
@@ -171,7 +170,6 @@ Item {
                         Text {
                             text: "pixels"
                             font.family: "Open Sans"
-                            Layout.leftMargin: 15
                         }
                     }
 
@@ -212,7 +210,6 @@ Item {
                             id: txtBorderSize
                             text: "1 pixel"
                             font.family: "Open Sans"
-                            Layout.leftMargin: 15
 
                             Connections {
                                 target: simulationParams
