@@ -840,8 +840,8 @@ Item {
                                         text: "Edge Size"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
-
-                                        color: cmbxNodeSizeMode.mode  === 'fixed' ? "black" : "#858585"
+                                        color: 'black'
+                                        //color: cmbxNodeSizeMode.mode  === 'fixed' ? "black" : "#858585"
                                     }
 
                                     BasicComponents.Slider {
@@ -851,7 +851,7 @@ Item {
                                         value: 1
                                         stepSize: 1
 
-                                        enabled: (cmbxNodeSizeMode.mode === 'fixed')
+                                        //enabled: (cmbxNodeSizeMode.mode === 'fixed')
 
                                         Layout.preferredWidth: 100
 
@@ -874,7 +874,8 @@ Item {
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
 
-                                        color: cmbxNodeSizeMode.mode === 'fixed' ? "black" : "#858585"
+                                        color: "black"
+                                        //color: cmbxNodeSizeMode.mode === 'fixed' ? "black" : "#858585"
 
                                         Connections {
                                             target: simulationParams
