@@ -292,10 +292,12 @@ class DGSWrapper(QObject):
 
         args.append('--border-size')
         args.append(str(self.simulationParams.imageBorderSize))
-        args.append('--label-type')
-        args.append(self.simulationParams.imageLabelType)
-        args.append('--label-size')
-        args.append(str(self.simulationParams.imageLabelSize))
+
+        if self.simulationParams.imageLabelType != 'none':        
+            args.append('--label-type')
+            args.append(self.simulationParams.imageLabelType)
+            args.append('--label-size')
+            args.append(str(self.simulationParams.imageLabelSize))
 
         args.append('--node-size-mode')
         args.append(self.simulationParams.imageNodeSizeMode)

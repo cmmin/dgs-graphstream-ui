@@ -900,6 +900,14 @@ Item {
                                         color: cmbxNodeSizeMode.mode  !== 'fixed' ? "black" : "#858585"
                                     }
 
+                                    Text {
+                                        text: "0"
+                                        font.family: "Open Sans"
+                                        Layout.leftMargin: 15
+
+                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
+                                    }
+
                                     BasicComponents.Slider {
                                         id: sldrMinNodeSize
                                         from: 1
@@ -924,6 +932,14 @@ Item {
                                             }
                                         }
 
+                                    }
+
+                                    Text {
+                                        text: String(sldrMinNodeSize.to)
+                                        font.family: "Open Sans"
+                                        Layout.leftMargin: 15
+
+                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
                                     }
 
                                     Text {
@@ -960,6 +976,15 @@ Item {
                                         color: cmbxNodeSizeMode.mode  !== 'fixed' ? "black" : "#858585"
                                     }
 
+
+                                    Text {
+                                        text: String(sldrMaxNodeSize.from)
+                                        font.family: "Open Sans"
+                                        Layout.leftMargin: 15
+
+                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
+                                    }
+
                                     BasicComponents.Slider {
                                         id: sldrMaxNodeSize
                                         from: 21
@@ -983,8 +1008,13 @@ Item {
                                                 }
                                             }
                                         }
+                                    }
+                                    Text {
+                                        text: String(sldrMaxNodeSize.to)
+                                        font.family: "Open Sans"
+                                        Layout.leftMargin: 15
 
-
+                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
                                     }
 
                                     Text {
@@ -1022,23 +1052,25 @@ Item {
 
                                     BasicComponents.Combo {
                                         id: cmbxLblNodeType
-                                        model: ["order", "id"]
+                                        model: ["none", "order", "id"]
 
-                                        property string mode: 'order'
+                                        property string mode: 'none'
 
                                         Layout.preferredWidth: 150
                                         Layout.leftMargin: 15
 
                                         onActivated: {
-                                            if(index === 1) {
-                                                // communities
+                                            if(index === 2) {
                                                 simulationParams.slotSetImageLabelType('id')
                                                 cmbxLblNodeType.mode = 'id'
                                             }
-                                            if(index === 0) {
-                                                // cut-edges
+                                            if(index === 1) {
                                                 simulationParams.slotSetImageLabelType('order')
                                                 cmbxLblNodeType.mode = 'order'
+                                            }
+                                            if(index === 0) {
+                                                simulationParams.slotSetImageLabelType('none')
+                                                cmbxLblNodeType.mode = 'none'
                                             }
                                         }
 
@@ -1047,11 +1079,15 @@ Item {
                                             onNotifyImageLabelTypeChanged: {
                                                 if(labelType === 'id') {
                                                     cmbxLblNodeType.mode = 'id'
-                                                    cmbxLblNodeType.currentIndex = 1
+                                                    cmbxLblNodeType.currentIndex = 2
+                                                }
+                                                else if(labelType === 'none') {
+                                                    cmbxLblNodeType.mode = 'none'
+                                                    cmbxLblNodeType.currentIndex = 0
                                                 }
                                                 else {
                                                     cmbxLblNodeType.mode = 'order'
-                                                    cmbxLblNodeType.currentIndex = 0
+                                                    cmbxLblNodeType.currentIndex = 1
                                                 }
                                             }
                                         }
@@ -1075,6 +1111,9 @@ Item {
                                         text: "Label Size"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
+
+                                        color: cmbxLblNodeType.mode !== 'none' ? "black" : "#858585"
+
                                     }
 
                                     BasicComponents.Slider {
@@ -1085,6 +1124,8 @@ Item {
                                         stepSize: 1
 
                                         Layout.preferredWidth: 100
+
+                                        enabled: cmbxLblNodeType.mode !== 'none'
 
                                         onValueChanged: {
                                             simulationParams.slotSetImageLabelSize(sldrLabelSize.value)
@@ -1105,6 +1146,8 @@ Item {
                                         text: "10 pixels"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
+
+                                        color: cmbxLblNodeType.mode !== 'none' ? "black" : "#858585"
 
                                         Connections {
                                             target: simulationParams
