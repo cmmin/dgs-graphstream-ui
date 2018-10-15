@@ -5,7 +5,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 from utils import generateRandomSeed
 from configwriter import saveConfigSettings, loadConfigSettings
 
-import ipdb; debug = ipdb.set_trace
+#import ipdb; debug = ipdb.set_trace
 
 def composeAbsolutePath(path):
     '''
@@ -356,9 +356,7 @@ class SimulationParameters(QObject):
 
     @pyqtSlot(float)
     def slotSetLoadImbalance(self, value):
-        debug()
         self.ubvec = 1.0 + (float(value) / 1000.0)
-        #self.ubvec = float(int(1000.0 * value)) / 1000.0
         self.notifyLoadImbalanceChanged.emit(value)
         self.saveSettings()
 

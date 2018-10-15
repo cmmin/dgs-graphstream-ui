@@ -97,7 +97,7 @@ Rectangle {
 
         Rectangle {
             Layout.fillHeight: true
-            Layout.preferredWidth: txtBackWizard.paintedWidth + 12
+            Layout.preferredWidth: txtOpenWizard.paintedWidth + 12
 
             visible: !root.settingsActivated && root.wizardVisible && root.projectLoadedAtLeastOnce
 
