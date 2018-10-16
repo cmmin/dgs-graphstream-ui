@@ -96,7 +96,7 @@ Item {
 
                       BasicComponents.Combo {
                           id: cmbxScheme
-                          model: ["Showcase Communities", "Showcase Edges Cut"]
+                          model: ["showcase communities", "showcase edges cut"]
 
                           Layout.preferredWidth: 300
                           //Layout.leftMargin: 15

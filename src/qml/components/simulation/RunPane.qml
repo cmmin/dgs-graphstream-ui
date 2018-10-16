@@ -639,7 +639,7 @@ Item {
                     // contents go here
                     Text {
                         id: txtoutput
-                        text: "DGS Graphstream Output: <i>the most recent output is at the top</i>"
+                        text: "Visualization Output: <i>the most recent output is at the top</i>"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10

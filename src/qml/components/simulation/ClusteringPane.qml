@@ -196,7 +196,7 @@ Item {
                         Layout.fillWidth: true
 
                         Text {
-                            text: "Infomap Calls"
+                            text: "Infomap Calls for OSLOM2"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 

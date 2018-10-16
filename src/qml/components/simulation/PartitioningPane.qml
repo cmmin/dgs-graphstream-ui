@@ -124,7 +124,7 @@ Item {
 
 
                             //model: ["Random Assignments", "From Assignments File"]
-                            model: ["METIS Partitioning", "Random Assignments", "From Assignments File"]
+                            model: ["METIS assignments", "random assignments", "from assignments file"]
 
 
                             //property bool checked: false
