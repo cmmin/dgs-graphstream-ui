@@ -908,18 +908,10 @@ Item {
                                         color: cmbxNodeSizeMode.mode  !== 'fixed' ? "black" : "#858585"
                                     }
 
-                                    Text {
-                                        text: "0"
-                                        font.family: "Open Sans"
-                                        Layout.leftMargin: 15
-
-                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
-                                    }
-
                                     BasicComponents.Slider {
                                         id: sldrMinNodeSize
                                         from: 1
-                                        to: 59
+                                        to: 100
                                         value: 20
                                         stepSize: 1
 
@@ -939,15 +931,6 @@ Item {
                                                 }
                                             }
                                         }
-
-                                    }
-
-                                    Text {
-                                        text: String(sldrMinNodeSize.to)
-                                        font.family: "Open Sans"
-                                        Layout.leftMargin: 15
-
-                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
                                     }
 
                                     Text {
@@ -965,7 +948,14 @@ Item {
                                             }
                                             onNotifyImageMaxNodeSizeChanged: {
                                                 // when min node is increased
-                                                sldrMinNodeSize.to = maxNodeSize - 1
+                                                if (sldrMinNodeSize.value >= maxNodeSize) {
+                                                    if(maxNodeSize > 1) {
+                                                        sldrMinNodeSize.value = maxNodeSize - 1
+                                                    }
+                                                    else if(maxNodeSize === 1) {
+                                                        sldrMinNodeSize.value = 1
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -984,18 +974,9 @@ Item {
                                         color: cmbxNodeSizeMode.mode  !== 'fixed' ? "black" : "#858585"
                                     }
 
-
-                                    Text {
-                                        text: String(sldrMaxNodeSize.from)
-                                        font.family: "Open Sans"
-                                        Layout.leftMargin: 15
-
-                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
-                                    }
-
                                     BasicComponents.Slider {
                                         id: sldrMaxNodeSize
-                                        from: 21
+                                        from: 1
                                         to: 100
                                         value: 60
                                         stepSize: 1
@@ -1017,13 +998,6 @@ Item {
                                             }
                                         }
                                     }
-                                    Text {
-                                        text: String(sldrMaxNodeSize.to)
-                                        font.family: "Open Sans"
-                                        Layout.leftMargin: 15
-
-                                        color: cmbxNodeSizeMode.mode !== 'fixed' ? "black" : "#858585"
-                                    }
 
                                     Text {
                                         id: txtMaxNodeSize
@@ -1040,7 +1014,14 @@ Item {
                                             }
                                             onNotifyImageMinNodeSizeChanged: {
                                                 // when min node is increased
-                                                sldrMaxNodeSize.from = minNodeSize + 1
+                                                if (minNodeSize >= sldrMaxNodeSize.value) {
+                                                    if(minNodeSize < 100) {
+                                                        sldrMaxNodeSize.value = minNodeSize + 1
+                                                    }
+                                                    else if (minNodeSize === 100) {
+                                                        sldrMaxNodeSize.value = minNodeSize
+                                                    }
+                                                }
                                             }
                                         }
                                     }
