@@ -260,8 +260,15 @@ class DGSWrapper(QObject):
         #coloring
 
         if self.simulationParams.colorScheme != 'node-color':
+            # node-color = single color throughout
             args.append('--color-scheme')
             args.append(self.simulationParams.colorScheme)
+
+            args.append('--color-seed')
+            args.append(str(self.simulationParams.coloringSeed))
+
+            if self.simulationParams.coloringSeedValid == False:
+                self.numErrors += 1
         else:
             if(len(self.simulationParams.nodeColor)) and self.simulationParams.colorScheme == 'node-color':
                 #@todo check valid color
@@ -270,12 +277,6 @@ class DGSWrapper(QObject):
 
                 if self.simulationParams.nodeColorValid == False:
                     self.numErrors += 1
-
-        args.append('--color-seed')
-        args.append(str(self.simulationParams.coloringSeed))
-
-        if self.simulationParams.coloringSeedValid == False:
-            self.numErrors += 1
 
         # image properties
         args.append('--width')
@@ -293,7 +294,7 @@ class DGSWrapper(QObject):
         args.append('--border-size')
         args.append(str(self.simulationParams.imageBorderSize))
 
-        if self.simulationParams.imageLabelType != 'none':        
+        if self.simulationParams.imageLabelType != 'none':
             args.append('--label-type')
             args.append(self.simulationParams.imageLabelType)
             args.append('--label-size')

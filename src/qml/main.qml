@@ -51,7 +51,7 @@ ApplicationWindow {
             id: loadProjectPage
 
             visible: navigationBar.settingsActivated === false && loadProjectPage.projectLoaded === false
-            //projectLoaded: true
+            projectLoaded: true
 
             anchors.left: contents.left
             anchors.top: navigationBar.bottom

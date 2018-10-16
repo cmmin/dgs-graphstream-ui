@@ -616,16 +616,21 @@ Item {
                                         text: "Coloring Random Seed"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
+
+                                        color: cmbxColorScheme.currentIndex !== 2 ? "black" : "#858585"
                                     }
 
                                     BasicComponents.Textfield {
                                         id: txtColoringSeed
                                         Layout.preferredWidth: 100
                                         text: ""
-                                        color: txtColoringSeed.valid === false ? "#E24670" : "black"
+                                        color: txtColoringSeed.valid === false ? "#E24670" : (cmbxColorScheme.currentIndex !== 2 ? "black" : "#858585")
 
                                         property bool disableUpdate: false
                                         property bool valid: true
+
+                                        enabled: cmbxColorScheme.currentIndex !== 2 ? true : false
+
 
                                         onTextChanged: {
                                             if (txtColoringSeed.disableUpdate === false) {
@@ -651,6 +656,8 @@ Item {
                                         function generateNewSeed() {
                                             simulationParams.slotGenerateNewColorRandomSeed()
                                         }
+
+                                        enabled: cmbxColorScheme.currentIndex !== 2 ? true : false
 
                                         text: "Generate Seed"
                                         onClicked: {
