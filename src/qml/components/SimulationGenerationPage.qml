@@ -68,6 +68,17 @@ Item {
         visible: paneList.currentPaneCode === "partition"
     }
 
+    SimulationPanes.VisualizePane {
+        id: visualizationPane
+
+        anchors.top: root.top
+        anchors.left: paneList.right
+        anchors.right: root.right
+        anchors.bottom: root.bottom
+
+        visible: paneList.currentPaneCode === "visualization"
+    }
+
     SimulationPanes.ClusteringPane {
         id: clusteringPane
 

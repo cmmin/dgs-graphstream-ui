@@ -20,7 +20,7 @@ Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 40
             paneCode: "simulation"
-            paneTitle: "Simulation"
+            paneTitle: "Input Data"
             currentPaneCode: root.currentPaneCode
             onClicked: {
                 root.changePane(paneCode)
@@ -31,7 +31,18 @@ Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 40
             paneCode: "partition"
-            paneTitle: "Partitioning"
+            paneTitle: "Partition"
+            currentPaneCode: root.currentPaneCode
+            onClicked: {
+                root.changePane(paneCode)
+            }
+        }
+
+        SimulationPageButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 40
+            paneCode: "visualization"
+            paneTitle: "Visualize"
             currentPaneCode: root.currentPaneCode
             onClicked: {
                 root.changePane(paneCode)

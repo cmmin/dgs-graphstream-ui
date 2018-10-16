@@ -10,7 +10,7 @@ Item {
     Text {
         id: paneTitle
         // Title
-        text: "Simulation Settings & Parameters"
+        text: "Simulation Input Data"
         font.family: "Ubuntu"
         font.pixelSize: 18
         color: "#333"
@@ -24,7 +24,7 @@ Item {
 
     Text {
         id: paneDescription
-        text: "The basic parameters for generating a simulation are set here."
+        text: "The basic input parameters for generating a simulation are set here."
         font.family: "Open Sans"
         font.pixelSize: 14
 
@@ -67,7 +67,7 @@ Item {
                     // contents go here
                     Text {
                         id: txtLayout
-                        text: "Simulation"
+                        text: "Input Data"
                         font.family: "Ubuntu"
                         font.pixelSize: 14
                         Layout.leftMargin: 10
@@ -85,6 +85,7 @@ Item {
 
                     Item {Layout.preferredHeight: 5}
 
+                    /*
                     RowLayout {
                         Layout.fillWidth: true
 
@@ -131,7 +132,7 @@ Item {
                           Layout.preferredHeight: 24
                       }
                       Item {Layout.fillWidth: true}
-                    }
+                  } */
 
                     // input graph
                     RowLayout {
