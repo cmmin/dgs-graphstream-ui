@@ -719,6 +719,63 @@ Item {
 
                                 Item {Layout.preferredHeight: 5}
 
+                                // edge size = slider
+                                RowLayout {
+                                    Layout.fillWidth: true
+
+                                    Text {
+                                        text: "Edge Size"
+                                        font.family: "Open Sans"
+                                        Layout.leftMargin: 15
+                                        color: 'black'
+                                        //color: cmbxNodeSizeMode.mode  === 'fixed' ? "black" : "#858585"
+                                    }
+
+                                    BasicComponents.Slider {
+                                        id: sldrEdgeSize
+                                        from: 1
+                                        to: 10
+                                        value: 1
+                                        stepSize: 1
+
+                                        //enabled: (cmbxNodeSizeMode.mode === 'fixed')
+
+                                        Layout.preferredWidth: 100
+
+                                        onValueChanged: {
+                                            simulationParams.slotSetImageEdgeSize(sldrEdgeSize.value)
+                                        }
+
+                                        Connections {
+                                            target: simulationParams
+                                            onNotifyImageEdgeSizeChanged: {
+                                                if(sldrEdgeSize.value !== edgeSize) {
+                                                    sldrEdgeSize.value = edgeSize
+                                                }
+                                            }
+                                        }                        }
+
+                                    Text {
+                                        id: txtEdgeSize
+                                        text: "1 pixel"
+                                        font.family: "Open Sans"
+                                        Layout.leftMargin: 15
+
+                                        color: "black"
+                                        //color: cmbxNodeSizeMode.mode === 'fixed' ? "black" : "#858585"
+
+                                        Connections {
+                                            target: simulationParams
+                                            onNotifyImageEdgeSizeChanged: {
+                                                txtEdgeSize.text = String(edgeSize) + (edgeSize == 1 ? " pixel" : " pixels")
+                                            }
+                                        }
+                                    }
+
+                                    Item {Layout.fillWidth: true}
+                                }
+
+
                                 // node side mode = combo
                                 RowLayout {
                                     Layout.fillWidth: true
@@ -788,7 +845,7 @@ Item {
                                     Layout.fillWidth: true
 
                                     Text {
-                                        text: "Node Size"
+                                        text: "Fixed Node Size"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
 
@@ -832,62 +889,6 @@ Item {
                                             target: simulationParams
                                             onNotifyImageNodeSizeChanged: {
                                                 txtNodeSize.text = String(nodeSize) + (nodeSize == 1 ? " pixel" : " pixels")
-                                            }
-                                        }
-                                    }
-
-                                    Item {Layout.fillWidth: true}
-                                }
-
-                                // edge size = slider
-                                RowLayout {
-                                    Layout.fillWidth: true
-
-                                    Text {
-                                        text: "Edge Size"
-                                        font.family: "Open Sans"
-                                        Layout.leftMargin: 15
-                                        color: 'black'
-                                        //color: cmbxNodeSizeMode.mode  === 'fixed' ? "black" : "#858585"
-                                    }
-
-                                    BasicComponents.Slider {
-                                        id: sldrEdgeSize
-                                        from: 1
-                                        to: 10
-                                        value: 1
-                                        stepSize: 1
-
-                                        //enabled: (cmbxNodeSizeMode.mode === 'fixed')
-
-                                        Layout.preferredWidth: 100
-
-                                        onValueChanged: {
-                                            simulationParams.slotSetImageEdgeSize(sldrEdgeSize.value)
-                                        }
-
-                                        Connections {
-                                            target: simulationParams
-                                            onNotifyImageEdgeSizeChanged: {
-                                                if(sldrEdgeSize.value !== edgeSize) {
-                                                    sldrEdgeSize.value = edgeSize
-                                                }
-                                            }
-                                        }                        }
-
-                                    Text {
-                                        id: txtEdgeSize
-                                        text: "1 pixel"
-                                        font.family: "Open Sans"
-                                        Layout.leftMargin: 15
-
-                                        color: "black"
-                                        //color: cmbxNodeSizeMode.mode === 'fixed' ? "black" : "#858585"
-
-                                        Connections {
-                                            target: simulationParams
-                                            onNotifyImageEdgeSizeChanged: {
-                                                txtEdgeSize.text = String(edgeSize) + (edgeSize == 1 ? " pixel" : " pixels")
                                             }
                                         }
                                     }
