@@ -324,12 +324,60 @@ Item {
                         Item {Layout.fillWidth: true}
                     }
 
+                    Item {Layout.preferredHeight: 10}
+                }
+            }
+        }
+    } // END PANE
+
+
+    Item {
+        id: paneAdvanced
+        anchors.left: root.left
+        anchors.right: root.right
+
+        visible: switchAdvanceMode.checked
+
+        anchors.top: panePartitioning.bottom
+        height: childrenRect.height
+
+        ColumnLayout {
+            width: parent.width
+
+            Rectangle {
+                radius: 5
+                color: "#F7F7F7"
+
+                Layout.fillWidth: true
+                Layout.margins: 10
+                Layout.preferredHeight: childrenRect.height
+
+                ColumnLayout {
+                    width: parent.width
+
+                    // contents go here
+                    Text {
+                        id: txtSequence
+                        text: "Additional Partitioning Parameters"
+                        font.family: "Ubuntu"
+                        font.pixelSize: 14
+                        Layout.leftMargin: 10
+                        Layout.topMargin: 10
+                    }
+
+                    Rectangle {
+                        Layout.preferredHeight: 1
+                        Layout.preferredWidth: txtSequence.paintedWidth * 2
+                        Layout.leftMargin: 10
+                        color: "#BFBFBF"
+                    }
+
+                    Item {Layout.preferredHeight: 5}
+
 
                     // load imbalance
                     RowLayout {
                         Layout.fillWidth: true
-
-                        visible: switchAdvanceMode.checked
 
                         Text {
                             text: "Partitioning Imbalance"
@@ -393,7 +441,6 @@ Item {
                     // partition weights
                     RowLayout {
                         Layout.fillWidth: true
-                        visible: switchAdvanceMode.checked
 
                         Text {
                             text: "Partition Weights"
@@ -461,7 +508,6 @@ Item {
                     // visible partitions
                     RowLayout {
                         Layout.fillWidth: true
-                        visible: switchAdvanceMode.checked
 
                         Text {
                             text: "Visible Partitions "
@@ -529,7 +575,6 @@ Item {
                     // partition seed
                     RowLayout {
                         Layout.fillWidth: true
-                        visible: switchAdvanceMode.checked
 
                         Text {
                             color: root.assignmentsMode === 'random' ? "black" : "#858585"
@@ -589,4 +634,6 @@ Item {
             }
         }
     } // END PANE
+
+
 }
