@@ -24,6 +24,27 @@ ApplicationWindow {
         root.setY(Screen.height / 2.0 - root.height / 2.0)
     }
 
+    Components.Menubar {
+        id: menuBar
+
+        onAboutRequested: {
+            aboutDialog.show()
+        }
+
+        onPreferencesRequested: {
+            navigationBar.settingsActivated = true
+        }
+    }
+
+    Components.AboutDialog {
+        id: aboutDialog
+
+        Component.onCompleted: {
+            aboutDialog.setY(root.y + (root.height - aboutDialog.height) * 0.5)
+            aboutDialog.setX(root.x + (root.width - aboutDialog.width) * 0.5)
+        }
+    }
+
     Item {
         id: contents
         anchors.fill: parent
