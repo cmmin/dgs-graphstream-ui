@@ -11,7 +11,7 @@ ApplicationWindow {
     width: Screen.width * 0.60
     height: Screen.height * 0.70
 
-    title: qsTr("DGS GraphStream")
+    title: qsTr("Emergency Shelter Reunification Visualizer")
     color: "white"
 
     flags: Qt.Window | Qt.WindowFullscreenButtonHint |

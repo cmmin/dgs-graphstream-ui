@@ -47,7 +47,7 @@ Rectangle {
         // Page Title
         Text {
             id: txtTitle
-            text: "DGS GRAPHSTREAM" + (root.currentProjectPath.length ? ": " + root.currentProjectPath : "") +  (root.settingsValid === true ? "" : " - errors in settings, cannot run")
+            text: "Emergency Shelter Reunification Visualizer" + (root.currentProjectPath.length ? ": " + root.currentProjectPath : "") +  (root.settingsValid === true ? "" : " - errors in settings, cannot run")
             font.family: "Ubuntu"
             font.pixelSize: 16
             Layout.alignment: Qt.AlignVCenter

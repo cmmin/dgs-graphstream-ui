@@ -60,7 +60,7 @@ Item {
 
     Text {
         id: txtTitle
-        text: "Welcome to DGS Graphstream"
+        text: "Welcome to Emergency Shelter Reunification Visualizer"
         anchors.top: root.top
         anchors.topMargin: 20
         //anchors.left: root.left
@@ -76,7 +76,7 @@ Item {
         text: "Please open an existing project or create a new one."
 
         font.family: "Open Sans"
-        font.pixelSize: 12
+        font.pixelSize: 14
 
         wrapMode: Text.WordWrap
 

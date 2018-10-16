@@ -15,7 +15,7 @@ Item {
     Text {
         id: paneTitle
         // Title
-        text: "Generate DGS Graphstream"
+        text: "Generate Emergency Shelter Reunification Visualization"
         font.family: "Ubuntu"
         font.pixelSize: 18
         color: "#333"
