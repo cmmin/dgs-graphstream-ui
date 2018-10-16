@@ -38,6 +38,7 @@ Item {
         wrapMode: Text.WordWrap
     }
 
+    /*
     // Output Options
     Item {
         id: paneOutput
@@ -150,7 +151,8 @@ Item {
             }
         }
     } // END PANE
-
+    */
+    
     // video Options
     Item {
         id: paneVideo
@@ -158,7 +160,7 @@ Item {
         anchors.left: root.left
         anchors.right: root.right
 
-        anchors.top: paneOutput.bottom
+        anchors.top: paneDescription.bottom
 
         height: childrenRect.height
 
