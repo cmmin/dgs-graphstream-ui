@@ -191,7 +191,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: 400//txtVideo.paintedWidth * 2
+                        Layout.preferredWidth: 300//txtVideo.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"

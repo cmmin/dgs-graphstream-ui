@@ -792,7 +792,7 @@ Item {
 
                                     BasicComponents.Combo {
                                         id: cmbxNodeSizeMode
-                                        model: ["highlight-new", "centrality", "fixed"]
+                                        model: ["highlight-new", "degree centrality", "fixed"]
 
                                         property string mode: 'fixed'
 

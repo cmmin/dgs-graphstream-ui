@@ -119,7 +119,7 @@ Item {
                             id: cmbxClustering
                             model: ["OSLOM2 + Infomap", "Infomap only", "graphviz"]
 
-                            Layout.preferredWidth: 250
+                            Layout.preferredWidth: 300
                             Layout.leftMargin: 15
 
                             enabled: {

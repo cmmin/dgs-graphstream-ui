@@ -10,7 +10,7 @@ Item {
     Text {
         id: paneTitle
         // Title
-        text: "Simulation Input Data"
+        text: "Visualization Input Data"
         font.family: "Ubuntu"
         font.pixelSize: 18
         color: "#333"
