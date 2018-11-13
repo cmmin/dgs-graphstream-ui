@@ -92,7 +92,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtLayout.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtLayout.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -367,7 +367,7 @@ Item {
 
                     Rectangle {
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtSequence.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtSequence.paintedWidth * 2
                         Layout.leftMargin: 10
                         color: "#BFBFBF"
                     }

@@ -112,7 +112,7 @@ Item {
                                 Rectangle {
                                     //Layout.fillWidth: true
                                     Layout.preferredHeight: 1
-                                    Layout.preferredWidth: txtLayout.paintedWidth * 2
+                                    Layout.preferredWidth: 400//txtLayout.paintedWidth * 2
                                     Layout.leftMargin: 10
                                     //Layout.rightMargin: 100
                                     color: "#BFBFBF"
@@ -471,7 +471,7 @@ Item {
                                 Rectangle {
                                     //Layout.fillWidth: true
                                     Layout.preferredHeight: 1
-                                    Layout.preferredWidth: txtColoring.paintedWidth * 2
+                                    Layout.preferredWidth: 400//txtColoring.paintedWidth * 2
                                     Layout.leftMargin: 10
                                     //Layout.rightMargin: 100
                                     color: "#BFBFBF"
@@ -554,7 +554,7 @@ Item {
 
                                         color: txtNodeColor.colorValid ? (txtNodeColor.enabled ? "black" : "#858585") : "#E24670"
 
-                                        text: ""
+                                        text: "#387EAA"
 
                                         enabled: cmbxColorScheme.currentIndex === 2
 
@@ -576,6 +576,9 @@ Item {
                                     BasicComponents.Button {
                                         text: "Pick Color"
                                         onClicked: {
+                                            /*if(txtNodeColor.text.length > 0) {
+                                                singleNodeColorPicker.color = txtNodeColor.text.length
+                                            }*/
                                             singleNodeColorPicker.visible = true
                                         }
                                         enabled: cmbxColorScheme.currentIndex === 2
@@ -583,6 +586,7 @@ Item {
 
                                     BasicComponents.Colorpicker {
                                         id: singleNodeColorPicker
+                                        color: (txtNodeColor.text.length > 0 ? txtNodeColor.text : "#387EAA")
                                         onColorChosen: {
                                             txtNodeColor.text = color
                                         }
@@ -711,7 +715,7 @@ Item {
                                 Rectangle {
                                     //Layout.fillWidth: true
                                     Layout.preferredHeight: 1
-                                    Layout.preferredWidth: txtGraphImg.paintedWidth * 2
+                                    Layout.preferredWidth: 400//txtGraphImg.paintedWidth * 2
                                     Layout.leftMargin: 10
                                     //Layout.rightMargin: 100
                                     color: "#BFBFBF"
@@ -1207,7 +1211,7 @@ Item {
                                         visible: root.scheme !== 'cut-edges'
                                         color: root.scheme === 'cut-edges' ? "black" : "#858585"
 
-                                        text: "<i>only for cut-edges scheme</i>"
+                                        text: "<i>Only available with cut-edges scheme</i>"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
                                     }
@@ -1280,7 +1284,7 @@ Item {
                                         visible: root.scheme !== 'cut-edges'
                                         color: root.scheme === 'cut-edges' ? "black" : "#858585"
 
-                                        text: "<i>only for cut-edges scheme</i>"
+                                        text: "<i>Only available with cut-edges scheme</i>"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
                                     }

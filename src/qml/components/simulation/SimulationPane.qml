@@ -77,7 +77,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtLayout.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtLayout.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -96,7 +96,7 @@ Item {
                         }
 
                       BasicComponents.Combo {
-                          id: cmbxScheme
+                          id: cmbxScheme400//
                           model: ["Showcase Communities", "Showcase Edges Cut"]
 
                           Layout.preferredWidth: 300
@@ -296,7 +296,7 @@ Item {
 
                     Rectangle {
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtSequence.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtSequence.paintedWidth * 2
                         Layout.leftMargin: 10
                         color: "#BFBFBF"
                     }
@@ -481,7 +481,7 @@ Item {
 
                     Rectangle {
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtAdditionalInputs.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtAdditionalInputs.paintedWidth * 2
                         Layout.leftMargin: 10
                         color: "#BFBFBF"
                     }

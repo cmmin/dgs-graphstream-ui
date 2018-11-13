@@ -88,7 +88,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtClustering.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtClustering.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -117,7 +117,7 @@ Item {
 
                         BasicComponents.Combo {
                             id: cmbxClustering
-                            model: ["oslom2 + infomap", "infomap only", "graphviz"]
+                            model: ["OSLOM2 + Infomap", "Infomap only", "graphviz"]
 
                             Layout.preferredWidth: 250
                             Layout.leftMargin: 15
@@ -166,7 +166,7 @@ Item {
 
 
                         Text {
-                            text: "<i>Options only available with Communities Scheme</i>"
+                            text: "<i>Only available with showcase edges cut mode</i>"
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
 
@@ -275,7 +275,7 @@ Item {
                         }
 
                         Text {
-                            text: "<i>Available with oslom2 clustering only</i>"
+                            text: "<i>Only available with OSLOM2 clustering</i>"
                             wrapMode: Text.WordWrap
                             font.family: "Open Sans"
                             Layout.leftMargin: 15

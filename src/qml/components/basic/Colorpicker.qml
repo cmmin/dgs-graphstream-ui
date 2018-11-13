@@ -6,6 +6,9 @@ ColorDialog {
     title: "Please choose a color"
 
     modality: Qt.ApplicationModal
+    showAlphaChannel: false
+
+    color: "#2980B9"
 
     signal colorChosen(string color)
 

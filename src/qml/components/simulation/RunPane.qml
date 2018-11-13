@@ -91,7 +91,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtSummary.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtSummary.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -649,7 +649,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtoutput.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtoutput.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -756,7 +756,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtControls.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtControls.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"

@@ -152,7 +152,7 @@ Item {
         }
     } // END PANE
     */
-    
+
     // video Options
     Item {
         id: paneVideo
@@ -191,7 +191,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtVideo.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtVideo.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
@@ -415,7 +415,7 @@ Item {
                     Rectangle {
                         //Layout.fillWidth: true
                         Layout.preferredHeight: 1
-                        Layout.preferredWidth: txtPDF.paintedWidth * 2
+                        Layout.preferredWidth: 400//txtPDF.paintedWidth * 2
                         Layout.leftMargin: 10
                         //Layout.rightMargin: 100
                         color: "#BFBFBF"
