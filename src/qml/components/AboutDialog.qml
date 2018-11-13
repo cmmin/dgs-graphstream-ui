@@ -6,7 +6,7 @@ import QtQuick.Window 2.0
 
 Window {
     id: root
-    title: qsTr("About Readalo")
+    title: qsTr("About Emergency Shelter Reunification Visualizer")
 
 
     width: 650
