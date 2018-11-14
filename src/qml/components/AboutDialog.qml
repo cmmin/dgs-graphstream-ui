@@ -68,17 +68,12 @@ Window {
 
 
                 Text {
-                    text: qsTr("Engineered by Nathaniel Douglass and implemented by Carlo Minciacchi.");
+                    text: qsTr("Engineered by Nathaniel Douglass. User interface implemented by Carlo Minciacchi; dgs-graphstream implemented by Sami Barakat and Paul-Antoine Bittner.");
                     font.family: "Open Sans"
                     font.pixelSize: 12
-                    //color: readaloStyle.baseDarkFontColor
-                    Layout.alignment: Qt.AlignHCenter
-                }
-
-                Text {
-                    text: qsTr("Copyright 2018 Leapian Ltd. All rights reserved.");
-                    font.family: "Open Sans"
-                    font.pixelSize: 12
+                    wrapMode: Text.WordWrap
+                    Layout.preferredWidth: root.width * 0.57
+                    horizontalAlignment: Text.AlignHCenter
                     //color: readaloStyle.baseDarkFontColor
                     Layout.alignment: Qt.AlignHCenter
                 }
