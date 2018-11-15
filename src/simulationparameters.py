@@ -70,7 +70,7 @@ class SimulationParameters(QObject):
 
         self.assignmentsMode = 'metis' # random, file
         self.numPartitions = 4
-        self.ubvec = 1.001
+        self.ubvec = 1
         self.tpwgts = [] # only with nparts
         self.tpwgtsValid = False
         #self.showPartitions = False
@@ -91,13 +91,13 @@ class SimulationParameters(QObject):
         # @deprecated, do not export this
         self.nodeShadowColor = ''
 
-        self.imageNodeSizeMode = 'fixed'
+        self.imageNodeSizeMode = 'highlight-new'
         self.imageNodeSize = 20
         self.imageMinNodeSize = 20
         self.imageMaxNodeSize = 60
         self.imageEdgeSize = 1
         self.imageLabelSize = 10
-        self.imageLabelType = 'id'
+        self.imageLabelType = 'order'
         self.imageBorderSize = 1
         self.imageWidth = 1280
         self.imageHeight = 780
@@ -356,7 +356,7 @@ class SimulationParameters(QObject):
 
     @pyqtSlot(float)
     def slotSetLoadImbalance(self, value):
-        self.ubvec = 1.0 + (float(value) / 1000.0)
+        self.ubvec = 1.0 + (float(value) / 100.0)
         self.notifyLoadImbalanceChanged.emit(value)
         self.saveSettings()
 

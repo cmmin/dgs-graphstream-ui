@@ -133,7 +133,7 @@ Item {
                                         id: cmbxGraphLayout
                                         model: ["springbox", "linlog"]
 
-                                        Layout.preferredWidth: 200
+                                        Layout.preferredWidth: 150
                                         Layout.leftMargin: 15
 
                                         onActivated: {
@@ -492,7 +492,7 @@ Item {
                                         id: cmbxColorScheme
                                         model: ["pastel colors", "primary colors", "single color"]
 
-                                        Layout.preferredWidth: 200
+                                        Layout.preferredWidth: 150
                                         Layout.leftMargin: 15
 
                                         onActivated: {
@@ -1045,9 +1045,9 @@ Item {
 
                                     BasicComponents.Combo {
                                         id: cmbxLblNodeType
-                                        model: ["none", "order", "id"]
+                                        model: ["order", "none", "id"]
 
-                                        property string mode: 'none'
+                                        property string mode: 'order'
 
                                         Layout.preferredWidth: 150
                                         Layout.leftMargin: 15
@@ -1057,11 +1057,11 @@ Item {
                                                 simulationParams.slotSetImageLabelType('id')
                                                 cmbxLblNodeType.mode = 'id'
                                             }
-                                            if(index === 1) {
+                                            if(index === 0) {
                                                 simulationParams.slotSetImageLabelType('order')
                                                 cmbxLblNodeType.mode = 'order'
                                             }
-                                            if(index === 0) {
+                                            if(index === 1) {
                                                 simulationParams.slotSetImageLabelType('none')
                                                 cmbxLblNodeType.mode = 'none'
                                             }
@@ -1076,11 +1076,11 @@ Item {
                                                 }
                                                 else if(labelType === 'none') {
                                                     cmbxLblNodeType.mode = 'none'
-                                                    cmbxLblNodeType.currentIndex = 0
+                                                    cmbxLblNodeType.currentIndex = 1
                                                 }
                                                 else {
                                                     cmbxLblNodeType.mode = 'order'
-                                                    cmbxLblNodeType.currentIndex = 1
+                                                    cmbxLblNodeType.currentIndex = 0
                                                 }
                                             }
                                         }

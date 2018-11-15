@@ -117,7 +117,7 @@ Item {
 
                         BasicComponents.Combo {
                             id: cmbxClustering
-                            model: ["OSLOM2 + Infomap", "Infomap only", "graphviz"]
+                            model: ["OSLOM2 + Infomap", "Infomap only", "Graphviz"]
 
                             Layout.preferredWidth: 300
                             Layout.leftMargin: 15
@@ -376,7 +376,7 @@ Item {
                         }
 
                         Text {
-                            text: "<i>Not available with graphviz clustering</i>"
+                            text: "<i>Not available with Graphviz clustering</i>"
                             wrapMode: Text.WordWrap
                             font.family: "Open Sans"
                             Layout.leftMargin: 15
