@@ -1,3 +1,4 @@
+#import ipdb; debug = ipdb.set_trace
 
 def loadConfigSettings(settingsPath, simparams):
     simparams.saveEnabled = False

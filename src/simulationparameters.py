@@ -70,7 +70,7 @@ class SimulationParameters(QObject):
 
         self.assignmentsMode = 'metis' # random, file
         self.numPartitions = 4
-        self.ubvec = 1
+        self.ubvec = 1.01
         self.tpwgts = [] # only with nparts
         self.tpwgtsValid = False
         #self.showPartitions = False
