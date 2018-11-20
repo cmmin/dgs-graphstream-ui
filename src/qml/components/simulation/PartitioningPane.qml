@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 
 import "./../basic/" as BasicComponents
 
@@ -10,6 +11,21 @@ Item {
     property string scheme: ""
     property string clustering: ""
     property string assignmentsMode: "metis"
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        folder: shortcuts.home
+        selectFolder: false
+        selectMultiple: false
+        property string caller: ''
+        onAccepted: {
+            if(fileDialog.caller === 'assignments') {
+                txtAssignmentsFilePath.text = dgsSettings.slotParseFileUrl(fileDialog.fileUrl)
+            }
+        }
+    }
+
 
     Connections {
         target: simulationParams
@@ -214,6 +230,19 @@ Item {
                                         txtAssignmentsFilePath.text = assignmentsPath
                                     }
                                 }
+                            }
+                        }
+
+                        BasicComponents.Button {
+                            Layout.preferredWidth: 100
+                            Layout.preferredHeight: 30
+                            text: "Locate"
+
+                            enabled: txtAssignmentsFilePath.enabled
+
+                            onClicked: {
+                                fileDialog.open()
+                                fileDialog.caller = 'assignments'
                             }
                         }
 

@@ -435,6 +435,11 @@ class DGSSettings(QObject):
         self.notifyOverallValidationChanged.emit(valid)
         return valid
 
+    @pyqtSlot(str, result=str)
+    def slotParseFileUrl(self, path):
+        path = cleanFolderPath(path)
+        return path
+
     @pyqtSlot(str)
     def slotSetDGSProgramDirectory(self, path):
         path = cleanFolderPath(path)

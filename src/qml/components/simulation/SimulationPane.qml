@@ -1,11 +1,32 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 
 import "./../basic/" as BasicComponents
 
 Item {
     id: root
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        folder: shortcuts.home
+        selectFolder: false
+        selectMultiple: false
+        property string caller: ''
+        onAccepted: {
+            if(fileDialog.caller === 'input') {
+                txtGraphFilePath.text = dgsSettings.slotParseFileUrl(fileDialog.fileUrl)
+            }
+            else if(fileDialog.caller == 'nodeorder') {
+                txtNoderOrderList.text = dgsSettings.slotParseFileUrl(fileDialog.fileUrl)
+            }
+            else if(fileDialog.caller == 'ignore') {
+                txtFilterListPath.text = dgsSettings.slotParseFileUrl(fileDialog.fileUrl)
+            }
+        }
+    }
 
     Text {
         id: paneTitle
@@ -37,7 +58,6 @@ Item {
 
         wrapMode: Text.WordWrap
     }
-
 
     // SCHEME SELECTION
     Item {
@@ -85,55 +105,6 @@ Item {
 
                     Item {Layout.preferredHeight: 5}
 
-                    /*
-                    RowLayout {
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: "Simulation Mode"
-                            font.family: "Open Sans"
-                            Layout.leftMargin: 15
-                        }
-
-                      BasicComponents.Combo {
-                          id: cmbxScheme400//
-                          model: ["Showcase Communities", "Showcase Edges Cut"]
-
-                          Layout.preferredWidth: 300
-                          //Layout.leftMargin: 15
-
-                          onActivated: {
-                              if(index === 0) {
-                                  // communities
-                                  simulationParams.slotSetScheme('communities')
-                              }
-                              if(index === 1) {
-                                  // cut-edges
-                                  simulationParams.slotSetScheme('cut-edges')
-                              }
-                          }
-
-                          Connections {
-                              target: simulationParams
-                              onNotifySchemeChanged: {
-                                  if (scheme === 'communities') {
-                                      cmbxScheme.currentIndex = 0
-                                  }
-                                  else {
-                                      cmbxScheme.currentIndex = 1
-                                  }
-                              }
-                          }
-                      }
-
-                      BasicComponents.TooltipIcon {
-                          text: uiTexts.get('tooltipScheme')
-                          Layout.preferredWidth: 24
-                          Layout.preferredHeight: 24
-                      }
-                      Item {Layout.fillWidth: true}
-                  } */
-
                     // input graph
                     RowLayout {
                         Layout.fillWidth: true
@@ -167,10 +138,51 @@ Item {
                             }
                         }
 
+                        BasicComponents.Button {
+                            Layout.preferredWidth: 100
+                            Layout.preferredHeight: 30
+                            text: "Locate"
+
+                            onClicked: {
+                                fileDialog.open()
+                                fileDialog.caller = 'input'
+                            }
+                        }
+
+                    }
+
+                    Text {
+                        id: txtFullGraphPath
+
+                        property string path: ""
+                        property string errorStr: "<b>File Doesn't Exist</b>: "
+                        property bool showError: false
+
+                        Layout.leftMargin: 15
+
+                        text: txtFullGraphPath.showError ? txtFullGraphPath.errorStr + txtFullGraphPath.path : txtFullGraphPath.path
+                        font.family: "Open Sans"
+                        font.pixelSize: 10
+                        color: txtFullGraphPath.showError ? "#E24670" : "#858585"
+
+                        visible: txtFullGraphPath.path.length > 0
+
+                        Connections {
+                            target: simulationParams
+                            onNotifyGraphFilePathChanged: {
+                                txtFullGraphPath.path = graphFilePath
+                                txtFullGraphPath.showError = !fileExistsAtPath
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+
                         Text {
                             text: "Graph Format"
                             font.family: "Open Sans"
-                            //Layout.leftMargin: 15
+                            Layout.leftMargin: 15
                         }
 
                         BasicComponents.Combo {
@@ -178,7 +190,7 @@ Item {
                             model: ["metis", "edgelist", "gml"]
 
                             Layout.preferredWidth: 150
-                            Layout.leftMargin: 15
+                            Layout.leftMargin: 18
 
                             onActivated: {
                                 if(index === 0) {
@@ -211,31 +223,6 @@ Item {
                         }
 
                         Item {Layout.fillWidth: true}
-                    }
-
-                    Text {
-                        id: txtFullGraphPath
-
-                        property string path: ""
-                        property string errorStr: "<b>File Doesn't Exist</b>: "
-                        property bool showError: false
-
-                        Layout.leftMargin: 15
-
-                        text: txtFullGraphPath.showError ? txtFullGraphPath.errorStr + txtFullGraphPath.path : txtFullGraphPath.path
-                        font.family: "Open Sans"
-                        font.pixelSize: 10
-                        color: txtFullGraphPath.showError ? "#E24670" : "#858585"
-
-                        visible: txtFullGraphPath.path.length > 0
-
-                        Connections {
-                            target: simulationParams
-                            onNotifyGraphFilePathChanged: {
-                                txtFullGraphPath.path = graphFilePath
-                                txtFullGraphPath.showError = !fileExistsAtPath
-                            }
-                        }
                     }
 
                     RowLayout {
@@ -340,6 +327,18 @@ Item {
                                 }
                             }
                         }
+
+                        BasicComponents.Button {
+                            Layout.preferredWidth: 100
+                            Layout.preferredHeight: 30
+                            text: "Locate"
+
+                            onClicked: {
+                                fileDialog.open()
+                                fileDialog.caller = 'nodeorder'
+                            }
+                        }
+
 
                         BasicComponents.TooltipIcon {
                             text: uiTexts.get('tooltipNodeOrderFilePath')
@@ -524,6 +523,17 @@ Item {
                                         txtFilterListPath.text = filterPath
                                     }
                                 }
+                            }
+                        }
+
+                        BasicComponents.Button {
+                            Layout.preferredWidth: 100
+                            Layout.preferredHeight: 30
+                            text: "Locate"
+
+                            onClicked: {
+                                fileDialog.open()
+                                fileDialog.caller = 'ignore'
                             }
                         }
 
