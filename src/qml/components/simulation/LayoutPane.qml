@@ -33,7 +33,7 @@ Item {
 
     Text {
         id: paneDescription
-        text: "The basic parameters for modifying the simulation layouting."
+        text: "The basic parameters for modifying the simulation layout."
         font.family: "Open Sans"
         font.pixelSize: 14
 
@@ -124,7 +124,7 @@ Item {
                                     Layout.fillWidth: true
 
                                     Text {
-                                        text: "Graph Layouting Mode"
+                                        text: "Graph Layout Mode"
                                         font.family: "Open Sans"
                                         Layout.leftMargin: 15
                                     }
