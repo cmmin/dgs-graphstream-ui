@@ -80,7 +80,6 @@ Item {
                 txtGraphstreamDirectory.text = dgsSettings.dgsProgramDirectory
             }
         }
-        Item {Layout.fillWidth: true;}
         BasicComponents.Button {
             Layout.preferredWidth: 100
             Layout.preferredHeight: 30
@@ -91,6 +90,7 @@ Item {
                 fileDialog.caller = 'dgs'
             }
         }
+        Item {Layout.fillWidth: true;}
 
         // END DGS Program Directory
 
@@ -122,8 +122,8 @@ Item {
                 lblDGSProgramPath.text = dgsSettings.dgsProgramPath
             }
         }
-        Item {Layout.fillWidth: true;}
         Item {width: 1}
+        Item {Layout.fillWidth: true;}
 
         // END DGS Program Path
 
@@ -157,7 +157,6 @@ Item {
                 txtOslom2Dir.text = dgsSettings.oslom2ProgramDirectory
             }
         }
-        Item {Layout.fillWidth: true;}
         BasicComponents.Button {
             Layout.preferredWidth: 100
             Layout.preferredHeight: 30
@@ -168,6 +167,7 @@ Item {
                 fileDialog.caller = 'oslom2'
             }
         }
+        Item {Layout.fillWidth: true;}
 
         // END Oslom2
 
@@ -198,8 +198,8 @@ Item {
                 lblOslom2ProgramPath.text = dgsSettings.oslom2ProgramPath
             }
         }
-        Item {Layout.fillWidth: true;}
         Item {width: 1}
+        Item {Layout.fillWidth: true;}
 
         // END Oslom2 Program Path
 
@@ -233,7 +233,6 @@ Item {
                 txtInfomapDir.text = dgsSettings.infomapProgramDirectory
             }
         }
-        Item {Layout.fillWidth: true;}
         BasicComponents.Button {
             Layout.preferredWidth: 100
             Layout.preferredHeight: 30
@@ -244,6 +243,7 @@ Item {
                 fileDialog.caller = 'infomap'
             }
         }
+        Item {Layout.fillWidth: true;}
 
         // END Infomap
 
@@ -274,8 +274,8 @@ Item {
                 lblInfomapProgramPath.text = dgsSettings.infomapProgramPath
             }
         }
-        Item {Layout.fillWidth: true;}
         Item {width: 1}
+        Item {Layout.fillWidth: true;}
 
         // END Infomap Program Path
 
@@ -309,7 +309,6 @@ Item {
                 txtGvmapDir.text = dgsSettings.gvmapProgramDirectory
             }
         }
-        Item {Layout.fillWidth: true;}
         BasicComponents.Button {
             Layout.preferredWidth: 100
             Layout.preferredHeight: 30
@@ -320,6 +319,7 @@ Item {
                 fileDialog.caller = 'gvmap'
             }
         }
+        Item {Layout.fillWidth: true;}
 
         // END Gvmap
 
@@ -350,8 +350,8 @@ Item {
                 lblGvmapProgramPath.text = dgsSettings.gvmapProgramPath
             }
         }
-        Item {Layout.fillWidth: true;}
         Item {width: 1}
+        Item {Layout.fillWidth: true;}
 
         // END Gvmap Program Path
 
@@ -387,8 +387,8 @@ Item {
                 txtMontageProgramPath.text = dgsSettings.montageProgramPath
             }
         }
-        Item {Layout.fillWidth: true;}
         Item {width: 1}
+        Item {Layout.fillWidth: true;}
 
         // END Montage Program
 
@@ -424,8 +424,8 @@ Item {
                 txtFfmpegProgramPath.text = dgsSettings.ffmpegProgramPath
             }
         }
-        Item {Layout.fillWidth: true;}
         Item {width: 1}
+        Item {Layout.fillWidth: true;}
         // END Ffmpeg Program
 
 
@@ -436,9 +436,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>networkx</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // nxmetis
         Text {
@@ -447,9 +447,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>nxmetis</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // configparser
         Text {
@@ -458,9 +458,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>configparser</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // pydot
         Text {
@@ -469,9 +469,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>pydot</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // scipy
         Text {
@@ -480,9 +480,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>scipy</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // colour
         Text {
@@ -491,9 +491,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>colour</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // Decorator
         Text {
@@ -502,9 +502,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>decorator</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // Pillow
         Text {
@@ -513,9 +513,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>Pillow</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // Fpdf
         Text {
@@ -524,9 +524,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>fpdf</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // pygraphviz
         Text {
@@ -535,9 +535,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>pygraphviz</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // reportlab
         Text {
@@ -546,9 +546,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>reportlab</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         //pyparsing
         Text {
@@ -557,9 +557,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>pyparsing</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         // svgutils
         Text {
@@ -568,9 +568,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>svgutils</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         //svglib
         Text {
@@ -579,9 +579,9 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>svglib</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         //cython
         Text {
@@ -590,14 +590,14 @@ Item {
             color: installed ? "#009E6A" : "#E24670"
         }
         Text { text: "<b>Cython</b>"; font.family: "Ubuntu"; font.pixelSize: 12; }
+        Item {width:1}
+        Item {width:1}
         Item {Layout.fillWidth: true;}
-        Item {width:1}
-        Item {width:1}
 
         Item {Layout.fillHeight: true;}
         Item {Layout.fillHeight: true;}
+        Item {Layout.fillHeight: true;}
+        Item {Layout.fillHeight: true;}
         Item {Layout.fillHeight: true; Layout.fillWidth: true;}
-        Item {Layout.fillHeight: true;}
-        Item {Layout.fillHeight: true;}
     }
 }
